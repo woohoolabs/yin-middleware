@@ -36,6 +36,7 @@ class JsonApiChecker
         $retriever = new UriRetriever();
         $schema = $retriever->retrieve('file://' . $jsonApiSchemaPath);
 
+        RefResolver::$maxDepth = 100;
         $refResolver = new RefResolver($retriever);
         $refResolver->resolve($schema, 'file://' . dirname($jsonApiSchemaPath) . "/json-api-schema-ref.json");
 

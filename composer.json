@@ -1,0 +1,42 @@
+{
+    "name": "woohoolabs/yin-middlewares",
+    "description": "Woohoo Labs. Yin Middlewares",
+    "type": "library",
+    "keywords": ["Woohoo Labs.", "Yin", "Middlewares", "HATEOAS", "JSON API", "PSR-7"],
+    "homepage": "http://yin.woohoolabs.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name":"Máté Kocsis",
+            "email":"kocsismate@woohoolabs.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/woohoolabs/yin-middlewares/issues",
+        "source": "https://github.com/woohoolabs/yin-middlewares"
+    },
+    "require": {
+        "php":">=5.5.0",
+        "psr/http-message": "^1.0.0",
+        "woohoolabs/yin": "^0.3.0"
+    },
+    "require-dev": {
+        "phpunit/PHPUnit": "^4.4.0",
+        "squizlabs/php_codesniffer": "^2.3.1"
+    },
+    "suggest": {
+        "container-interop/container-interop": "Allows to use the JsonApiDispatcher",
+        "justinrainbow/json-schema": "Allows to validate the request and response body against the JSON API schema",
+        "seld/jsonlint": "Allows to lint the request and response body"
+    },
+    "autoload": {
+        "psr-4": {
+            "WoohooLabs\\YinMiddlewares\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "WoohooLabsTest\\YinMiddlewares\\": "tests/"
+        }
+    }
+}

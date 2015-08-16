@@ -1,5 +1,5 @@
 <?php
-namespace WoohooLabs\YinMiddlewares;
+namespace WoohooLabs\YinMiddlewares\Middleware;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;

@@ -1,5 +1,5 @@
 <?php
-namespace WoohooLabs\YinMiddlewares;
+namespace WoohooLabs\YinMiddlewares\Middleware;
 
 use Interop\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;

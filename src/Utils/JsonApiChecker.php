@@ -38,7 +38,7 @@ class JsonApiChecker
 
         RefResolver::$maxDepth = 100;
         $refResolver = new RefResolver($retriever);
-        $refResolver->resolve($schema, 'file://' . dirname($jsonApiSchemaPath) . "/json-api-schema-ref.json");
+        $refResolver->resolve($schema, 'file://' . dirname($jsonApiSchemaPath) . "/json-api-schema.json");
 
         $validator = new Validator();
         $validator->check($message, $schema);

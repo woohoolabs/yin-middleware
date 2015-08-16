@@ -31,24 +31,17 @@ class JsonApiChecker
      */
     public function validate($message)
     {
-        $jsonApiSchemaPath = realpath("../../data/json-api-schema.json");
+        $jsonApiSchemaPath = realpath(__DIR__ . "/../../data/json-api-schema.json");
 
         $retriever = new UriRetriever();
         $schema = $retriever->retrieve('file://' . $jsonApiSchemaPath);
 
         $refResolver = new RefResolver($retriever);
-        $refResolver->resolve($schema, 'file://' . dirname($jsonApiSchemaPath));
+        $refResolver->resolve($schema, 'file://' . dirname($jsonApiSchemaPath) . "/json-api-schema-ref.json");
 
         $validator = new Validator();
         $validator->check($message, $schema);
 
-        $errors = [];
-        if ($validator->isValid() === false) {
-            foreach ($validator->getErrors() as $error) {
-                $errors[$error["property"]] = $error["message"];
-            }
-        }
-
-        return $errors;
+        return $validator->getErrors();
     }
 }

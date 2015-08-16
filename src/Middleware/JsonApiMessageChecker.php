@@ -57,8 +57,8 @@ abstract class JsonApiMessageChecker
 
             if (empty($errorMessages) === false) {
                 $errors = [];
-                foreach ($errorMessages as $property => $errorMessage) {
-                    $errors[] = $this->getValidationError($property, $errorMessage);
+                foreach ($errorMessages as $errorMessage) {
+                    $errors[] = $this->getValidationError($errorMessage["property"], $errorMessage["message"]);
                 }
                 $errorDocument = $this->getValidationErrorDocument($errors)->getResponse($response);
                 return $errorDocument;
@@ -88,7 +88,7 @@ abstract class JsonApiMessageChecker
     protected function getValidationError($property, $message)
     {
         $error = new Error();
-        $error->setTitle("$property: $message");
+        $error->setTitle(($property ? $property . ": " : "") . "$message");
 
         return $error;
     }

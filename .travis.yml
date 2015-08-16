@@ -20,6 +20,9 @@ matrix:
 
 before_install:
   - if [[ $EXECUTE_COVERAGE != 'true' ]]; then phpenv config-rm xdebug.ini || return 0 ; fi
+  - composer require container-interop/container-interop
+  - composer require justinrainbow/json-schema
+  - composer require seld/jsonlint
   - composer self-update
 
 install:

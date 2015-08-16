@@ -57,8 +57,8 @@ abstract class JsonApiMessageChecker
 
             if (empty($errorMessages) === false) {
                 $errors = [];
-                foreach ($errorMessages as $errorMessage) {
-                    $errors[] = $this->getValidationError($errorMessage);
+                foreach ($errorMessages as $property => $errorMessage) {
+                    $errors[] = $this->getValidationError($property, $errorMessage);
                 }
                 $errorDocument = $this->getValidationErrorDocument($errors)->getResponse($response);
                 return $errorDocument;
@@ -69,25 +69,26 @@ abstract class JsonApiMessageChecker
     }
 
     /**
-     * @param $title
+     * @param string $message
      * @return \WoohooLabs\Yin\JsonApi\Schema\Error
      */
-    protected function getLintError($title)
+    protected function getLintError($message)
     {
         $error = new Error();
-        $error->setTitle($title);
+        $error->setTitle($message);
 
         return $error;
     }
 
     /**
-     * @param $title
+     * @param string $property
+     * @param string $message
      * @return \WoohooLabs\Yin\JsonApi\Schema\Error
      */
-    protected function getValidationError($title)
+    protected function getValidationError($property, $message)
     {
         $error = new Error();
-        $error->setTitle($title);
+        $error->setTitle("$property: $message");
 
         return $error;
     }

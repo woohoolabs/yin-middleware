@@ -45,7 +45,7 @@ class JsonApiChecker
         $errors = [];
         if ($validator->isValid() === false) {
             foreach ($validator->getErrors() as $error) {
-                echo sprintf("[%s] %s\n", $error['property'], $error['message']);
+                $errors[$error["property"]] = $error["message"];
             }
         }
 

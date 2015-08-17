@@ -7,7 +7,7 @@ use Psr\Http\Message\ResponseInterface;
 use WoohooLabs\Yin\JsonApi\Schema\Error;
 use WoohooLabs\Yin\JsonApi\Transformer\ErrorDocument;
 
-class JsonApiDispatcher
+class JsonApiDispatcherMiddleware
 {
     /**
      * @var \Interop\Container\ContainerInterface

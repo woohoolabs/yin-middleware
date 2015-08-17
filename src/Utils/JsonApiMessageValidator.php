@@ -141,7 +141,7 @@ abstract class JsonApiMessageValidator
 
     /**
      * @param \Psr\Http\Message\MessageInterface $message
-     * @param array $errors
+     * @param \WoohooLabs\Yin\JsonApi\Schema\Error[] $errors
      * @return \WoohooLabs\Yin\JsonApi\Transformer\ErrorDocument
      */
     protected function getLintErrorDocument(MessageInterface $message, array $errors)
@@ -153,7 +153,7 @@ abstract class JsonApiMessageValidator
 
     /**
      * @param \Psr\Http\Message\MessageInterface $message
-     * @param array $errors
+     * @param \WoohooLabs\Yin\JsonApi\Schema\Error[] $errors
      * @return \WoohooLabs\Yin\JsonApi\Transformer\ErrorDocument
      */
     protected function getValidationErrorDocument(MessageInterface $message, array $errors)
@@ -165,7 +165,7 @@ abstract class JsonApiMessageValidator
 
     /**
      * @param \Psr\Http\Message\MessageInterface $message
-     * @param array $errors
+     * @param \WoohooLabs\Yin\JsonApi\Schema\Error[] $errors
      * @return \WoohooLabs\Yin\JsonApi\Transformer\ErrorDocument
      */
     protected function getErrorDocument(MessageInterface $message, array $errors)

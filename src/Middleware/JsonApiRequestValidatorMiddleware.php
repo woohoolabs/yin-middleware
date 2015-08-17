@@ -7,13 +7,13 @@ use Psr\Http\Message\ResponseInterface;
 class JsonApiRequestValidatorMiddleware extends JsonApiMessageValidator
 {
     /**
+     * @param bool $includeOriginalMessage
      * @param bool $lint
      * @param bool $validate
-     * @param bool $includeOriginalMessage
      */
-    public function __construct($lint = true, $validate = true, $includeOriginalMessage = true)
+    public function __construct($includeOriginalMessage = true, $lint = true, $validate = true)
     {
-        parent::__construct($lint, $validate, $includeOriginalMessage);
+        parent::__construct($includeOriginalMessage, $lint, $validate);
     }
 
     /**

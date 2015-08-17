@@ -17,6 +17,11 @@ abstract class JsonApiMessageValidator
     /**
      * @var bool
      */
+    private $includeOriginalMessage;
+
+    /**
+     * @var bool
+     */
     private $lint;
 
     /**
@@ -25,20 +30,15 @@ abstract class JsonApiMessageValidator
     private $validate;
 
     /**
-     * @var bool
-     */
-    private $includeOriginalMessage;
-
-    /**
+     * @param bool $includeOriginalMessage
      * @param bool $lint
      * @param bool $validate
-     * @param bool $includeOriginalMessage
      */
-    public function __construct($lint = true, $validate = true, $includeOriginalMessage = true)
+    public function __construct($includeOriginalMessage = true, $lint = true, $validate = true)
     {
+        $this->includeOriginalMessage = true;
         $this->lint = $lint;
         $this->validate = $validate;
-        $this->includeOriginalMessage = true;
     }
 
     /**

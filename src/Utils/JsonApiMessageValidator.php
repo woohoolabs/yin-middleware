@@ -48,7 +48,9 @@ abstract class JsonApiMessageValidator
      */
     protected function check(MessageInterface $message, ResponseInterface $response)
     {
-        if ($this->lint === true) {
+        $isEmpty = $message->getBody()->getSize() ? false : true;
+
+        if ($this->lint === true && $isEmpty === false) {
             $errorMessage = $this->lint($message->getBody()->getContents());
 
             if ($errorMessage) {
@@ -58,7 +60,7 @@ abstract class JsonApiMessageValidator
             }
         }
 
-        if ($this->validate === true) {
+        if ($this->validate === true && $isEmpty === false) {
             $errorMessages = $this->validate(json_decode($message->getBody()->getContents()));
 
             if (empty($errorMessages) === false) {
@@ -131,7 +133,7 @@ abstract class JsonApiMessageValidator
     protected function getValidationError($property, $message)
     {
         $error = new Error();
-        $error->setDetail($message);
+        $error->setDetail(ucfirst($message));
         if ($property) {
             $error->setSource(ErrorSource::fromParameter($property));
         }
@@ -172,7 +174,7 @@ abstract class JsonApiMessageValidator
     {
         $errorDocument = new ErrorDocument();
         if ($this->includeOriginalMessage) {
-            $errorDocument->setMeta(["original", $message->getBody()->getContents()]);
+            $errorDocument->setMeta(["original" => $message->getBody()->getContents()]);
         }
 
         foreach ($errors as $error) {

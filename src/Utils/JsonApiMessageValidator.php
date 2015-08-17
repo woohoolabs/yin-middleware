@@ -48,9 +48,11 @@ abstract class JsonApiMessageValidator
      */
     protected function check(MessageInterface $message, ResponseInterface $response)
     {
-        $isEmpty = $message->getBody()->getSize() ? false : true;
+        if ($message->getBody()->getSize() < 1) {
+            return null;
+        }
 
-        if ($this->lint === true && $isEmpty === false) {
+        if ($this->lint === true) {
             $errorMessage = $this->lint($message->getBody()->getContents());
 
             if ($errorMessage) {
@@ -60,7 +62,7 @@ abstract class JsonApiMessageValidator
             }
         }
 
-        if ($this->validate === true && $isEmpty === false) {
+        if ($this->validate === true) {
             $errorMessages = $this->validate(json_decode($message->getBody()->getContents()));
 
             if (empty($errorMessages) === false) {

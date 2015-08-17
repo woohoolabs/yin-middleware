@@ -52,7 +52,9 @@ class JsonApiDispatcherMiddleware
     protected function getDispatchError()
     {
         $error = new Error();
-        $error->setTitle("No dispatchable callable is added to the request as an attribute!");
+        $error->setStatus(404);
+        $error->setTitle("Route not found");
+        $error->setDetail("No dispatchable callable is added to the request as an attribute!");
 
         return $error;
     }

@@ -41,7 +41,7 @@ class JsonApiRequestValidatorMiddleware extends JsonApiMessageValidator
     {
         $error = parent::getLintError($message);
         $error->setStatus(400);
-        $error->setTitle("The request body is not a valid JSON document!");
+        $error->setTitle("The request body is not a valid JSON document");
 
         return $error;
     }
@@ -55,7 +55,7 @@ class JsonApiRequestValidatorMiddleware extends JsonApiMessageValidator
     {
         $error = parent::getValidationError($property, $message);
         $error->setStatus(400);
-        $error->setTitle("The request body is not a valid JSON API document!");
+        $error->setTitle("The request body is not a valid JSON API document");
 
         return $error;
     }

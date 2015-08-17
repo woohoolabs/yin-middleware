@@ -3,6 +3,7 @@ namespace WoohooLabs\YinMiddlewares\Middleware;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use WoohooLabs\YinMiddlewares\Utils\JsonApiMessageValidator;
 
 class JsonApiResponseValidatorMiddleware extends JsonApiMessageValidator
 {

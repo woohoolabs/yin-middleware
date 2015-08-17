@@ -1,5 +1,5 @@
 <?php
-namespace WoohooLabs\YinMiddlewares\Middleware;
+namespace WoohooLabs\YinMiddlewares\Utils;
 
 use JsonSchema\RefResolver;
 use JsonSchema\Uri\UriRetriever;

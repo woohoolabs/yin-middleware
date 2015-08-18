@@ -8,13 +8,13 @@ use WoohooLabs\YinMiddlewares\Utils\JsonApiMessageValidator;
 class JsonApiResponseValidatorMiddleware extends JsonApiMessageValidator
 {
     /**
-     * @param bool $includeOriginalMessage
+     * @param bool $includeOriginalMessageInResponse
      * @param bool $lint
      * @param bool $validate
      */
-    public function __construct($includeOriginalMessage = true, $lint = true, $validate = true)
+    public function __construct($includeOriginalMessageInResponse = true, $lint = true, $validate = true)
     {
-        parent::__construct($includeOriginalMessage, $lint, $validate);
+        parent::__construct($includeOriginalMessageInResponse, $lint, $validate);
     }
 
     /**

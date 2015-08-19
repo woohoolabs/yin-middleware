@@ -162,7 +162,7 @@ abstract class JsonApiMessageValidator
     {
         $errorDocument = $this->getErrorDocument($errors);
         if ($this->includeOriginalMessage) {
-            $errorDocument->setMeta(["original" => $message->getBody()]);
+            $errorDocument->setMeta(["original" => json_decode($message->getBody(), true)]);
         }
 
         return $errorDocument;

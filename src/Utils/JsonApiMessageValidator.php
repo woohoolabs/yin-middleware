@@ -57,7 +57,7 @@ abstract class JsonApiMessageValidator
 
             if ($errorMessage) {
                 $error = $this->getLintError($errorMessage);
-                return $this->getLintErrorDocument($message, [$error])->getResponse($response);
+                return $this->getLintErrorDocument([$error])->getResponse($response);
             }
         }
 
@@ -142,11 +142,10 @@ abstract class JsonApiMessageValidator
     }
 
     /**
-     * @param \Psr\Http\Message\MessageInterface $message
      * @param \WoohooLabs\Yin\JsonApi\Schema\Error[] $errors
      * @return \WoohooLabs\Yin\JsonApi\Transformer\ErrorDocument
      */
-    protected function getLintErrorDocument(MessageInterface $message, array $errors)
+    protected function getLintErrorDocument(array $errors)
     {
         $errorDocument = $this->getErrorDocument($errors);
 

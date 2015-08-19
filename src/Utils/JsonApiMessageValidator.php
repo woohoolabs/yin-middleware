@@ -53,25 +53,23 @@ abstract class JsonApiMessageValidator
         }
 
         if ($this->lint === true) {
-            $errorMessage = $this->lint($message->getBody()->getContents());
+            $errorMessage = $this->lint($message->getBody());
 
             if ($errorMessage) {
                 $error = $this->getLintError($errorMessage);
-                $errorDocument = $this->getLintErrorDocument($message, [$error])->getResponse($response);
-                return $errorDocument;
+                return $this->getLintErrorDocument($message, [$error])->getResponse($response);
             }
         }
 
         if ($this->validate === true) {
-            $errorMessages = $this->validate(json_decode($message->getBody()->getContents()));
+            $errorMessages = $this->validate(json_decode($message->getBody()));
 
             if (empty($errorMessages) === false) {
                 $errors = [];
                 foreach ($errorMessages as $errorMessage) {
                     $errors[] = $this->getValidationError($errorMessage["property"], $errorMessage["message"]);
                 }
-                $errorDocument = $this->getValidationErrorDocument($message, $errors)->getResponse($response);
-                return $errorDocument;
+                return $this->getValidationErrorDocument($message, $errors)->getResponse($response);
             }
         }
 
@@ -150,7 +148,7 @@ abstract class JsonApiMessageValidator
      */
     protected function getLintErrorDocument(MessageInterface $message, array $errors)
     {
-        $errorDocument = $this->getErrorDocument($message, $errors);
+        $errorDocument = $this->getErrorDocument($errors);
 
         return $errorDocument;
     }
@@ -162,23 +160,21 @@ abstract class JsonApiMessageValidator
      */
     protected function getValidationErrorDocument(MessageInterface $message, array $errors)
     {
-        $errorDocument = $this->getErrorDocument($message, $errors);
+        $errorDocument = $this->getErrorDocument($errors);
+        if ($this->includeOriginalMessage) {
+            $errorDocument->setMeta(["original" => $message->getBody()]);
+        }
 
         return $errorDocument;
     }
 
     /**
-     * @param \Psr\Http\Message\MessageInterface $message
      * @param \WoohooLabs\Yin\JsonApi\Schema\Error[] $errors
      * @return \WoohooLabs\Yin\JsonApi\Transformer\ErrorDocument
      */
-    protected function getErrorDocument(MessageInterface $message, array $errors)
+    protected function getErrorDocument(array $errors)
     {
         $errorDocument = new ErrorDocument();
-        if ($this->includeOriginalMessage) {
-            $errorDocument->setMeta(["original" => $message->getBody()->getContents()]);
-        }
-
         foreach ($errors as $error) {
             $errorDocument->addError($error);
         }

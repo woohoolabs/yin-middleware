@@ -89,7 +89,7 @@ class JsonApiCatchingDispatcherMiddleware extends JsonApiDispatcherMiddleware
     {
         $error = new Error();
         $error->setStatus(400);
-        $error->setTitle("Included path '" . $e->getIncluded() . "' is unrecognized");
+        $error->setTitle("Included path '" . $e->getIncludes() . "' is unrecognized");
 
         return $error;
     }

@@ -2,10 +2,9 @@
 namespace WoohooLabs\YinMiddlewares\Middleware;
 
 use Interop\Container\ContainerInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use WoohooLabs\Yin\JsonApi\JsonApi;
-use WoohooLabs\Yin\JsonApi\Request\Request;
+use WoohooLabs\Yin\JsonApi\Request\RequestInterface;
 use WoohooLabs\Yin\JsonApi\Schema\Error;
 use WoohooLabs\Yin\JsonApi\Transformer\ErrorDocument;
 
@@ -14,7 +13,7 @@ class JsonApiDispatcherMiddleware
     /**
      * @var \Interop\Container\ContainerInterface
      */
-    private $container;
+    protected $container;
 
     /**
      * @param \Interop\Container\ContainerInterface $container
@@ -25,13 +24,13 @@ class JsonApiDispatcherMiddleware
     }
 
     /**
-     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \WoohooLabs\Yin\JsonApi\Request\RequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param callable $next
      * @return void|\Psr\Http\Message\ResponseInterface
      * @throws \Exception
      */
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next)
+    public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next)
     {
         $callable = $request->getAttribute("__callable");
 
@@ -39,7 +38,7 @@ class JsonApiDispatcherMiddleware
             return $this->getDispatchErrorDocument($this->getDispatchError())->getResponse($response);
         }
 
-        $jsonApi = new JsonApi(new Request($request), $response);
+        $jsonApi = new JsonApi($request, $response);
 
         if (is_array($callable) && is_string($callable[0])) {
             $object = $this->container->get($callable[0]);

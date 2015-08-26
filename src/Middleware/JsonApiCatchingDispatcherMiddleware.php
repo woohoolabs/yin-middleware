@@ -89,7 +89,7 @@ class JsonApiCatchingDispatcherMiddleware extends JsonApiDispatcherMiddleware
     {
         $error = new Error();
         $error->setStatus(400);
-        $error->setTitle("Included path '" . $e->getPath() . "' is unrecognized");
+        $error->setTitle("Included path '" . $e->getIncluded() . "' is unrecognized");
 
         return $error;
     }
@@ -243,7 +243,7 @@ class JsonApiCatchingDispatcherMiddleware extends JsonApiDispatcherMiddleware
     {
         $error = new Error();
         $error->setStatus(403);
-        $error->setTitle("Full replacement of relationship '" . $e->getRelationshipName . "' is prohibited");
+        $error->setTitle("Full replacement of relationship '" . $e->getRelationshipName() . "' is prohibited");
 
         return $error;
     }
@@ -265,7 +265,7 @@ class JsonApiCatchingDispatcherMiddleware extends JsonApiDispatcherMiddleware
     {
         $error = new Error();
         $error->setStatus(403);
-        $error->setTitle("Removal of relationship '" . $e->getRelationshipName . "' is prohibited");
+        $error->setTitle("Removal of relationship '" . $e->getRelationshipName() . "' is prohibited");
 
         return $error;
     }

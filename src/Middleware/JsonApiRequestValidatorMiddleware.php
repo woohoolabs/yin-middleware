@@ -1,11 +1,11 @@
 <?php
 namespace WoohooLabs\YinMiddlewares\Middleware;
 
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use WoohooLabs\Yin\JsonApi\Exception\MediaTypeUacceptable;
+use WoohooLabs\Yin\JsonApi\Exception\MediaTypeUnacceptable;
 use WoohooLabs\Yin\JsonApi\Exception\MediaTypeUnsupported;
 use WoohooLabs\Yin\JsonApi\Exception\QueryParamUnrecognized;
+use WoohooLabs\Yin\JsonApi\Request\RequestInterface;
 use WoohooLabs\Yin\JsonApi\Schema\Error;
 use WoohooLabs\YinMiddlewares\Utils\JsonApiMessageValidator;
 
@@ -41,12 +41,12 @@ class JsonApiRequestValidatorMiddleware extends JsonApiMessageValidator
     }
 
     /**
-     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \WoohooLabs\Yin\JsonApi\Request\RequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param callable $next
      * @return void|\Psr\Http\Message\ResponseInterface
      */
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next)
+    public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next)
     {
         $response = $this->check($request, $response);
 
@@ -56,7 +56,7 @@ class JsonApiRequestValidatorMiddleware extends JsonApiMessageValidator
 
         if ($this->checkMediaType) {
             try {
-                $request->validateContentHeader();
+                $request->validateContentTypeHeader();
                 $request->validateAcceptHeader();
             } catch (MediaTypeUnsupported $e) {
                 return $this->getContentTypeHeaderErrorDocument($this->getContentTypeHeaderError($e));
@@ -111,7 +111,7 @@ class JsonApiRequestValidatorMiddleware extends JsonApiMessageValidator
     {
         $error = new Error();
         $error->setStatus(415);
-        $error->setTitle("Unsupported media type: '" . $e->getMediaType() . "'");
+        $error->setTitle("Unsupported media type: '" . $e->getMediaTypeName() . "'");
 
         return $error;
     }
@@ -133,7 +133,7 @@ class JsonApiRequestValidatorMiddleware extends JsonApiMessageValidator
     {
         $error = new Error();
         $error->setStatus(406);
-        $error->setTitle("Unacceptable media type: '" .  $e->getMediaType() . "'");
+        $error->setTitle("Unacceptable media type: '" .  $e->getMediaTypeName() . "'");
 
         return $error;
     }
@@ -148,7 +148,7 @@ class JsonApiRequestValidatorMiddleware extends JsonApiMessageValidator
     }
 
     /**
-     * @param string $e
+     * @param \WoohooLabs\Yin\JsonApi\Exception\QueryParamUnrecognized $e
      * @return \WoohooLabs\Yin\JsonApi\Schema\Error
      */
     protected function getQueryParamsError(QueryParamUnrecognized $e)

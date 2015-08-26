@@ -1,7 +1,6 @@
 <?php
 namespace WoohooLabs\YinMiddlewares\Middleware;
 
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use WoohooLabs\Yin\JsonApi\Exception\ClientGeneratedIdAlreadyExists;
 use WoohooLabs\Yin\JsonApi\Exception\ClientGeneratedIdNotSupported;
@@ -13,18 +12,19 @@ use WoohooLabs\Yin\JsonApi\Exception\ResourceIdMissing;
 use WoohooLabs\Yin\JsonApi\Exception\ResourceTypeMissing;
 use WoohooLabs\Yin\JsonApi\Exception\ResourceTypeUnacceptable;
 use WoohooLabs\Yin\JsonApi\Exception\RemovalProhibited;
+use WoohooLabs\Yin\JsonApi\Request\RequestInterface;
 use WoohooLabs\Yin\JsonApi\Schema\Error;
 
 class JsonApiCatchingDispatcherMiddleware extends JsonApiDispatcherMiddleware
 {
     /**
-     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \WoohooLabs\Yin\JsonApi\Request\RequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param callable $next
      * @return void|\Psr\Http\Message\ResponseInterface
      * @throws \Exception
      */
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next)
+    public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next)
     {
         try {
             $result = parent::__invoke($request, $response, $next);

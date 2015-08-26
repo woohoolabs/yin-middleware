@@ -28,6 +28,7 @@ class JsonApiDispatcherMiddleware
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param callable $next
+     * @return void|\Psr\Http\Message\ResponseInterface
      * @throws \Exception
      */
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next)
@@ -35,7 +36,7 @@ class JsonApiDispatcherMiddleware
         $callable = $request->getAttribute("__callable");
 
         if ($callable === null) {
-            $this->getDispatchErrorDocument([$this->getDispatchError()])->getResponse($response);
+            return $this->getDispatchErrorDocument($this->getDispatchError())->getResponse($response);
         }
 
         $jsonApi = new JsonApi(new Request($request), $response);
@@ -58,22 +59,27 @@ class JsonApiDispatcherMiddleware
         $error = new Error();
         $error->setStatus(404);
         $error->setTitle("Route not found");
-        $error->setDetail("No dispatchable callable is added to the request as an attribute!");
 
         return $error;
     }
 
     /**
-     * @param array $errors
+     * @param \WoohooLabs\Yin\JsonApi\Schema\Error $error
      * @return \WoohooLabs\Yin\JsonApi\Transformer\ErrorDocument
      */
-    protected function getDispatchErrorDocument(array $errors)
+    protected function getDispatchErrorDocument(Error $error)
+    {
+        return $this->getErrorDocument($error);
+    }
+
+    /**
+     * @param \WoohooLabs\Yin\JsonApi\Schema\Error $error
+     * @return \WoohooLabs\Yin\JsonApi\Transformer\ErrorDocument
+     */
+    protected function getErrorDocument(Error $error)
     {
         $errorDocument = new ErrorDocument();
-
-        foreach ($errors as $error) {
-            $errorDocument->addError($error);
-        }
+        $errorDocument->addError($error);
 
         return $errorDocument;
     }

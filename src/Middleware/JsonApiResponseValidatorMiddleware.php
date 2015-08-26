@@ -9,12 +9,12 @@ class JsonApiResponseValidatorMiddleware extends JsonApiMessageValidator
 {
     /**
      * @param bool $includeOriginalMessageInResponse
-     * @param bool $lint
-     * @param bool $validate
+     * @param bool $lintBody
+     * @param bool $validateBody
      */
-    public function __construct($includeOriginalMessageInResponse = true, $lint = true, $validate = true)
+    public function __construct($includeOriginalMessageInResponse = true, $lintBody = true, $validateBody = true)
     {
-        parent::__construct($includeOriginalMessageInResponse, $lint, $validate);
+        parent::__construct($includeOriginalMessageInResponse, $lintBody, $validateBody);
     }
 
     /**

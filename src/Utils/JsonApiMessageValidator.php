@@ -31,14 +31,14 @@ abstract class JsonApiMessageValidator
 
     /**
      * @param bool $includeOriginalMessageInResponse
-     * @param bool $lint
-     * @param bool $validate
+     * @param bool $lintBody
+     * @param bool $validateBody
      */
-    public function __construct($includeOriginalMessageInResponse = true, $lint = true, $validate = true)
+    public function __construct($includeOriginalMessageInResponse = true, $lintBody = true, $validateBody = true)
     {
         $this->includeOriginalMessage = $includeOriginalMessageInResponse;
-        $this->lint = $lint;
-        $this->validate = $validate;
+        $this->lint = $lintBody;
+        $this->validate = $validateBody;
     }
 
     /**

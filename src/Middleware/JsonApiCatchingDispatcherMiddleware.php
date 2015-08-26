@@ -32,29 +32,45 @@ class JsonApiCatchingDispatcherMiddleware extends JsonApiDispatcherMiddleware
                 return $result;
             }
         } catch (InclusionNotSupported $e) {
-            return $this->getInclusionNotSupportedErrorDocument($this->getInclusionNotSupportedError());
+            return $this
+                ->getInclusionNotSupportedErrorDocument($this->getInclusionNotSupportedError())
+                ->getResponse($response);
         } catch (InclusionUnrecognized $e) {
-            return $this->getInclusionUnrecognizedErrorDocument($this->getInclusionUnrecognizedError($e));
+            return $this
+                ->getInclusionUnrecognizedErrorDocument($this->getInclusionUnrecognizedError($e))
+                ->getResponse($response);
         } catch (QueryParamUnrecognized $e) {
-            return $this->getQueryParamUnrecognizedErrorDocument($this->getQueryParamUnrecognizedError($e));
+            return $this
+                ->getQueryParamUnrecognizedErrorDocument($this->getQueryParamUnrecognizedError($e))
+                ->getResponse($response);
         } catch (ClientGeneratedIdNotSupported $e) {
-            return $this->getClientGeneratedIdNotSupportedErrorDocument(
-                $this->getClientGeneratedIdNotSupportedError($e)
-            );
+            return $this
+                ->getClientGeneratedIdNotSupportedErrorDocument($this->getClientGeneratedIdNotSupportedError($e))
+                ->getResponse($response);
         } catch (ClientGeneratedIdAlreadyExists $e) {
-            return $this->getClientGeneratedIdAlreadyExistsErrorDocument(
-                $this->getClientGeneratedIdAlreadyExistsError($e)
-            );
+            return $this
+                ->getClientGeneratedIdAlreadyExistsErrorDocument($this->getClientGeneratedIdAlreadyExistsError($e))
+                ->getResponse($response);
         } catch (ResourceTypeMissing $e) {
-            return $this->getResourceTypeMissingErrorDocument($this->getResourceTypeMissingError($e));
+            return $this
+                ->getResourceTypeMissingErrorDocument($this->getResourceTypeMissingError($e))
+                ->getResponse($response);
         } catch (ResourceTypeUnacceptable $e) {
-            return $this->getResourceTypeUnacceptableErrorDocument($this->getResourceTypeUnacceptableError($e));
+            return $this
+                ->getResourceTypeUnacceptableErrorDocument($this->getResourceTypeUnacceptableError($e))
+                ->getResponse($response);
         } catch (ResourceIdMissing $e) {
-            return $this->getResourceIdMissingErrorDocument($this->getResourceIdMissingError($e));
+            return $this
+                ->getResourceIdMissingErrorDocument($this->getResourceIdMissingError($e))
+                ->getResponse($response);
         } catch (FullReplacementProhibited $e) {
-            return $this->getFullReplacementProhibitedErrorDocument($this->getFullReplacementProhibitedError($e));
+            return $this
+                ->getFullReplacementProhibitedErrorDocument($this->getFullReplacementProhibitedError($e))
+                ->getResponse($response);
         } catch (RemovalProhibited $e) {
-            return $this->getRemovalProhibitedErrorDocument($this->getRemovalProhibitedError($e));
+            return $this
+                ->getRemovalProhibitedErrorDocument($this->getRemovalProhibitedError($e))
+                ->getResponse($response);
         }
 
         $next($request, $response);

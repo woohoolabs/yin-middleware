@@ -48,10 +48,9 @@ class JsonApiRequestValidatorMiddleware extends JsonApiMessageValidator
      */
     public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next)
     {
-        $response = $this->check($request, $response);
-
-        if ($response !== null) {
-            return $response;
+        $result = $this->check($request, $response);
+        if ($result !== null) {
+            return $result;
         }
 
         if ($this->checkMediaType) {

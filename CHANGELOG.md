@@ -1,4 +1,4 @@
-## 0.2.0 - Unreleased
+## 0.2.0 - 2015-08-27
 
 ADDED:
 
@@ -6,7 +6,7 @@ ADDED:
 
 CHANGED:
 
-- Woohoo Labs. Yin 0.4.0 is the minimum requirement
+- Woohoo Labs. Yin 0.4.2 is the minimum requirement
 
 FIXED:
 

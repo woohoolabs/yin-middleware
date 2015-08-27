@@ -59,9 +59,13 @@ class JsonApiRequestValidatorMiddleware extends JsonApiMessageValidator
                 $request->validateContentTypeHeader();
                 $request->validateAcceptHeader();
             } catch (MediaTypeUnsupported $e) {
-                return $this->getContentTypeHeaderErrorDocument($this->getContentTypeHeaderError($e));
+                return $this
+                    ->getContentTypeHeaderErrorDocument($this->getContentTypeHeaderError($e))
+                    ->getResponse($response);
             } catch (MediaTypeUnacceptable $e) {
-                return $this->getAcceptHeaderErrorDocument($this->getAcceptHeaderError($e));
+                return $this
+                    ->getAcceptHeaderErrorDocument($this->getAcceptHeaderError($e))
+                    ->getResponse($response);
             }
         }
 
@@ -69,7 +73,9 @@ class JsonApiRequestValidatorMiddleware extends JsonApiMessageValidator
             try {
                 $request->validateQueryParams();
             } catch (QueryParamUnrecognized $e) {
-                return $this->getQueryParamsErrorDocument($this->getQueryParamsError($e));
+                return $this
+                    ->getQueryParamsErrorDocument($this->getQueryParamsError($e))
+                    ->getResponse($response);
             }
         }
 

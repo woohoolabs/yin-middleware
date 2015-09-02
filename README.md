@@ -18,18 +18,12 @@
 
 The steps of this process are quite straightforward. The only thing you need is [Composer](http://getcomposer.org).
 
-#### Add Yin Middlewares to your composer.json:
+##### Add Yin Middlewares to your composer.json:
 
 To install this library, run the command below and you will get the latest version:
 
 ```bash
 $ composer require woohoolabs/yin-middlewares
-```
-
-#### Autoload in your bootstrap:
-
-```php
-require "vendor/autoload.php"
 ```
 
 ## Basic Usage

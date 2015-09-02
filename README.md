@@ -1,11 +1,11 @@
 # Woohoo Labs. Yin Middlewares
 
-[![Build Status](https://img.shields.io/travis/woohoolabs/yin-middlewares.svg)](https://travis-ci.org/woohoolabs/yin-middlewares)
-[![Code Coverage](https://scrutinizer-ci.com/g/woohoolabs/yin-middlewares/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/woohoolabs/yin-middlewares/?branch=master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/woohoolabs/yin-middlewares/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/woohoolabs/yin-middlewares/?branch=master)
-[![SensioLabs Insight](https://img.shields.io/sensiolabs/i/7595f075-a84c-4a62-a316-8a91568d49b4.svg)](https://insight.sensiolabs.com/projects/7595f075-a84c-4a62-a316-8a91568d49b4)
-[![Stable Release](https://img.shields.io/packagist/v/woohoolabs/yin-middlewares.svg)](https://packagist.org/packages/woohoolabs/yin-middlewares)
-[![License](https://img.shields.io/packagist/l/woohoolabs/yin-middlewares.svg)](https://packagist.org/packages/woohoolabs/yin-middlewares)
+[![Latest Version on Packagist][ico-version]][link-packagist]
+[![Software License][ico-license]](LICENSE.md)
+[![Build Status][ico-travis]][link-travis]
+[![Coverage Status][ico-scrutinizer]][link-scrutinizer]
+[![Quality Score][ico-code-quality]][link-code-quality]
+[![Total Downloads][ico-downloads]][link-downloads]
 
 **Woohoo Labs. Yin Middlewares is a collection of middlewares which helps you to integrate
 [Woohoo Labs. Yin](https://github.com/woohoolabs/yin) into your PHP applications.**
@@ -34,7 +34,38 @@ require "vendor/autoload.php"
 
 ## Basic Usage
 
+## Versioning
+
+This library follows [SemVer v2.0.0](http://semver.org/).
+
+## Change log
+
+Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
+
+## Contributing
+
+Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+
+## Credits
+
+- [Máté Kocsis][link-author]
+- [All Contributors][link-contributors]
+
 ## License
 
-The MIT License (MIT). Please see the [License File](https://github.com/woohoolabs/yin/blob/master/LICENSE.md)
-for more information.
+The MIT License (MIT). Please see the [License File](LICENSE.md) for more information.
+
+[ico-version]: https://img.shields.io/packagist/v/woohoolabs/yin-middlewares.svg
+[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg
+[ico-travis]: https://img.shields.io/travis/woohoolabs/yin-middlewares/master.svg
+[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/woohoolabs/yin-middlewares.svg
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/woohoolabs/yin-middlewares.svg
+[ico-downloads]: https://img.shields.io/packagist/dt/woohoolabs/yin-middlewares.svg
+
+[link-packagist]: https://packagist.org/packages/woohoolabs/yin-middlewares
+[link-travis]: https://travis-ci.org/woohoolabs/yin-middlewares
+[link-scrutinizer]: https://scrutinizer-ci.com/g/woohoolabs/yin-middlewares/code-structure
+[link-code-quality]: https://scrutinizer-ci.com/g/woohoolabs/yin-middlewares
+[link-downloads]: https://packagist.org/packages/woohoolabs/yin-middlewares
+[link-author]: https://github.com/kocsismate
+[link-contributors]: ../../contributors

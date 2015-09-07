@@ -26,16 +26,14 @@ class JsonApiRequestValidatorMiddleware extends JsonApiMessageValidator
      * @param bool $checkMediaType
      * @param bool $checkQueryParams
      * @param bool $lint
-     * @param bool $validate
      */
     public function __construct(
         $includeOriginalMessageInResponse = true,
         $checkMediaType = true,
         $checkQueryParams = true,
-        $lint = true,
-        $validate = true
+        $lint = true
     ) {
-        parent::__construct($includeOriginalMessageInResponse, $lint, $validate);
+        parent::__construct($includeOriginalMessageInResponse, $lint, false);
         $this->checkMediaType = $checkMediaType;
         $this->checkQueryParams = $checkQueryParams;
     }
@@ -90,20 +88,6 @@ class JsonApiRequestValidatorMiddleware extends JsonApiMessageValidator
         $error = parent::getLintError($message);
         $error->setStatus(400);
         $error->setTitle("The request body is not a valid JSON document");
-
-        return $error;
-    }
-
-    /**
-     * @param string $property
-     * @param string $message
-     * @return \WoohooLabs\Yin\JsonApi\Schema\Error
-     */
-    protected function getValidationError($property, $message)
-    {
-        $error = parent::getValidationError($property, $message);
-        $error->setStatus(400);
-        $error->setTitle("The request body is not a valid JSON API document");
 
         return $error;
     }

@@ -41,7 +41,7 @@ for [Woohoo Labs. Harmony](https://github.com/woohoolabs/harmony),
 
 #### `JsonApiRequestValidatorMiddleware`
 
-The middleware is mainly useful in a development environment, and it is capable to validate a
+The middleware is mainly useful in a development environment, and it is able to validate a
 PSR-7 request against the JSON and the JSON API schema. Just add it to your
 application (the example is for [Woohoo Labs. Harmony](https://github.com/woohoolabs/harmony)):
 
@@ -63,7 +63,7 @@ spec. In this case, the "Content-Type" and the "Accept" header is checked.
 
 #### `JsonApiResponseValidatorMiddleware`
 
-The middleware is mainly useful in a development environment, and it is capable to validate a
+The middleware is mainly useful in a development environment, and it is able to validate a
 PSR-7 response against the JSON and the JSON API schema. Just add it to your
 application (the example is for [Woohoo Labs. Harmony](https://github.com/woohoolabs/harmony)):
 
@@ -83,7 +83,7 @@ will be included in the "meta" top-level member.
 
 #### `JsonApiDispatcherMiddleware`
 
-The middleware is capable to dispatch JSON API-aware controllers. Just add it to your
+The middleware is able to dispatch JSON API-aware controllers. Just add it to your
 application (the example is for [Woohoo Labs. Harmony](https://github.com/woohoolabs/harmony)):
 
 ```php

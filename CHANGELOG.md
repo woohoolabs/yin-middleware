@@ -1,3 +1,23 @@
+## 0.4.0 - unreleased
+
+ADDED:
+
+CHANGED:
+
+FIXED:
+
+## 0.3.0 - 2015-09-23
+
+CHANGED:
+
+- Woohoo Labs. Yin 0.6.0 is the minimum requirement
+- `JsonApiCatchingDispatcherMiddleware` handles more exceptions
+
+FIXED:
+
+- `JsonApiDispatcherMiddleware` returns an error when the current route can't be found
+- Request body now doesn't get validated
+
 ## 0.2.0 - 2015-08-27
 
 ADDED:

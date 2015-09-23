@@ -49,7 +49,7 @@ application (the example is for [Woohoo Labs. Harmony](https://github.com/woohoo
 $harmony->addMiddleware("request_validator", new JsonApiRequestValidatorMiddleware());
 ```
 
-If the validation fails, the appropriate JSON API errors will be sent. If you want to customize
+If validation fails, the appropriate JSON API errors will be sent. If you want to customize
 the messages or the responses or anything else, feel free to extend the class and override its methods.
 
 Available options for the middleware (they can be set in the constructor):
@@ -71,7 +71,7 @@ application (the example is for [Woohoo Labs. Harmony](https://github.com/woohoo
 $harmony->addMiddleware("response_validator", new JsonApiResponseValidatorMiddleware());
 ```
 
-If the validation fails, the appropriate JSON API errors will be sent. If you want to customize
+If validation fails, the appropriate JSON API errors will be sent. If you want to customize
 the messages or the responses or anything else, feel free to extend the class and override its methods.
 
 Available options for the middleware (they can be set in the constructor):
@@ -91,14 +91,14 @@ $harmony->addMiddleware("json_api_dispatcher", new JsonApiDispatcherMiddleware()
 ```
 
 The middleware works exactly as [the one in Woohoo Labs. Harmony](https://github.com/woohoolabs/harmony#using-your-favourite-di-container-with-harmony),
-the only difference is that controllers signature will be:
+the only difference is that controllers' signature will be:
 
 ```php
 /**
  * @param JsonApi $jsonApi
  * @param ResponseInterface $response
  */
-public function getUsers(JsonApi $jsonApi);
+public function myController(JsonApi $jsonApi);
 ```
 
 instead of:
@@ -108,7 +108,7 @@ instead of:
  * @param ServerRequestInterface $request
  * @param ResponseInterface $response
  */
-public function getUsers(ServerRequestInterface $request, ResponseInterface $response);
+public function myController(ServerRequestInterface $request, ResponseInterface $response);
 ```
 
 The difference is subtle, as the `JsonApi` object contains a PSR-7 compatible request,

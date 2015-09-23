@@ -12,6 +12,7 @@ CHANGED:
 
 - Woohoo Labs. Yin 0.6.0 is the minimum requirement
 - `JsonApiCatchingDispatcherMiddleware` handles more exceptions
+- Updated JSON API schema
 
 FIXED:
 

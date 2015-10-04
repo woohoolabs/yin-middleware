@@ -2,11 +2,9 @@
 namespace WoohooLabs\YinMiddlewares\Middleware;
 
 use Psr\Http\Message\ResponseInterface;
-use WoohooLabs\Yin\JsonApi\Exception\MediaTypeUnacceptable;
-use WoohooLabs\Yin\JsonApi\Exception\MediaTypeUnsupported;
-use WoohooLabs\Yin\JsonApi\Exception\QueryParamUnrecognized;
+use WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface;
+use WoohooLabs\Yin\JsonApi\Negotiation\RequestValidator;
 use WoohooLabs\Yin\JsonApi\Request\RequestInterface;
-use WoohooLabs\Yin\JsonApi\Schema\Error;
 use WoohooLabs\YinMiddlewares\Utils\JsonApiMessageValidator;
 
 class JsonApiRequestValidatorMiddleware extends JsonApiMessageValidator
@@ -14,27 +12,29 @@ class JsonApiRequestValidatorMiddleware extends JsonApiMessageValidator
     /**
      * @var bool
      */
-    private $checkMediaType;
+    protected $negotiate;
 
     /**
      * @var bool
      */
-    private $checkQueryParams;
+    protected $checkQueryParams;
 
     /**
+     * @param \WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface $exceptionFactory
      * @param bool $includeOriginalMessageInResponse
-     * @param bool $checkMediaType
+     * @param bool $negotiate
      * @param bool $checkQueryParams
      * @param bool $lintBody
      */
     public function __construct(
+        ExceptionFactoryInterface $exceptionFactory,
         $includeOriginalMessageInResponse = true,
-        $checkMediaType = true,
+        $negotiate = true,
         $checkQueryParams = true,
         $lintBody = true
     ) {
-        parent::__construct($includeOriginalMessageInResponse, $lintBody, false);
-        $this->checkMediaType = $checkMediaType;
+        parent::__construct($exceptionFactory, $includeOriginalMessageInResponse, $lintBody, false);
+        $this->negotiate = $negotiate;
         $this->checkQueryParams = $checkQueryParams;
     }
 
@@ -46,115 +46,20 @@ class JsonApiRequestValidatorMiddleware extends JsonApiMessageValidator
      */
     public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next)
     {
-        $result = $this->check($request, $response);
-        if ($result !== null) {
-            return $result;
-        }
+        $validator= new RequestValidator($this->exceptionFactory, $this->includeOriginalMessageInResponse);
 
-        if ($this->checkMediaType) {
-            try {
-                $request->validateContentTypeHeader();
-                $request->validateAcceptHeader();
-            } catch (MediaTypeUnsupported $e) {
-                return $this
-                    ->getContentTypeHeaderErrorDocument($this->getContentTypeHeaderError($e))
-                    ->getResponse($response);
-            } catch (MediaTypeUnacceptable $e) {
-                return $this
-                    ->getAcceptHeaderErrorDocument($this->getAcceptHeaderError($e))
-                    ->getResponse($response);
-            }
+        if ($this->negotiate) {
+            $validator->negotiate($request);
         }
 
         if ($this->checkQueryParams) {
-            try {
-                $request->validateQueryParams();
-            } catch (QueryParamUnrecognized $e) {
-                return $this
-                    ->getQueryParamsErrorDocument($this->getQueryParamsError($e))
-                    ->getResponse($response);
-            }
+            $validator->validateQueryParams($request);
+        }
+
+        if ($this->lintBody) {
+            $validator->lintBody($request);
         }
 
         $next();
-    }
-
-    /**
-     * @param string $message
-     * @return \WoohooLabs\Yin\JsonApi\Schema\Error
-     */
-    protected function getLintError($message)
-    {
-        $error = parent::getLintError($message);
-        $error->setStatus(400);
-        $error->setTitle("The request body is not a valid JSON document");
-
-        return $error;
-    }
-
-    /**
-     * @param \WoohooLabs\Yin\JsonApi\Schema\Error $error
-     * @return \WoohooLabs\Yin\JsonApi\Transformer\ErrorDocument
-     */
-    protected function getContentTypeHeaderErrorDocument(Error $error)
-    {
-        return $this->getErrorDocument([$error]);
-    }
-
-    /**
-     * @param \WoohooLabs\Yin\JsonApi\Exception\MediaTypeUnsupported $e
-     * @return \WoohooLabs\Yin\JsonApi\Schema\Error
-     */
-    protected function getContentTypeHeaderError(MediaTypeUnsupported $e)
-    {
-        $error = new Error();
-        $error->setStatus(415);
-        $error->setTitle($e->getMessage());
-
-        return $error;
-    }
-
-    /**
-     * @param \WoohooLabs\Yin\JsonApi\Schema\Error $error
-     * @return \WoohooLabs\Yin\JsonApi\Transformer\ErrorDocument
-     */
-    protected function getAcceptHeaderErrorDocument(Error $error)
-    {
-        return $this->getErrorDocument([$error]);
-    }
-
-    /**
-     * @param \WoohooLabs\Yin\JsonApi\Exception\MediaTypeUnacceptable $e
-     * @return \WoohooLabs\Yin\JsonApi\Schema\Error
-     */
-    protected function getAcceptHeaderError(MediaTypeUnacceptable $e)
-    {
-        $error = new Error();
-        $error->setStatus(406);
-        $error->setTitle($e->getMessage());
-
-        return $error;
-    }
-
-    /**
-     * @param \WoohooLabs\Yin\JsonApi\Schema\Error $error
-     * @return \WoohooLabs\Yin\JsonApi\Transformer\ErrorDocument
-     */
-    protected function getQueryParamsErrorDocument(Error $error)
-    {
-        return $this->getErrorDocument([$error]);
-    }
-
-    /**
-     * @param \WoohooLabs\Yin\JsonApi\Exception\QueryParamUnrecognized $e
-     * @return \WoohooLabs\Yin\JsonApi\Schema\Error
-     */
-    protected function getQueryParamsError(QueryParamUnrecognized $e)
-    {
-        $error = new Error();
-        $error->setStatus(406);
-        $error->setTitle($e->getMessage());
-
-        return $error;
     }
 }

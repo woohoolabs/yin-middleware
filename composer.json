@@ -18,16 +18,14 @@
     "require": {
         "php":">=5.5.0",
         "psr/http-message": "^1.0.0",
-        "woohoolabs/yin": "^0.6.0"
+        "woohoolabs/yin": "^0.7.0"
     },
     "require-dev": {
         "phpunit/PHPUnit": "^4.4.0",
         "squizlabs/php_codesniffer": "^2.3.1"
     },
     "suggest": {
-        "container-interop/container-interop": "Allows to use the JsonApiDispatcher",
-        "justinrainbow/json-schema": "Allows to validate the request and response body against the JSON API schema",
-        "seld/jsonlint": "Allows to lint the request and response body"
+        "container-interop/container-interop": "Allows to use the JsonApiDispatcher"
     },
     "autoload": {
         "psr-4": {

@@ -3,23 +3,34 @@ namespace WoohooLabs\YinMiddlewares\Middleware;
 
 use Interop\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
+use WoohooLabs\Yin\JsonApi\Exception\ExceptionFactory;
+use WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface;
 use WoohooLabs\Yin\JsonApi\JsonApi;
 use WoohooLabs\Yin\JsonApi\Request\RequestInterface;
 use WoohooLabs\Yin\JsonApi\Schema\Error;
-use WoohooLabs\Yin\JsonApi\Transformer\ErrorDocument;
+use WoohooLabs\Yin\JsonApi\Document\ErrorDocument;
 
 class JsonApiDispatcherMiddleware
 {
+    /**
+     * @var \WoohooLabs\Yin\jsonApi\Exception\ExceptionFactoryInterface
+     */
+    private $exceptionFactory;
+
     /**
      * @var \Interop\Container\ContainerInterface
      */
     protected $container;
 
     /**
+     * @param \WoohooLabs\Yin\jsonApi\Exception\ExceptionFactoryInterface $exceptionFactory
      * @param \Interop\Container\ContainerInterface $container
      */
-    public function __construct(ContainerInterface $container = null)
-    {
+    public function __construct(
+        ExceptionFactoryInterface $exceptionFactory = null,
+        ContainerInterface $container = null
+    ) {
+        $this->exceptionFactory = $exceptionFactory !== null ? $exceptionFactory : new ExceptionFactory();
         $this->container = $container;
     }
 
@@ -38,10 +49,10 @@ class JsonApiDispatcherMiddleware
             return $this->getDispatchErrorDocument($this->getDispatchError())->getResponse($response);
         }
 
-        $jsonApi = new JsonApi($request, $response);
+        $jsonApi = new JsonApi($request, $response, $this->exceptionFactory);
 
         if (is_array($callable) && is_string($callable[0])) {
-            $object = $this->container->get($callable[0]);
+            $object = $this->container !== null ? $this->container->get($callable[0]) : new $callable[0];
             $response = $object->{$callable[1]}($jsonApi);
         } else {
             $response = call_user_func($callable, $jsonApi);
@@ -57,14 +68,14 @@ class JsonApiDispatcherMiddleware
     {
         $error = new Error();
         $error->setStatus(404);
-        $error->setTitle("Route not found");
+        $error->setTitle("Resource was not not found");
 
         return $error;
     }
 
     /**
      * @param \WoohooLabs\Yin\JsonApi\Schema\Error $error
-     * @return \WoohooLabs\Yin\JsonApi\Transformer\ErrorDocument
+     * @return \WoohooLabs\Yin\JsonApi\Document\ErrorDocument
      */
     protected function getDispatchErrorDocument(Error $error)
     {
@@ -73,7 +84,7 @@ class JsonApiDispatcherMiddleware
 
     /**
      * @param \WoohooLabs\Yin\JsonApi\Schema\Error $error
-     * @return \WoohooLabs\Yin\JsonApi\Transformer\ErrorDocument
+     * @return \WoohooLabs\Yin\JsonApi\Document\ErrorDocument
      */
     protected function getErrorDocument(Error $error)
     {

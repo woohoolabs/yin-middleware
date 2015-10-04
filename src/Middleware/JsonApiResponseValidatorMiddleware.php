@@ -1,63 +1,47 @@
 <?php
 namespace WoohooLabs\YinMiddlewares\Middleware;
 
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface;
+use WoohooLabs\Yin\JsonApi\Negotiation\ResponseValidator;
+use WoohooLabs\Yin\JsonApi\Request\RequestInterface;
 use WoohooLabs\YinMiddlewares\Utils\JsonApiMessageValidator;
 
 class JsonApiResponseValidatorMiddleware extends JsonApiMessageValidator
 {
     /**
+     * @param \WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface $exceptionFactory
      * @param bool $includeOriginalMessageInResponse
      * @param bool $lintBody
      * @param bool $validateBody
      */
-    public function __construct($includeOriginalMessageInResponse = true, $lintBody = true, $validateBody = true)
-    {
-        parent::__construct($includeOriginalMessageInResponse, $lintBody, $validateBody);
+    public function __construct(
+        ExceptionFactoryInterface $exceptionFactory,
+        $includeOriginalMessageInResponse = true,
+        $lintBody = true,
+        $validateBody = true
+    ) {
+        parent::__construct($exceptionFactory, $includeOriginalMessageInResponse, $lintBody, $validateBody);
     }
 
     /**
-     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \WoohooLabs\Yin\JsonApi\Request\RequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param callable $next
      * @return void|\Psr\Http\Message\ResponseInterface
      */
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next)
+    public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next)
     {
-        $response = $this->check($response, $response);
+        $validator= new ResponseValidator($this->exceptionFactory, $this->includeOriginalMessageInResponse);
 
-        if ($response !== null) {
-            return $response;
+        if ($this->lintBody) {
+            $validator->lintBody($response);
+        }
+
+        if ($this->validateBody) {
+            $validator->validateBody($response);
         }
 
         $next();
-    }
-
-    /**
-     * @param string $message
-     * @return \WoohooLabs\Yin\JsonApi\Schema\Error
-     */
-    protected function getLintError($message)
-    {
-        $error = parent::getLintError($message);
-        $error->setStatus(500);
-        $error->setTitle("The response body is not a valid JSON");
-
-        return $error;
-    }
-
-    /**
-     * @param string $property
-     * @param string $message
-     * @return \WoohooLabs\Yin\JsonApi\Schema\Error
-     */
-    protected function getValidationError($property, $message)
-    {
-        $error = parent::getValidationError($property, $message);
-        $error->setStatus(500);
-        $error->setTitle("The response body is not a valid JSON API document");
-
-        return $error;
     }
 }

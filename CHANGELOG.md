@@ -1,10 +1,16 @@
-## 0.4.0 - unreleased
+## 0.5.0 - unreleased
 
 ADDED:
 
 CHANGED:
 
-FIXED:
+REMOVED:
+
+## 0.4.0 - 2015-10-05
+
+CHANGED
+- `JsonApiCatchingDispatcherMiddleware` is now `JsonApiErrorHandlerMiddleware`
+- Woohoo Labs. Yin 0.7.0 is the minimum requirement
 
 ## 0.3.0 - 2015-09-23
 

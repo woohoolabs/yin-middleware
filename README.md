@@ -153,7 +153,7 @@ class MyErrorHandlerMiddleware extends JsonApiErrorHandlerMiddleware
                 return $result;
             }
         } catch (\Exception $e) {
-            return $this->exceptionFactory->createGeneralException($request);
+            return $this->exceptionFactory->createApplicationErrorException($request)->getErrorDocument()->getResponse($response);
         }
     }
 }

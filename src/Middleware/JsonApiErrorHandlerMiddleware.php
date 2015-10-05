@@ -20,8 +20,6 @@ class JsonApiErrorHandlerMiddleware
             $next();
         } catch (JsonApiException $e) {
             return $e->getErrorDocument()->getResponse($response);
-        }catch (\Exception $e) {
-            return $response;
         }
     }
 }

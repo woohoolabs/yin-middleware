@@ -2,7 +2,7 @@
 namespace WoohooLabs\YinMiddlewares\Middleware;
 
 use Psr\Http\Message\ResponseInterface;
-use WoohooLabs\Yin\JsonApi\Exception\JsonApiException;
+use WoohooLabs\Yin\JsonApi\Exception\JsonApiExceptionInterface;
 use WoohooLabs\Yin\JsonApi\Request\RequestInterface;
 
 class JsonApiErrorHandlerMiddleware
@@ -18,7 +18,7 @@ class JsonApiErrorHandlerMiddleware
     {
         try {
             $next();
-        } catch (JsonApiException $e) {
+        } catch (JsonApiExceptionInterface $e) {
             return $e->getErrorDocument()->getResponse($response);
         }
     }

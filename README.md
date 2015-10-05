@@ -54,12 +54,13 @@ the messages or the responses or anything else, feel free to extend the class an
 
 Available options for the middleware (they can be set in the constructor):
 
+- `exceptionFactory`: The [Exception Factory](https://github.com/woohoolabs/yin/#exceptions) instance to be used
 - `includeOriginalMessageInResponse`: If true, the original request will be included in the "meta"
 top-level member.
-- `checkMediaType`: If true, the middleware performs content-negotiation as specified by the JSON API
+- `negotiate`: If true, the middleware performs content-negotiation as specified by the JSON API
 spec. In this case, the "Content-Type" and the "Accept" header is checked.
-- `CheckQueryParams`: If true, query parameters are validated against the JSON API specification.
-- `lintBody`: If true, the request gets linted.
+- `checkQueryParams`: If true, query parameters are validated against the JSON API specification.
+- `lintBody`: If true, the request body gets linted.
 
 #### `JsonApiResponseValidatorMiddleware`
 
@@ -76,9 +77,10 @@ the messages or the responses or anything else, feel free to extend the class an
 
 Available options for the middleware (they can be set in the constructor):
 
+- `exceptionFactory`: The [Exception Factory](https://github.com/woohoolabs/yin/#exceptions) instance to be used
 - `includeOriginalMessageInResponse`: If true, the original response which would have been sent,
 will be included in the "meta" top-level member.
-- `lintBody`: If true, the response gets linted.
+- `lintBody`: If true, the response body gets linted.
 - `validateBody`: If true, the response is validated against the JSON API schema.
 
 #### `JsonApiDispatcherMiddleware`
@@ -115,12 +117,47 @@ The difference is subtle, as the `JsonApi` object contains a PSR-7 compatible re
 and PSR-7 responses can also be created with it. Learn more from the documentation of
 [Woohoo Labs. Yin](https://github.com/woohoolabs/yin#jsonapi-class)
 
-#### `JsonApiCatchingDispatcherMiddleware`
+#### `JsonApiErrorHandlerMiddleware`
 
-It is almost the same as the previous middleware, it only adds some exception handling functionality
-to the `JsonApiCatchingDispatcherMiddleware`. When a JSON API exception is thrown, it catches it
-and converts it to a proper JSON API error response. If you want to customize the messages or
-the responses or anything else, feel free to extend the class and override its methods.
+It catches `JsonApiException`-s and responds with the JSON API error response associated with the exception.
+If you want to catch `\Exception`-s too, you have to extend the class and wrap it like that:
+
+```php
+class MyErrorHandlerMiddleware extends JsonApiErrorHandlerMiddleware
+{
+    /**
+     * @var \WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface
+     */
+    protected $exceptionFactory;
+
+    /**
+     * @param \WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface $exceptionFactory
+     */
+    public function __construct(ExceptionFactoryInterface $exceptionFactory)
+    {
+        $this->exceptionFactory = $exceptionFactory;
+    }
+
+    /**
+     * @param \WoohooLabs\Yin\JsonApi\Request\RequestInterface $request
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param callable $next
+     * @return void|\Psr\Http\Message\ResponseInterface
+     * @throws \Exception
+     */
+    public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next)
+    {
+        try {
+            $result = parent::__invoke($request, $response, $next);
+            if ($result) {
+                return $result;
+            }
+        } catch (\Exception $e) {
+            return $this->exceptionFactory->createGeneralException($request);
+        }
+    }
+}
+```
 
 ## Versioning
 

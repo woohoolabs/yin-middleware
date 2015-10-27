@@ -10,6 +10,17 @@
 **Woohoo Labs. Yin Middlewares is a collection of middlewares which helps you to integrate
 [Woohoo Labs. Yin](https://github.com/woohoolabs/yin) into your PHP applications.**
 
+## Table of Contents
+
+* [Introduction](#introduction)
+* [Install](#install)
+* [Basic Usage](#basic-usage)
+* [Versioning](#versioning)
+* [Change Log](#change-log)
+* [Contributing](#contributing)
+* [Credits](#credits)
+* [License](#license)
+
 ## Introduction
 
 Yin. middlewares are compatible with frameworks like [Woohoo Labs. Harmony](https://github.com/woohoolabs/harmony),
@@ -167,7 +178,7 @@ class MyErrorHandlerMiddleware extends JsonApiErrorHandlerMiddleware
 
 This library follows [SemVer v2.0.0](http://semver.org/).
 
-## Change log
+## Change Log
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 

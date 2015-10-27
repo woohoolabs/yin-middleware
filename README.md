@@ -12,6 +12,10 @@
 
 ## Introduction
 
+Yin. middlewares are compatible with frameworks like [Woohoo Labs. Harmony](https://github.com/woohoolabs/harmony),
+[Zend-Stratigility](https://github.com/zendframework/zend-stratigility/), [Zend-Expressive](https://github.com/zendframework/zend-expressive/) or
+[Slim Framework 3](http://www.slimframework.com/docs/concepts/middleware.html). Read more in the [Supported middleware interface design section](https://github.com/woohoolabs/yin-middlewares#supported-middleware-interface-design).
+
 #### Features
 
 - 100% [PSR-7](http://www.php-fig.org/psr/psr-7/) compatibility
@@ -33,11 +37,11 @@ $ composer require woohoolabs/yin-middlewares
 
 #### Supported middleware interface design
 
-The interface design of our middlewares is based on the style that is advocated by
-Matthew Weier O'Phinney. That's why they are compatible with middlewares built
-for [Woohoo Labs. Harmony](https://github.com/woohoolabs/harmony),
-[Zend-Stratigility](https://github.com/zendframework/zend-stratigility) and
-[Slim Framework 3](https://github.com/slimphp/Slim).
+The interface design of our middlewares is based on the "request, response, next" style advocated
+by such prominent developers as [Matthew Weier O'Phinney](https://mwop.net/) (you can read more on the topic [in his blog post](https://mwop.net/blog/2015-01-08-on-http-middleware-and-psr-7.html)). That's why
+they are compatible with [Woohoo Labs. Harmony](https://github.com/woohoolabs/harmony),
+[Zend-Stratigility](https://github.com/zendframework/zend-stratigility/), [Zend-Expressive](https://github.com/zendframework/zend-expressive/) or
+[Slim Framework 3](http://www.slimframework.com/docs/concepts/middleware.html).
 
 #### `JsonApiRequestValidatorMiddleware`
 

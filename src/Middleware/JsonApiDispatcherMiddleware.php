@@ -55,6 +55,9 @@ class JsonApiDispatcherMiddleware
             $object = $this->container !== null ? $this->container->get($callable[0]) : new $callable[0];
             $response = $object->{$callable[1]}($jsonApi);
         } else {
+            if (!is_callable($callable)) {
+                $callable = $this->container->get($callable);
+            }
             $response = call_user_func($callable, $jsonApi);
         }
 

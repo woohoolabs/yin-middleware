@@ -23,15 +23,23 @@ class JsonApiDispatcherMiddleware
     protected $container;
 
     /**
+     * @var string
+     */
+    protected $handlerAttribute;
+
+    /**
      * @param \WoohooLabs\Yin\jsonApi\Exception\ExceptionFactoryInterface $exceptionFactory
      * @param \Interop\Container\ContainerInterface $container
+     * @param string $handlerAttribute
      */
     public function __construct(
         ExceptionFactoryInterface $exceptionFactory = null,
-        ContainerInterface $container = null
+        ContainerInterface $container = null,
+        $handlerAttribute = "__callable"
     ) {
         $this->exceptionFactory = $exceptionFactory !== null ? $exceptionFactory : new ExceptionFactory();
         $this->container = $container;
+        $this->handlerAttribute = $handlerAttribute;
     }
 
     /**
@@ -43,7 +51,7 @@ class JsonApiDispatcherMiddleware
      */
     public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next)
     {
-        $callable = $request->getAttribute("__callable");
+        $callable = $request->getAttribute($this->handlerAttribute);
 
         if ($callable === null) {
             return $this->getDispatchErrorDocument($this->getDispatchError())->getResponse($response);

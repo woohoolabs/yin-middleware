@@ -2,9 +2,17 @@
 
 ADDED:
 
+- Configuration option for `JsonApiDispatcherMiddleware` to define the request attribute name storing the route handler
+- Configuration option for `JsonApiErrorHandler` whether to catch or not `JsonApiException`-s
+
 CHANGED:
 
-REMOVED:
+- Woohoo Labs. Yin 0.8.0 is the minimum requirement
+- `JsonApiDispatcherMiddleware` can dispatch the route handler from the container when it is not a `callable` 
+
+FIXED:
+
+- PHP version constraint in composer.json
 
 ## 0.4.0 - 2015-10-05
 

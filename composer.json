@@ -18,7 +18,7 @@
     "require": {
         "php":"^5.5.0|^7.0.0",
         "psr/http-message": "^1.0.0",
-        "woohoolabs/yin": "dev-master"
+        "woohoolabs/yin": "^0.8.0"
     },
     "require-dev": {
         "phpunit/PHPUnit": "^4.4.0",

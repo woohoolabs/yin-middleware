@@ -71,11 +71,11 @@ Available options for the middleware (they can be set in the constructor):
 
 - `exceptionFactory`: The [Exception Factory](https://github.com/woohoolabs/yin/#exceptions) instance to be used
 - `includeOriginalMessageInResponse`: If true, the original request will be included in the "meta"
-top-level member.
+top-level member
 - `negotiate`: If true, the middleware performs content-negotiation as specified by the JSON API
 spec. In this case, the "Content-Type" and the "Accept" header is checked.
-- `checkQueryParams`: If true, query parameters are validated against the JSON API specification.
-- `lintBody`: If true, the request body gets linted.
+- `checkQueryParams`: If true, query parameters are validated against the JSON API specification
+- `lintBody`: If true, the request body gets linted
 
 #### `JsonApiResponseValidatorMiddleware`
 
@@ -94,9 +94,9 @@ Available options for the middleware (they can be set in the constructor):
 
 - `exceptionFactory`: The [Exception Factory](https://github.com/woohoolabs/yin/#exceptions) instance to be used
 - `includeOriginalMessageInResponse`: If true, the original response which would have been sent,
-will be included in the "meta" top-level member.
-- `lintBody`: If true, the response body gets linted.
-- `validateBody`: If true, the response is validated against the JSON API schema.
+will be included in the "meta" top-level member
+- `lintBody`: If true, the response body gets linted
+- `validateBody`: If true, the response is validated against the JSON API schema
 
 #### `JsonApiDispatcherMiddleware`
 
@@ -135,6 +135,10 @@ and PSR-7 responses can also be created with it. Learn more from the documentati
 #### `JsonApiErrorHandlerMiddleware`
 
 It catches `JsonApiException`-s and responds with the JSON API error response associated with the exception.
+Available options for the middleware (they can be set in the constructor):
+
+- `isCatching`: If false, the middleware won't catch `JsonApiException`-s
+
 If you want to catch `\Exception`-s too, you have to extend the class and wrap it like that:
 
 ```php

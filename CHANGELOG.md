@@ -1,4 +1,14 @@
-## 0.5.0 - unreleased
+## 0.6.0 - unreleased
+
+ADDED:
+
+CHANGED:
+
+REMOVED:
+
+FIXED:
+
+## 0.5.0 - 2015-11-18
 
 ADDED:
 
@@ -8,7 +18,7 @@ ADDED:
 CHANGED:
 
 - Woohoo Labs. Yin 0.8.0 is the minimum requirement
-- `JsonApiDispatcherMiddleware` can dispatch the route handler from the container when it is not a `callable` 
+- `JsonApiDispatcherMiddleware` dispatches the route handler from the container when it is not a `callable` 
 
 FIXED:
 

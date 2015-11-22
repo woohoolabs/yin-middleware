@@ -1,6 +1,7 @@
 <?php
 namespace WoohooLabs\YinMiddlewares\Middleware;
 
+use Exception;
 use Psr\Http\Message\ResponseInterface;
 use WoohooLabs\Yin\JsonApi\Exception\JsonApiExceptionInterface;
 use WoohooLabs\Yin\JsonApi\Request\RequestInterface;
@@ -13,11 +14,17 @@ class JsonApiErrorHandlerMiddleware
     protected $isCatching;
 
     /**
-     * @param bool $isCatching
+     * @var bool
      */
-    public function __construct($isCatching = true)
+    protected $verbose;
+
+    /**
+     * @param bool $catching
+     * @param bool $verbose
+     */
+    public function __construct($catching = true, $verbose = false)
     {
-        $this->isCatching = $isCatching;
+        $this->isCatching = $catching;
     }
 
     /**
@@ -32,8 +39,21 @@ class JsonApiErrorHandlerMiddleware
         if ($this->isCatching === true) {
             try {
                 $next();
-            } catch (JsonApiExceptionInterface $e) {
-                return $e->getErrorDocument()->getResponse($response);
+            } catch (JsonApiExceptionInterface $exception) {
+                $errorDocument = $exception->getErrorDocument();
+                if ($this->verbose === true) {
+                    $additionalMeta = [
+                        "code" => $exception->getCode(),
+                        "message" => $exception->getMessage(),
+                        "file" => $exception->getFile(),
+                        "line" => $exception->getLine(),
+                        "trace" => $exception->getTrace()
+                    ];
+                } else {
+                    $additionalMeta = [];
+                }
+
+                return $exception->getErrorDocument()->getResponse($response, null, $additionalMeta);
             }
         } else {
             $next();

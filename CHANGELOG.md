@@ -2,6 +2,8 @@
 
 ADDED:
 
+- Configuration option for `JsonApiErrorHandlerMiddleware` to provide meta information about the exception thrown
+
 CHANGED:
 
 REMOVED:

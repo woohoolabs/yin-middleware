@@ -1,7 +1,6 @@
 <?php
 namespace WoohooLabs\YinMiddlewares\Middleware;
 
-use Exception;
 use Psr\Http\Message\ResponseInterface;
 use WoohooLabs\Yin\JsonApi\Exception\JsonApiExceptionInterface;
 use WoohooLabs\Yin\JsonApi\Request\RequestInterface;
@@ -25,6 +24,7 @@ class JsonApiErrorHandlerMiddleware
     public function __construct($catching = true, $verbose = false)
     {
         $this->isCatching = $catching;
+        $this->verbose = $verbose;
     }
 
     /**
@@ -40,7 +40,6 @@ class JsonApiErrorHandlerMiddleware
             try {
                 $next();
             } catch (JsonApiExceptionInterface $exception) {
-                $errorDocument = $exception->getErrorDocument();
                 if ($this->verbose === true) {
                     $additionalMeta = [
                         "code" => $exception->getCode(),

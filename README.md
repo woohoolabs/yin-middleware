@@ -166,9 +166,12 @@ class MyErrorHandlerMiddleware extends JsonApiErrorHandlerMiddleware
 
     /**
      * @param \WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface $exceptionFactory
+     * @param bool $catching
+     * @param bool $verbose
      */
-    public function __construct(ExceptionFactoryInterface $exceptionFactory)
+    public function __construct(ExceptionFactoryInterface $exceptionFactory, $catching = true, $verbose = false)
     {
+        parent::__construct($catching, $verbose);
         $this->exceptionFactory = $exceptionFactory;
     }
 

@@ -1,4 +1,4 @@
-## 0.6.0 - unreleased
+## 0.7.0 - unreleased
 
 ADDED:
 
@@ -7,6 +7,12 @@ CHANGED:
 REMOVED:
 
 FIXED:
+
+## 0.6.0 - 2016-01-16
+
+CHANGED:
+
+- The library now requires Yin 0.10.0
 
 ## 0.5.1 - 2015-11-26
 

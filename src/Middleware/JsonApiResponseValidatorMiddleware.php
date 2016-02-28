@@ -32,7 +32,7 @@ class JsonApiResponseValidatorMiddleware extends JsonApiMessageValidator
      */
     public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next)
     {
-        $validator= new ResponseValidator($this->exceptionFactory, $this->includeOriginalMessageInResponse);
+        $validator = new ResponseValidator($this->exceptionFactory, $this->includeOriginalMessageInResponse);
 
         if ($this->lintBody) {
             $validator->lintBody($response);
@@ -42,6 +42,6 @@ class JsonApiResponseValidatorMiddleware extends JsonApiMessageValidator
             $validator->validateBody($response);
         }
 
-        $next();
+        return $next();
     }
 }

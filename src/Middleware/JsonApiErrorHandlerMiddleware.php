@@ -39,14 +39,14 @@ class JsonApiErrorHandlerMiddleware
     {
         if ($this->isCatching === true) {
             try {
-                $next();
+                return $next();
             } catch (JsonApiExceptionInterface $exception) {
                 $additionalMeta = $this->verbose === true ? $this->getExceptionMeta($exception) : [];
                 return $exception->getErrorDocument()->getResponse($response, null, $additionalMeta);
             }
-        } else {
-            $next();
         }
+
+        return $next();
     }
 
     /**

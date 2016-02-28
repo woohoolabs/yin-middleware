@@ -4,6 +4,8 @@ ADDED:
 
 CHANGED:
 
+- Return a Response object for all the middlewares
+
 REMOVED:
 
 FIXED:

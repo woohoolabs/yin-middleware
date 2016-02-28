@@ -69,7 +69,7 @@ class JsonApiDispatcherMiddleware
             $response = call_user_func($callable, $jsonApi);
         }
 
-        $next($request, $response);
+        return $next($request, $response);
     }
 
     /**

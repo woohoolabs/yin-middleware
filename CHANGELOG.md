@@ -1,14 +1,18 @@
-## 0.7.0 - unreleased
+## 0.8.0 - unreleased
 
 ADDED:
 
 CHANGED:
 
-- Return a Response object for all the middlewares
-
 REMOVED:
 
 FIXED:
+
+## 0.7.0 - 2016-02-28
+
+CHANGED:
+
+- Return a Response object for all the middlewares
 
 ## 0.6.0 - 2016-01-16
 

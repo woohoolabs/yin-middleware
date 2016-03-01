@@ -54,7 +54,7 @@ class JsonApiDispatcherMiddleware
         $callable = $request->getAttribute($this->handlerAttribute);
 
         if ($callable === null) {
-            return $this->getDispatchErrorDocument($this->getDispatchError())->getResponse($response);
+            return $this->getDispatchErrorResponse($response);
         }
 
         $jsonApi = new JsonApi($request, $response, $this->exceptionFactory);
@@ -73,6 +73,15 @@ class JsonApiDispatcherMiddleware
     }
 
     /**
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @return \Psr\Http\Message\ResponseInterface $response
+     */
+    protected function getDispatchErrorResponse(ResponseInterface $response)
+    {
+        return $this->getErrorDocument($this->getDispatchError())->getResponse($response);
+    }
+
+    /**
      * @return \WoohooLabs\Yin\JsonApi\Schema\Error
      */
     protected function getDispatchError()
@@ -82,15 +91,6 @@ class JsonApiDispatcherMiddleware
         $error->setTitle("Resource was not not found!");
 
         return $error;
-    }
-
-    /**
-     * @param \WoohooLabs\Yin\JsonApi\Schema\Error $error
-     * @return \WoohooLabs\Yin\JsonApi\Document\ErrorDocument
-     */
-    protected function getDispatchErrorDocument(Error $error)
-    {
-        return $this->getErrorDocument($error);
     }
 
     /**

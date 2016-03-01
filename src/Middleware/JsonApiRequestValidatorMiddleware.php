@@ -60,6 +60,6 @@ class JsonApiRequestValidatorMiddleware extends JsonApiMessageValidator
             $validator->lintBody($request);
         }
 
-        return $next();
+        return $next($request, $response);
     }
 }

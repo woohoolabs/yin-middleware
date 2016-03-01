@@ -42,6 +42,6 @@ class JsonApiResponseValidatorMiddleware extends JsonApiMessageValidator
             $validator->validateBody($response);
         }
 
-        return $next();
+        return $next($request, $response);
     }
 }

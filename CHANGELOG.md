@@ -8,6 +8,14 @@ REMOVED:
 
 FIXED:
 
+## 0.7.1 - unreleased
+
+CHANGED:
+
+- Improved compatibility for other middleware dispatchers
+
+FIXED:
+
 ## 0.7.0 - 2016-02-28
 
 CHANGED:

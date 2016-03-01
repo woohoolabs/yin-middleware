@@ -79,7 +79,7 @@ class JsonApiDispatcherMiddleware
     {
         $error = new Error();
         $error->setStatus(404);
-        $error->setTitle("Resource was not not found");
+        $error->setTitle("Resource was not not found!");
 
         return $error;
     }

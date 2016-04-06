@@ -5,6 +5,7 @@ language: php
 cache:
   directories:
     - $HOME/.composer/cache
+    - vendor
 
 matrix:
   fast_finish: true
@@ -18,16 +19,19 @@ matrix:
     - php: 7
     - php: hhvm
 
+notifications:
+  email: true
+
 before_install:
   - if [[ $EXECUTE_COVERAGE != 'true' ]]; then phpenv config-rm xdebug.ini || return 0 ; fi
-  - if [[ $EXECUTE_COVERAGE == 'true' ]]; then composer require --no-update satooshi/php-coveralls:dev-master ; fi
-  - composer require container-interop/container-interop
-  - composer require justinrainbow/json-schema
-  - composer require seld/jsonlint
   - composer self-update
+  - if [[ $EXECUTE_COVERAGE == 'true' ]]; then composer require --no-update satooshi/php-coveralls:dev-master ; fi
+  - composer require --no-interaction container-interop/container-interop
+  - composer require --no-interaction justinrainbow/json-schema
+  - composer require --no-interaction seld/jsonlint
 
 install:
-  - travis_retry composer install --no-interaction --ignore-platform-reqs
+  - travis_retry composer install --no-interaction
 
 script:
   - if [[ $EXECUTE_COVERAGE == 'true' ]]; then ./vendor/bin/phpunit --coverage-clover coverage.clover ; fi

@@ -2,6 +2,8 @@
 
 ADDED:
 
+- Support or PHPUnit 5.0
+
 CHANGED:
 
 REMOVED:

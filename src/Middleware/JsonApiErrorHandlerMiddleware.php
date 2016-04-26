@@ -4,7 +4,7 @@ namespace WoohooLabs\YinMiddlewares\Middleware;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
 use WoohooLabs\Yin\JsonApi\Exception\JsonApiExceptionInterface;
-use WoohooLabs\Yin\JsonApi\Request\ServerRequestInterface;
+use WoohooLabs\Yin\JsonApi\Request\RequestInterface;
 
 class JsonApiErrorHandlerMiddleware
 {
@@ -29,13 +29,13 @@ class JsonApiErrorHandlerMiddleware
     }
 
     /**
-     * @param \WoohooLabs\Yin\JsonApi\Request\ServerRequestInterface $request
+     * @param \WoohooLabs\Yin\JsonApi\Request\RequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param callable $next
      * @return void|\Psr\Http\Message\ResponseInterface
      * @throws \Exception
      */
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next)
+    public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next)
     {
         if ($this->isCatching === true) {
             try {

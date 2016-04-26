@@ -6,7 +6,7 @@ use Psr\Http\Message\ResponseInterface;
 use WoohooLabs\Yin\JsonApi\Exception\ExceptionFactory;
 use WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface;
 use WoohooLabs\Yin\JsonApi\JsonApi;
-use WoohooLabs\Yin\JsonApi\Request\RequestInterface;
+use WoohooLabs\Yin\JsonApi\Request\ServerRequestInterface;
 use WoohooLabs\Yin\JsonApi\Schema\Error;
 use WoohooLabs\Yin\JsonApi\Document\ErrorDocument;
 
@@ -43,13 +43,13 @@ class JsonApiDispatcherMiddleware
     }
 
     /**
-     * @param \WoohooLabs\Yin\JsonApi\Request\RequestInterface $request
+     * @param \WoohooLabs\Yin\JsonApi\Request\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param callable $next
      * @return void|\Psr\Http\Message\ResponseInterface
      * @throws \Exception
      */
-    public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next)
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next)
     {
         $callable = $request->getAttribute($this->handlerAttribute);
 

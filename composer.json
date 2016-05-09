@@ -17,18 +17,21 @@
     },
     "require": {
         "php":"^5.5.0||^7.0.0",
-        "psr/http-message": "^1.0.0",
-        "woohoolabs/yin": "^0.10.0"
+        "psr/http-message-implementation": "^1.0.0",
+        "woohoolabs/yin": "^0.11.0 as dev-master"
     },
     "require-dev": {
         "container-interop/container-interop": "^1.0.0",
-        "justinrainbow/json-schema": "^1.5.0",
+        "justinrainbow/json-schema": "^2.0.0",
         "phpunit/phpunit": "^4.4.0||^5.0.0",
-        "seld/jsonlint": "^1.3.0",
-        "squizlabs/php_codesniffer": "^2.3.1"
+        "seld/jsonlint": "^1.4.0",
+        "squizlabs/php_codesniffer": "^2.3.1",
+        "zendframework/zend-diactoros": "^1.3.0"
     },
     "suggest": {
-        "container-interop/container-interop": "Allows to use the JsonApiDispatcher"
+        "container-interop/container-interop": "Allows to use the JsonApiDispatcher",
+        "justinrainbow/json-schema": "Allows to validate the request and response body against the JSON API schema",
+        "seld/jsonlint": "Allows to lint the request and response body"
     },
     "autoload": {
         "psr-4": {

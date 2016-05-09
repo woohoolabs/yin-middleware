@@ -2,9 +2,11 @@
 
 ADDED:
 
-- Support or PHPUnit 5.0
+- Support for PHPUnit 5.0
 
 CHANGED:
+
+- The library now requires Yin 0.11.0
 
 REMOVED:
 

@@ -1,8 +1,8 @@
 {
-    "name": "woohoolabs/yin-middlewares",
+    "name": "woohoolabs/yin-middleware",
     "description": "Woohoo Labs. Yin Middlewares",
     "type": "library",
-    "keywords": ["Woohoo Labs.", "Yin", "Middlewares", "HATEOAS", "JSON API", "PSR-7"],
+    "keywords": ["Woohoo Labs.", "Yin", "Middleware", "HATEOAS", "JSON API", "PSR-7"],
     "homepage": "http://yin.woohoolabs.com",
     "license": "MIT",
     "authors": [
@@ -12,8 +12,8 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/woohoolabs/yin-middlewares/issues",
-        "source": "https://github.com/woohoolabs/yin-middlewares"
+        "issues": "https://github.com/woohoolabs/yin-middleware/issues",
+        "source": "https://github.com/woohoolabs/yin-middleware"
     },
     "require": {
         "php":"^5.5.0||^7.0.0",
@@ -35,12 +35,15 @@
     },
     "autoload": {
         "psr-4": {
-            "WoohooLabs\\YinMiddlewares\\": "src/"
+            "WoohooLabs\\YinMiddleware\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "WoohooLabsTest\\YinMiddlewares\\": "tests/"
+            "WoohooLabsTest\\YinMiddleware\\": "tests/"
         }
+    },
+    "replace": {
+        "woohoolabs/yin-middlewares": "self.version"
     }
 }

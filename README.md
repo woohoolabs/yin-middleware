@@ -1,4 +1,4 @@
-# Woohoo Labs. Yin Middlewares
+# Woohoo Labs. Yin Middleware
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
@@ -7,7 +7,7 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-**Woohoo Labs. Yin Middlewares is a collection of middlewares which helps you to integrate
+**Woohoo Labs. Yin Middleware is a collection of middleware which helps you to integrate
 [Woohoo Labs. Yin](https://github.com/woohoolabs/yin) into your PHP applications.**
 
 ## Table of Contents
@@ -23,10 +23,10 @@
 
 ## Introduction
 
-Yin. middlewares are compatible with frameworks like [Woohoo Labs. Harmony](https://github.com/woohoolabs/harmony),
+Yin. middleware are compatible with frameworks like [Woohoo Labs. Harmony](https://github.com/woohoolabs/harmony),
 [Zend-Stratigility](https://github.com/zendframework/zend-stratigility/), [Zend-Expressive](https://github.com/zendframework/zend-expressive/) or
 [Slim Framework 3](http://www.slimframework.com/docs/concepts/middleware.html). Read more in the
-[Supported middleware interface design section](https://github.com/woohoolabs/yin-middlewares#supported-middleware-interface-design).
+[Supported middleware interface design section](#supported-middleware-interface-design).
 
 #### Features
 
@@ -42,21 +42,21 @@ You need [Composer](https://getcomposer.org) to install this library. Run the co
 version:
 
 ```bash
-$ composer require woohoolabs/yin-middlewares
+$ composer require woohoolabs/yin-middleware
 ```
 
 ## Basic Usage
 
 #### Supported middleware interface design
 
-The interface design of our middlewares is based on the "request, response, next" style advocated
+The interface design of our middleware is based on the "request, response, next" style advocated
 by such prominent developers as [Matthew Weier O'Phinney](https://mwop.net/) (you can read more on the
 topic [in his blog post](https://mwop.net/blog/2015-01-08-on-http-middleware-and-psr-7.html)). That's why
-our middlewares are compatible with [Woohoo Labs. Harmony](https://github.com/woohoolabs/harmony),
+our middleware are compatible with [Woohoo Labs. Harmony](https://github.com/woohoolabs/harmony),
 [Zend-Stratigility](https://github.com/zendframework/zend-stratigility/), [Zend-Expressive](https://github.com/zendframework/zend-expressive/) or
 [Slim Framework 3](http://www.slimframework.com/docs/concepts/middleware.html).
 
-The following sections will guide you through how to use and configure the provided middlewares.
+The following sections will guide you through how to use and configure the provided middleware.
 
 #### JsonApiRequestValidatorMiddleware
 
@@ -217,17 +217,17 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 The MIT License (MIT). Please see the [License File](LICENSE.md) for more information.
 
-[ico-version]: https://img.shields.io/packagist/v/woohoolabs/yin-middlewares.svg
+[ico-version]: https://img.shields.io/packagist/v/woohoolabs/yin-middleware.svg
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg
-[ico-travis]: https://img.shields.io/travis/woohoolabs/yin-middlewares/master.svg
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/woohoolabs/yin-middlewares.svg
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/woohoolabs/yin-middlewares.svg
-[ico-downloads]: https://img.shields.io/packagist/dt/woohoolabs/yin-middlewares.svg
+[ico-travis]: https://img.shields.io/travis/woohoolabs/yin-middleware/master.svg
+[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/woohoolabs/yin-middleware.svg
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/woohoolabs/yin-middleware.svg
+[ico-downloads]: https://img.shields.io/packagist/dt/woohoolabs/yin-middleware.svg
 
-[link-packagist]: https://packagist.org/packages/woohoolabs/yin-middlewares
-[link-travis]: https://travis-ci.org/woohoolabs/yin-middlewares
-[link-scrutinizer]: https://scrutinizer-ci.com/g/woohoolabs/yin-middlewares/code-structure
-[link-code-quality]: https://scrutinizer-ci.com/g/woohoolabs/yin-middlewares
-[link-downloads]: https://packagist.org/packages/woohoolabs/yin-middlewares
+[link-packagist]: https://packagist.org/packages/woohoolabs/yin-middleware
+[link-travis]: https://travis-ci.org/woohoolabs/yin-middleware
+[link-scrutinizer]: https://scrutinizer-ci.com/g/woohoolabs/yin-middleware/code-structure
+[link-code-quality]: https://scrutinizer-ci.com/g/woohoolabs/yin-middleware
+[link-downloads]: https://packagist.org/packages/woohoolabs/yin-middleware
 [link-author]: https://github.com/kocsismate
 [link-contributors]: ../../contributors

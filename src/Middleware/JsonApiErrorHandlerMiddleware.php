@@ -1,5 +1,5 @@
 <?php
-namespace WoohooLabs\YinMiddlewares\Middleware;
+namespace WoohooLabs\YinMiddleware\Middleware;
 
 use Exception;
 use Psr\Http\Message\ResponseInterface;

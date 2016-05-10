@@ -1,11 +1,11 @@
 <?php
-namespace WoohooLabs\YinMiddlewares\Middleware;
+namespace WoohooLabs\YinMiddleware\Middleware;
 
 use Psr\Http\Message\ResponseInterface;
 use WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface;
 use WoohooLabs\Yin\JsonApi\Negotiation\ResponseValidator;
 use WoohooLabs\Yin\JsonApi\Request\RequestInterface;
-use WoohooLabs\YinMiddlewares\Utils\JsonApiMessageValidator;
+use WoohooLabs\YinMiddleware\Utils\JsonApiMessageValidator;
 
 class JsonApiResponseValidatorMiddleware extends JsonApiMessageValidator
 {

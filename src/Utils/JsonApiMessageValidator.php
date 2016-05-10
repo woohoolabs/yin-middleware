@@ -1,5 +1,5 @@
 <?php
-namespace WoohooLabs\YinMiddlewares\Utils;
+namespace WoohooLabs\YinMiddleware\Utils;
 
 use WoohooLabs\Yin\JsonApi\Exception\ExceptionFactory;
 use WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface;

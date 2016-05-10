@@ -6,6 +6,7 @@ ADDED:
 
 CHANGED:
 
+- Renamed project to Yin-Middleware
 - The library now requires Yin 0.11.0
 
 REMOVED:
@@ -22,7 +23,7 @@ CHANGED:
 
 CHANGED:
 
-- Return a Response object for all the middlewares
+- Return a Response object for all middleware
 
 ## 0.6.0 - 2016-01-16
 

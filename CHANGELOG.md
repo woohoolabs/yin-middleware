@@ -8,6 +8,7 @@ CHANGED:
 
 - Renamed project to Yin-Middleware
 - The library now requires Yin 0.11.0
+- Improved Travis config
 
 REMOVED:
 

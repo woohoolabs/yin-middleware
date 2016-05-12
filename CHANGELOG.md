@@ -18,7 +18,7 @@ FIXED:
 
 CHANGED:
 
-- Improved compatibility for other middleware dispatchers
+- Improved compatibility with other middleware dispatchers
 
 ## 0.7.0 - 2016-02-28
 

@@ -3,12 +3,12 @@ namespace WoohooLabs\YinMiddleware\Middleware;
 
 use Interop\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
+use WoohooLabs\Yin\JsonApi\Document\ErrorDocument;
 use WoohooLabs\Yin\JsonApi\Exception\ExceptionFactory;
 use WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface;
 use WoohooLabs\Yin\JsonApi\JsonApi;
 use WoohooLabs\Yin\JsonApi\Request\RequestInterface;
 use WoohooLabs\Yin\JsonApi\Schema\Error;
-use WoohooLabs\Yin\JsonApi\Document\ErrorDocument;
 
 class JsonApiDispatcherMiddleware
 {

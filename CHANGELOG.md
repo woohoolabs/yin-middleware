@@ -3,6 +3,7 @@
 ADDED:
 
 - Support for PHPUnit 5.0
+- Support for PHP 7 exception handling
 
 CHANGED:
 

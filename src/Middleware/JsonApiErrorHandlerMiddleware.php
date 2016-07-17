@@ -53,7 +53,7 @@ class JsonApiErrorHandlerMiddleware
      * @param \Exception $exception
      * @return array
      */
-    protected function getExceptionMeta(Exception $exception)
+    protected function getExceptionMeta($exception)
     {
         return [
             "code" => $exception->getCode(),

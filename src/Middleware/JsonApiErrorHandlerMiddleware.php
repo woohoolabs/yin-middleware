@@ -1,7 +1,6 @@
 <?php
 namespace WoohooLabs\YinMiddleware\Middleware;
 
-use Exception;
 use Psr\Http\Message\ResponseInterface;
 use WoohooLabs\Yin\JsonApi\Exception\JsonApiExceptionInterface;
 use WoohooLabs\Yin\JsonApi\Request\RequestInterface;

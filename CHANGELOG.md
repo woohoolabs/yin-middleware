@@ -21,10 +21,6 @@ CHANGED:
 - The library now requires Yin 0.11.0
 - Improved Travis config
 
-REMOVED:
-
-FIXED:
-
 ## 0.7.1 - 2016-03-01
 
 CHANGED:

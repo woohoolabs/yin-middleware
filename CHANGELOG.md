@@ -8,13 +8,7 @@ REMOVED:
 
 FIXED:
 
-## 0.8.1 - 2016-08-22
-
-FIXED:
-
-- The library now really requires Yin 0.11.0
-
-## 0.8.0 - 2016-07-17
+## 0.8.0 - 2016-08-22
 
 ADDED:
 

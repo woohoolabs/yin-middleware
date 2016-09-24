@@ -38,7 +38,7 @@ abstract class JsonApiMessageValidator
         $lintBody,
         $validateBody
     ) {
-        $this->exceptionFactory = $exceptionFactory === null ? new ExceptionFactory() : $exceptionFactory;
+        $this->exceptionFactory = $exceptionFactory;
         $this->includeOriginalMessageInResponse = $includeOriginalMessageInResponse;
         $this->lintBody = $lintBody;
         $this->validateBody = $validateBody;

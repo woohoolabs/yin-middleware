@@ -4,7 +4,6 @@ namespace WoohooLabs\YinMiddleware\Middleware;
 use Interop\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use WoohooLabs\Yin\JsonApi\Document\ErrorDocument;
-use WoohooLabs\Yin\JsonApi\Exception\ExceptionFactory;
 use WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface;
 use WoohooLabs\Yin\JsonApi\JsonApi;
 use WoohooLabs\Yin\JsonApi\Request\RequestInterface;
@@ -37,7 +36,7 @@ class JsonApiDispatcherMiddleware
         ContainerInterface $container = null,
         $handlerAttribute = "__callable"
     ) {
-        $this->exceptionFactory = $exceptionFactory !== null ? $exceptionFactory : new ExceptionFactory();
+        $this->exceptionFactory = $exceptionFactory;
         $this->container = $container;
         $this->handlerAttribute = $handlerAttribute;
     }

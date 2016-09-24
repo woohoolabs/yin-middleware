@@ -1,6 +1,8 @@
-## 0.9.0 - unreleased
+## 1.0.0 - unreleased
 
 ADDED:
+
+- Support for Yin 1.0.0
 
 CHANGED:
 

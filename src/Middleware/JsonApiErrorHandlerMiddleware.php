@@ -4,6 +4,8 @@ namespace WoohooLabs\YinMiddleware\Middleware;
 use Psr\Http\Message\ResponseInterface;
 use WoohooLabs\Yin\JsonApi\Exception\JsonApiExceptionInterface;
 use WoohooLabs\Yin\JsonApi\Request\RequestInterface;
+use WoohooLabs\Yin\JsonApi\Serializer\DefaultSerializer;
+use WoohooLabs\Yin\JsonApi\Serializer\SerializerInterface;
 
 class JsonApiErrorHandlerMiddleware
 {
@@ -18,13 +20,20 @@ class JsonApiErrorHandlerMiddleware
     protected $verbose;
 
     /**
+     * @var SerializerInterface
+     */
+    protected $serializer;
+
+    /**
      * @param bool $catching
      * @param bool $verbose
+     * @param SerializerInterface $serializer
      */
-    public function __construct($catching = true, $verbose = false)
+    public function __construct($catching = true, $verbose = false, SerializerInterface $serializer = null)
     {
         $this->isCatching = $catching;
         $this->verbose = $verbose;
+        $this->serializer = $serializer !== null ? $serializer : new DefaultSerializer();
     }
 
     /**
@@ -41,7 +50,7 @@ class JsonApiErrorHandlerMiddleware
                 return $next($request, $response);
             } catch (JsonApiExceptionInterface $exception) {
                 $additionalMeta = $this->verbose === true ? $this->getExceptionMeta($exception) : [];
-                return $exception->getErrorDocument()->getResponse($response, null, $additionalMeta);
+                return $exception->getErrorDocument()->getResponse($this->serializer, $response, null, $additionalMeta);
             }
         }
 

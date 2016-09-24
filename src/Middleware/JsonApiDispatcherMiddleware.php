@@ -8,6 +8,7 @@ use WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface;
 use WoohooLabs\Yin\JsonApi\JsonApi;
 use WoohooLabs\Yin\JsonApi\Request\RequestInterface;
 use WoohooLabs\Yin\JsonApi\Schema\Error;
+use WoohooLabs\Yin\JsonApi\Serializer\SerializerInterface;
 
 class JsonApiDispatcherMiddleware
 {
@@ -22,6 +23,11 @@ class JsonApiDispatcherMiddleware
     protected $container;
 
     /**
+     * @var SerializerInterface
+     */
+    protected $serializer;
+
+    /**
      * @var string
      */
     protected $handlerAttribute;
@@ -29,15 +35,18 @@ class JsonApiDispatcherMiddleware
     /**
      * @param \WoohooLabs\Yin\jsonApi\Exception\ExceptionFactoryInterface $exceptionFactory
      * @param \Interop\Container\ContainerInterface $container
+     * @param SerializerInterface $serializer
      * @param string $handlerAttribute
      */
     public function __construct(
-        ExceptionFactoryInterface $exceptionFactory = null,
         ContainerInterface $container = null,
+        ExceptionFactoryInterface $exceptionFactory = null,
+        SerializerInterface $serializer = null,
         $handlerAttribute = "__callable"
     ) {
-        $this->exceptionFactory = $exceptionFactory;
         $this->container = $container;
+        $this->exceptionFactory = $exceptionFactory;
+        $this->serializer = $serializer;
         $this->handlerAttribute = $handlerAttribute;
     }
 
@@ -77,7 +86,7 @@ class JsonApiDispatcherMiddleware
      */
     protected function getDispatchErrorResponse(ResponseInterface $response)
     {
-        return $this->getErrorDocument($this->getDispatchError())->getResponse($response);
+        return $this->getErrorDocument($this->getDispatchError())->getResponse($this->serializer, $response);
     }
 
     /**

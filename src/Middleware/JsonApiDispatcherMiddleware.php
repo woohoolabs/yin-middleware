@@ -23,7 +23,7 @@ class JsonApiDispatcherMiddleware
     protected $container;
 
     /**
-     * @var SerializerInterface
+     * @var SerializerInterface|null
      */
     protected $serializer;
 
@@ -35,7 +35,7 @@ class JsonApiDispatcherMiddleware
     /**
      * @param \WoohooLabs\Yin\jsonApi\Exception\ExceptionFactoryInterface $exceptionFactory
      * @param \Interop\Container\ContainerInterface $container
-     * @param SerializerInterface $serializer
+     * @param SerializerInterface $serializer|null
      * @param string $handlerAttribute
      */
     public function __construct(
@@ -65,7 +65,7 @@ class JsonApiDispatcherMiddleware
             return $this->getDispatchErrorResponse($response);
         }
 
-        $jsonApi = new JsonApi($request, $response, $this->exceptionFactory);
+        $jsonApi = new JsonApi($request, $response, $this->exceptionFactory, $this->serializer);
 
         if (is_array($callable) && is_string($callable[0])) {
             $object = $this->container !== null ? $this->container->get($callable[0]) : new $callable[0];

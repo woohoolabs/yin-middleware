@@ -8,6 +8,7 @@ use WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface;
 use WoohooLabs\Yin\JsonApi\JsonApi;
 use WoohooLabs\Yin\JsonApi\Request\RequestInterface;
 use WoohooLabs\Yin\JsonApi\Schema\Error;
+use WoohooLabs\Yin\JsonApi\Serializer\DefaultSerializer;
 use WoohooLabs\Yin\JsonApi\Serializer\SerializerInterface;
 
 class JsonApiDispatcherMiddleware
@@ -23,7 +24,7 @@ class JsonApiDispatcherMiddleware
     protected $container;
 
     /**
-     * @var SerializerInterface|null
+     * @var SerializerInterface
      */
     protected $serializer;
 
@@ -35,7 +36,7 @@ class JsonApiDispatcherMiddleware
     /**
      * @param \WoohooLabs\Yin\jsonApi\Exception\ExceptionFactoryInterface $exceptionFactory
      * @param \Interop\Container\ContainerInterface $container
-     * @param SerializerInterface $serializer|null
+     * @param SerializerInterface|null $serializer
      * @param string $handlerAttribute
      */
     public function __construct(
@@ -46,7 +47,7 @@ class JsonApiDispatcherMiddleware
     ) {
         $this->container = $container;
         $this->exceptionFactory = $exceptionFactory;
-        $this->serializer = $serializer;
+        $this->serializer = $serializer ? $serializer : new DefaultSerializer();
         $this->handlerAttribute = $handlerAttribute;
     }
 

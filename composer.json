@@ -16,13 +16,13 @@
         "source": "https://github.com/woohoolabs/yin-middleware"
     },
     "require": {
-        "php":"^5.5.0||^7.0.0",
+        "php":"^5.6.0||^7.0.0",
         "psr/http-message-implementation": "^1.0.0",
         "woohoolabs/yin": "dev-master as 1.0.0"
     },
     "require-dev": {
         "container-interop/container-interop": "^1.0.0",
-        "phpunit/phpunit": "^4.4.0||^5.0.0",
+        "phpunit/phpunit": "^5.4.0",
         "squizlabs/php_codesniffer": "^2.3.1",
         "zendframework/zend-diactoros": "^1.3.0"
     },
@@ -41,5 +41,8 @@
     },
     "replace": {
         "woohoolabs/yin-middlewares": "self.version"
+    },
+    "scripts": {
+        "test": "phpunit"
     }
 }

@@ -6,6 +6,8 @@ ADDED:
 
 CHANGED:
 
+- Updated minimum PHP version requirement to PHP 5.6
+
 REMOVED:
 
 FIXED:

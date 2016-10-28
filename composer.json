@@ -18,7 +18,7 @@
     "require": {
         "php":"^5.6.0||^7.0.0",
         "psr/http-message-implementation": "^1.0.0",
-        "woohoolabs/yin": "dev-master as 1.0.0"
+        "woohoolabs/yin": "^1.0.0"
     },
     "require-dev": {
         "container-interop/container-interop": "^1.0.0",

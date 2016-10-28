@@ -20,20 +20,20 @@ class JsonApiRequestValidatorMiddleware extends JsonApiMessageValidator
     protected $checkQueryParams;
 
     /**
-     * @param \WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface $exceptionFactory
+     * @param \WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface|null $exceptionFactory
      * @param bool $includeOriginalMessageInResponse
      * @param bool $negotiate
      * @param bool $checkQueryParams
      * @param bool $lintBody
      */
     public function __construct(
-        ExceptionFactoryInterface $exceptionFactory,
+        ExceptionFactoryInterface $exceptionFactory = null,
         $includeOriginalMessageInResponse = true,
         $negotiate = true,
         $checkQueryParams = true,
         $lintBody = true
     ) {
-        parent::__construct($exceptionFactory, $includeOriginalMessageInResponse, $lintBody, false);
+        parent::__construct($includeOriginalMessageInResponse, $lintBody, false, $exceptionFactory);
         $this->negotiate = $negotiate;
         $this->checkQueryParams = $checkQueryParams;
     }

@@ -1,6 +1,7 @@
 <?php
 namespace WoohooLabs\YinMiddleware\Utils;
 
+use WoohooLabs\Yin\JsonApi\Exception\DefaultExceptionFactory;
 use WoohooLabs\Yin\JsonApi\Exception\ExceptionFactory;
 use WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface;
 
@@ -33,12 +34,12 @@ abstract class JsonApiMessageValidator
      * @param bool $validateBody
      */
     public function __construct(
-        ExceptionFactoryInterface $exceptionFactory,
         $includeOriginalMessageInResponse,
         $lintBody,
-        $validateBody
+        $validateBody,
+        ExceptionFactoryInterface $exceptionFactory = null
     ) {
-        $this->exceptionFactory = $exceptionFactory;
+        $this->exceptionFactory = $exceptionFactory ? $exceptionFactory : new DefaultExceptionFactory();
         $this->includeOriginalMessageInResponse = $includeOriginalMessageInResponse;
         $this->lintBody = $lintBody;
         $this->validateBody = $validateBody;

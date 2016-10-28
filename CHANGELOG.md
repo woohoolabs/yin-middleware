@@ -1,4 +1,14 @@
-## 1.0.0 - unreleased
+## 1.1.0 - unreleased
+
+ADDED:
+
+CHANGED:
+
+REMOVED:
+
+FIXED:
+
+## 1.0.0 - 2016-10-29
 
 ADDED:
 
@@ -7,6 +17,7 @@ ADDED:
 CHANGED:
 
 - Updated minimum PHP version requirement to PHP 5.6
+- The `exceptionFactory` parameter of `JsonApiResponseValidatorMiddleware` and `JsonApiResponseValidatorMiddleware` became optional
 
 REMOVED:
 

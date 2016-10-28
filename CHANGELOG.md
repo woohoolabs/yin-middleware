@@ -19,10 +19,6 @@ CHANGED:
 - Updated minimum PHP version requirement to PHP 5.6
 - The `exceptionFactory` parameter of `JsonApiResponseValidatorMiddleware` and `JsonApiResponseValidatorMiddleware` became optional
 
-REMOVED:
-
-FIXED:
-
 ## 0.8.0 - 2016-08-22
 
 ADDED:

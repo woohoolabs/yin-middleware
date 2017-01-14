@@ -1,7 +1,7 @@
 <?php
 namespace WoohooLabs\YinMiddleware\Middleware;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use WoohooLabs\Yin\JsonApi\Document\ErrorDocument;
 use WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface;
@@ -19,7 +19,7 @@ class JsonApiDispatcherMiddleware
     private $exceptionFactory;
 
     /**
-     * @var \Interop\Container\ContainerInterface
+     * @var \Psr\Container\ContainerInterface
      */
     protected $container;
 
@@ -35,7 +35,7 @@ class JsonApiDispatcherMiddleware
 
     /**
      * @param \WoohooLabs\Yin\jsonApi\Exception\ExceptionFactoryInterface $exceptionFactory
-     * @param \Interop\Container\ContainerInterface $container
+     * @param \Psr\Container\ContainerInterface $container
      * @param SerializerInterface|null $serializer
      * @param string $handlerAttributeName
      */

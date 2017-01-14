@@ -1,6 +1,6 @@
 {
     "name": "woohoolabs/yin-middleware",
-    "description": "Woohoo Labs. Yin Middlewares",
+    "description": "Woohoo Labs. Yin Middleware",
     "type": "library",
     "keywords": ["Woohoo Labs.", "Yin", "Middleware", "JSON API", "PSR-7"],
     "license": "MIT",

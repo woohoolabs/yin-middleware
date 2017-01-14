@@ -38,14 +38,14 @@ Yin. middleware are compatible with frameworks like [Woohoo Labs. Harmony](https
 
 ## Install
 
-You need [Composer](https://getcomposer.org) to install this library. Run the command below and you will get the latest
-version:
+The only thing you need is [Composer](http://getcomposer.org) before getting started. Then run the command below to get
+the latest version:
 
 ```bash
 $ composer require woohoolabs/yin-middleware
 ```
 
-This library needs PHP 5.6+.
+This library requires PHP 5.6 at least.
 
 ## Basic Usage
 

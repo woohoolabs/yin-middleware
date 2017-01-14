@@ -32,9 +32,9 @@ Yin. middleware are compatible with frameworks like [Woohoo Labs. Harmony](https
 
 - 100% [PSR-7](http://www.php-fig.org/psr/psr-7/) compatibility
 - Validation of requests against the JSON schema
-- Validation of responses against the JSON and JSON API schema
-- Dispatching of JSON API-aware controllers
-- JSON API exception handling
+- Validation of responses against the JSON and JSON:API schema
+- Dispatching of JSON:API-aware controllers
+- JSON:API exception handling
 
 ## Install
 
@@ -63,14 +63,14 @@ The following sections will guide you through how to use and configure the provi
 ### JsonApiRequestValidatorMiddleware
 
 The middleware is mainly useful in a development environment, and it is able to validate a
-PSR-7 request against the JSON and the JSON API schema. Just add it to your
+PSR-7 request against the JSON and the JSON:API schema. Just add it to your
 application (the example is for [Woohoo Labs. Harmony](https://github.com/woohoolabs/harmony)):
 
 ```php
 $harmony->addMiddleware(new JsonApiRequestValidatorMiddleware());
 ```
 
-If validation fails, the appropriate JSON API errors will be sent. If you want to customize
+If validation fails, the appropriate JSON:API errors will be sent. If you want to customize
 the error messages or the responses, provide an Exception Factory of your own.
 For other customizations, feel free to extend the class.
 
@@ -79,15 +79,15 @@ Available configuration options for the middleware (they can be set in the const
 - `exceptionFactory`: The [Exception Factory](https://github.com/woohoolabs/yin/#exceptions) instance to be used
 - `includeOriginalMessageInResponse`: If true, the original request will be included in the "meta"
 top-level member
-- `negotiate`: If true, the middleware performs content-negotiation as specified by the JSON API
+- `negotiate`: If true, the middleware performs content-negotiation as specified by the JSON:API
 spec. In this case, the "Content-Type" and the "Accept" header is checked.
-- `checkQueryParams`: If true, query parameters are validated against the JSON API specification
+- `checkQueryParams`: If true, query parameters are validated against the JSON:API specification
 - `lintBody`: If true, the request body gets linted
 
 ### JsonApiResponseValidatorMiddleware
 
 The middleware is mainly useful in a development environment, and it is able to validate a
-PSR-7 response against the JSON and the JSON API schema. Just add it to your
+PSR-7 response against the JSON and the JSON:API schema. Just add it to your
 application (the example is for [Woohoo Labs. Harmony](https://github.com/woohoolabs/harmony)):
 
 ```php
@@ -104,11 +104,11 @@ Available configuration options for the middleware (they can be set in the const
 - `serializer`: The [Serializer](https://github.com/woohoolabs/yin/#custom-serialization) instance to be used
 - `includeOriginalMessageInResponse`: If true, the original response will be included in the "meta" top-level member
 - `lintBody`: If true, the response body gets linted
-- `validateBody`: If true, the response is validated against the JSON API schema
+- `validateBody`: If true, the response is validated against the JSON:API schema
 
 ### JsonApiDispatcherMiddleware
 
-The middleware is able to dispatch JSON API-aware controllers. Just add it to your
+The middleware is able to dispatch JSON:API-aware controllers. Just add it to your
 application (the example is for [Woohoo Labs. Harmony](https://github.com/woohoolabs/harmony)):
 
 ```php
@@ -142,7 +142,7 @@ and PSR-7 responses can also be created with it. Learn more from the documentati
 
 Available configuration options for the middleware (they can be set in the constructor):
 
-- `container`: A [Container Interop-compliant](https://github.com/container-interop/container-interop) container
+- `container`: A [PSR-11 compliant](https://github.com/php-fig/fig-standards/blob/master/proposed/container.md) container
 instance to be used to instantiate the controller
 - `exceptionFactory`: The [Exception Factory](https://github.com/woohoolabs/yin/#exceptions) instance to be
 used (e.g.: when dispatching fails)
@@ -152,7 +152,7 @@ provided by a router).
 
 ### JsonApiErrorHandlerMiddleware
 
-It catches `JsonApiException`-s and responds with the JSON API error response associated with the exception.
+It catches `JsonApiException`-s and responds with the JSON:API error response associated with the exception.
 Available configuration options for the middleware (they can be set in the constructor):
 
 - `catching`: If false, the middleware won't catch `JsonApiException`-s

@@ -31,24 +31,24 @@ class JsonApiDispatcherMiddleware
     /**
      * @var string
      */
-    protected $handlerAttribute;
+    protected $handlerAttributeName;
 
     /**
      * @param \WoohooLabs\Yin\jsonApi\Exception\ExceptionFactoryInterface $exceptionFactory
      * @param \Interop\Container\ContainerInterface $container
      * @param SerializerInterface|null $serializer
-     * @param string $handlerAttribute
+     * @param string $handlerAttributeName
      */
     public function __construct(
         ContainerInterface $container = null,
         ExceptionFactoryInterface $exceptionFactory = null,
         SerializerInterface $serializer = null,
-        $handlerAttribute = "__callable"
+        $handlerAttributeName = "__action"
     ) {
         $this->container = $container;
         $this->exceptionFactory = $exceptionFactory;
         $this->serializer = $serializer ? $serializer : new DefaultSerializer();
-        $this->handlerAttribute = $handlerAttribute;
+        $this->handlerAttributeName = $handlerAttributeName;
     }
 
     /**
@@ -60,7 +60,7 @@ class JsonApiDispatcherMiddleware
      */
     public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next)
     {
-        $callable = $request->getAttribute($this->handlerAttribute);
+        $callable = $request->getAttribute($this->handlerAttributeName);
 
         if ($callable === null) {
             return $this->getDispatchErrorResponse($response);
@@ -69,7 +69,7 @@ class JsonApiDispatcherMiddleware
         $jsonApi = new JsonApi($request, $response, $this->exceptionFactory, $this->serializer);
 
         if (is_array($callable) && is_string($callable[0])) {
-            $object = $this->container !== null ? $this->container->get($callable[0]) : new $callable[0];
+            $object = $this->container !== null ? $this->container->get($callable[0]) : new $callable[0]();
             $response = $object->{$callable[1]}($jsonApi);
         } else {
             if (!is_callable($callable)) {

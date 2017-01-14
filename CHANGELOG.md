@@ -6,6 +6,8 @@ ADDED:
 
 CHANGED:
 
+- The default request attribute name storing the callable to be dispatched to "__action" in `JsonApiDispatcherMiddleware`
+
 REMOVED:
 
 - Support for Container-Interop

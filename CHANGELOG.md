@@ -1,4 +1,4 @@
-## 1.1.0 - unreleased
+## 2.0.0 - unreleased
 
 ADDED:
 
@@ -6,6 +6,7 @@ ADDED:
 
 CHANGED:
 
+- Increased minimum PHP version requirement to 7.0
 - The default request attribute name storing the callable to be dispatched to "__action" in `JsonApiDispatcherMiddleware`
 
 REMOVED:

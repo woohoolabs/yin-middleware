@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace WoohooLabs\YinMiddleware\Middleware;
 
 use Psr\Container\ContainerInterface;
@@ -33,17 +35,11 @@ class JsonApiDispatcherMiddleware
      */
     protected $handlerAttributeName;
 
-    /**
-     * @param \WoohooLabs\Yin\jsonApi\Exception\ExceptionFactoryInterface $exceptionFactory
-     * @param \Psr\Container\ContainerInterface $container
-     * @param SerializerInterface|null $serializer
-     * @param string $handlerAttributeName
-     */
     public function __construct(
         ContainerInterface $container = null,
         ExceptionFactoryInterface $exceptionFactory = null,
         SerializerInterface $serializer = null,
-        $handlerAttributeName = "__action"
+        string $handlerAttributeName = "__action"
     ) {
         $this->container = $container;
         $this->exceptionFactory = $exceptionFactory;
@@ -51,14 +47,7 @@ class JsonApiDispatcherMiddleware
         $this->handlerAttributeName = $handlerAttributeName;
     }
 
-    /**
-     * @param \WoohooLabs\Yin\JsonApi\Request\RequestInterface $request
-     * @param \Psr\Http\Message\ResponseInterface $response
-     * @param callable $next
-     * @return void|\Psr\Http\Message\ResponseInterface
-     * @throws \Exception
-     */
-    public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next)
+    public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next): ResponseInterface
     {
         $callable = $request->getAttribute($this->handlerAttributeName);
 
@@ -81,19 +70,12 @@ class JsonApiDispatcherMiddleware
         return $next($request, $response);
     }
 
-    /**
-     * @param \Psr\Http\Message\ResponseInterface $response
-     * @return \Psr\Http\Message\ResponseInterface $response
-     */
-    protected function getDispatchErrorResponse(ResponseInterface $response)
+    protected function getDispatchErrorResponse(ResponseInterface $response): ResponseInterface
     {
         return $this->getErrorDocument($this->getDispatchError())->getResponse($this->serializer, $response);
     }
 
-    /**
-     * @return \WoohooLabs\Yin\JsonApi\Schema\Error
-     */
-    protected function getDispatchError()
+    protected function getDispatchError(): Error
     {
         $error = new Error();
         $error->setStatus(404);
@@ -102,11 +84,7 @@ class JsonApiDispatcherMiddleware
         return $error;
     }
 
-    /**
-     * @param \WoohooLabs\Yin\JsonApi\Schema\Error $error
-     * @return \WoohooLabs\Yin\JsonApi\Document\ErrorDocument
-     */
-    protected function getErrorDocument(Error $error)
+    protected function getErrorDocument(Error $error): ErrorDocument
     {
         $errorDocument = new ErrorDocument();
         $errorDocument->addError($error);

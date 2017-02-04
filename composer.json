@@ -18,7 +18,7 @@
         "php": "^7.0.0",
         "psr/container": "^1.0.0@dev",
         "psr/http-message-implementation": "^1.0.0",
-        "woohoolabs/yin": "^1.0.3"
+        "woohoolabs/yin": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.0.0",

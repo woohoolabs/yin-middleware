@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace WoohooLabs\YinMiddleware\Middleware;
 
 use Psr\Http\Message\ResponseInterface;
@@ -16,31 +18,18 @@ class JsonApiResponseValidatorMiddleware extends JsonApiMessageValidator
      */
     private $serializer;
 
-    /**
-     * @param \WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface|null $exceptionFactory
-     * @param SerializerInterface|null $serializer
-     * @param bool $includeOriginalMessageInResponse
-     * @param bool $lintBody
-     * @param bool $validateBody
-     */
     public function __construct(
         ExceptionFactoryInterface $exceptionFactory = null,
         SerializerInterface $serializer = null,
-        $includeOriginalMessageInResponse = true,
-        $lintBody = true,
-        $validateBody = true
+        bool $includeOriginalMessageInResponse = true,
+        bool $lintBody = true,
+        bool $validateBody = true
     ) {
         parent::__construct($includeOriginalMessageInResponse, $lintBody, $validateBody, $exceptionFactory);
         $this->serializer = $serializer ? $serializer : new DefaultSerializer();
     }
 
-    /**
-     * @param \WoohooLabs\Yin\JsonApi\Request\RequestInterface $request
-     * @param \Psr\Http\Message\ResponseInterface $response
-     * @param callable $next
-     * @return void|\Psr\Http\Message\ResponseInterface
-     */
-    public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next)
+    public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next): ResponseInterface
     {
         $validator = new ResponseValidator(
             $this->serializer,

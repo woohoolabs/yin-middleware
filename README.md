@@ -128,7 +128,7 @@ instead of:
 public function myController(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface;
 ```
 
-The difference is subtle, as the `WoohooLabs\Yin\JsonApi\JsonApi` object contains a PSR-7 compatible request,
+The difference is subtle, as the `$jsonApi` object contains a PSR-7 compatible request,
 and PSR-7 responses can also be created with it. Learn more from the documentation of
 [Woohoo Labs. Yin](https://github.com/woohoolabs/yin#jsonapi-class).
 
@@ -144,10 +144,10 @@ provided by a router).
 
 ### JsonApiErrorHandlerMiddleware
 
-It catches `JsonApiException`-s and responds with the JSON:API error response associated with the exception.
+It catches `JsonApiException`s and responds with the JSON:API error response associated with the exception.
 Available configuration options for the middleware (they can be set in the constructor):
 
-- `catching`: If false, the middleware won't catch `JsonApiException`-s
+- `catching`: If false, the middleware won't catch `JsonApiException`s
 - `verbose`: If true, additional meta information will be provided about the exception thrown
 - `exceptionFactory`: The [Exception Factory](https://github.com/woohoolabs/yin/#exceptions) instance to be
 used

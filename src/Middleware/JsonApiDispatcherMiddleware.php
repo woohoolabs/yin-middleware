@@ -54,7 +54,9 @@ class JsonApiDispatcherMiddleware
         if ($callable === null) {
             $responder = new Responder($request, $response, $this->exceptionFactory, $this->serializer);
 
-            return $responder->genericError($this->exceptionFactory->createResourceNotFoundException($request));
+            return $responder->genericError(
+                $this->exceptionFactory->createResourceNotFoundException($request)->getErrorDocument()
+            );
         }
 
         $jsonApi = new JsonApi($request, $response, $this->exceptionFactory, $this->serializer);

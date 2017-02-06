@@ -5,23 +5,23 @@ namespace WoohooLabs\YinMiddleware\Middleware;
 
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
-use WoohooLabs\Yin\JsonApi\Document\ErrorDocument;
+use WoohooLabs\Yin\JsonApi\Exception\DefaultExceptionFactory;
 use WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface;
 use WoohooLabs\Yin\JsonApi\JsonApi;
 use WoohooLabs\Yin\JsonApi\Request\RequestInterface;
-use WoohooLabs\Yin\JsonApi\Schema\Error;
+use WoohooLabs\Yin\JsonApi\Response\Responder;
 use WoohooLabs\Yin\JsonApi\Serializer\DefaultSerializer;
 use WoohooLabs\Yin\JsonApi\Serializer\SerializerInterface;
 
 class JsonApiDispatcherMiddleware
 {
     /**
-     * @var \WoohooLabs\Yin\jsonApi\Exception\ExceptionFactoryInterface
+     * @var ExceptionFactoryInterface
      */
     private $exceptionFactory;
 
     /**
-     * @var \Psr\Container\ContainerInterface
+     * @var ContainerInterface
      */
     protected $container;
 
@@ -42,8 +42,8 @@ class JsonApiDispatcherMiddleware
         string $handlerAttributeName = "__action"
     ) {
         $this->container = $container;
-        $this->exceptionFactory = $exceptionFactory;
-        $this->serializer = $serializer ? $serializer : new DefaultSerializer();
+        $this->exceptionFactory = $exceptionFactory ?? new DefaultExceptionFactory();
+        $this->serializer = $serializer ?? new DefaultSerializer();
         $this->handlerAttributeName = $handlerAttributeName;
     }
 
@@ -52,7 +52,9 @@ class JsonApiDispatcherMiddleware
         $callable = $request->getAttribute($this->handlerAttributeName);
 
         if ($callable === null) {
-            return $this->getDispatchErrorResponse($response);
+            $responder = new Responder($request, $response, $this->exceptionFactory, $this->serializer);
+
+            return $responder->genericError($this->exceptionFactory->createResourceNotFoundException($request));
         }
 
         $jsonApi = new JsonApi($request, $response, $this->exceptionFactory, $this->serializer);
@@ -68,27 +70,5 @@ class JsonApiDispatcherMiddleware
         }
 
         return $next($request, $response);
-    }
-
-    protected function getDispatchErrorResponse(ResponseInterface $response): ResponseInterface
-    {
-        return $this->getErrorDocument($this->getDispatchError())->getResponse($this->serializer, $response);
-    }
-
-    protected function getDispatchError(): Error
-    {
-        $error = new Error();
-        $error->setStatus(404);
-        $error->setTitle("Resource was not not found!");
-
-        return $error;
-    }
-
-    protected function getErrorDocument(Error $error): ErrorDocument
-    {
-        $errorDocument = new ErrorDocument();
-        $errorDocument->addError($error);
-
-        return $errorDocument;
     }
 }

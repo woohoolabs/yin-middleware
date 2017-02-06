@@ -26,7 +26,7 @@ class JsonApiResponseValidatorMiddleware extends JsonApiMessageValidator
         bool $validateBody = true
     ) {
         parent::__construct($includeOriginalMessageInResponse, $lintBody, $validateBody, $exceptionFactory);
-        $this->serializer = $serializer ? $serializer : new DefaultSerializer();
+        $this->serializer = $serializer ?? new DefaultSerializer();
     }
 
     public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next): ResponseInterface

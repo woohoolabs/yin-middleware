@@ -7,7 +7,10 @@ ADDED:
 CHANGED:
 
 - Increased minimum PHP version requirement to 7.0
+- Yin 2.0.0 is minimally required
 - The default request attribute name storing the callable to be dispatched to "__action" in `JsonApiDispatcherMiddleware`
+- `DispatcherMiddleware` now uses `ExceptionFactory::createResourceNotFoundException()`for `Error 404` responses
+- `JsonApiErrorHandlerMiddleware` now accepts an `ExceptionFactory` as an optional constructor argument
 
 REMOVED:
 

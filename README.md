@@ -23,7 +23,7 @@
 
 ## Introduction
 
-Yin. middleware are compatible with frameworks like [Woohoo Labs. Harmony](https://github.com/woohoolabs/harmony),
+Yin Middleware are compatible with frameworks like [Woohoo Labs. Harmony](https://github.com/woohoolabs/harmony),
 [Zend-Stratigility](https://github.com/zendframework/zend-stratigility/), [Zend-Expressive](https://github.com/zendframework/zend-expressive/) or
 [Slim Framework 3](http://www.slimframework.com/docs/concepts/middleware.html). Read more in the
 [Supported middleware interface design section](#supported-middleware-interface-design).
@@ -45,7 +45,7 @@ the latest version:
 $ composer require woohoolabs/yin-middleware
 ```
 
-This library requires PHP 5.6 at least.
+This library requires PHP 7.0 at least. You may use version 1.0 for PHP 5.6.
 
 ## Basic Usage
 
@@ -119,21 +119,13 @@ The middleware works exactly as [the one in Woohoo Labs. Harmony](https://github
 the only difference is that it dispatches controllers with the following signature:
 
 ```php
-/**
- * @param JsonApi $jsonApi
- * @param ResponseInterface $response
- */
-public function myController(JsonApi $jsonApi);
+public function myController(JsonApi $jsonApi): ResponseInterface;
 ```
 
 instead of:
 
 ```php
-/**
- * @param ServerRequestInterface $request
- * @param ResponseInterface $response
- */
-public function myController(ServerRequestInterface $request, ResponseInterface $response);
+public function myController(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface;
 ```
 
 The difference is subtle, as the `WoohooLabs\Yin\JsonApi\JsonApi` object contains a PSR-7 compatible request,
@@ -157,45 +149,23 @@ Available configuration options for the middleware (they can be set in the const
 
 - `catching`: If false, the middleware won't catch `JsonApiException`-s
 - `verbose`: If true, additional meta information will be provided about the exception thrown
+- `exceptionFactory`: The [Exception Factory](https://github.com/woohoolabs/yin/#exceptions) instance to be
+used
 - `serializer`: The [Serializer](https://github.com/woohoolabs/yin/#custom-serialization) instance to be used
 
-If you want to catch `\Exception`s too, you have to extend the class and wrap it like that:
+If you want to catch `\Throwable`s too, you have to extend the class and wrap it like that:
 
 ```php
 class MyErrorHandlerMiddleware extends JsonApiErrorHandlerMiddleware
 {
-    /**
-     * @var \WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface
-     */
-    protected $exceptionFactory;
-
-    /**
-     * @param \WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface $exceptionFactory
-     * @param bool $catching
-     * @param bool $verbose
-     */
-    public function __construct(ExceptionFactoryInterface $exceptionFactory, $catching = true, $verbose = false)
-    {
-        parent::__construct($catching, $verbose);
-        $this->exceptionFactory = $exceptionFactory;
-    }
-
-    /**
-     * @param \WoohooLabs\Yin\JsonApi\Request\RequestInterface $request
-     * @param \Psr\Http\Message\ResponseInterface $response
-     * @param callable $next
-     * @return void|\Psr\Http\Message\ResponseInterface
-     * @throws \Exception
-     */
-    public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next)
+    public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next): ResponseInterface
     {
         try {
-            $result = parent::__invoke($request, $response, $next);
-            if ($result) {
-                return $result;
-            }
-        } catch (\Exception $e) {
-            return $this->exceptionFactory->createApplicationErrorException($request)->getErrorDocument()->getResponse($response);
+            return parent::__invoke($request, $response, $next);
+        } catch (Throwable $e) {
+            $responder = new Responder($request, $response, $this->exceptionFactory, $this->serializer);
+            
+            return $responder->genericError($this->exceptionFactory->createApplicationErrorException($request), [], null, $additionalMeta);
         }
     }
 }

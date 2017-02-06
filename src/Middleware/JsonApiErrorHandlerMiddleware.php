@@ -5,8 +5,11 @@ namespace WoohooLabs\YinMiddleware\Middleware;
 
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
+use WoohooLabs\Yin\JsonApi\Exception\DefaultExceptionFactory;
+use WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface;
 use WoohooLabs\Yin\JsonApi\Exception\JsonApiExceptionInterface;
 use WoohooLabs\Yin\JsonApi\Request\RequestInterface;
+use WoohooLabs\Yin\JsonApi\Response\Responder;
 use WoohooLabs\Yin\JsonApi\Serializer\DefaultSerializer;
 use WoohooLabs\Yin\JsonApi\Serializer\SerializerInterface;
 
@@ -23,15 +26,25 @@ class JsonApiErrorHandlerMiddleware
     protected $verbose;
 
     /**
+     * @var ExceptionFactoryInterface
+     */
+    protected $exceptionFactory;
+
+    /**
      * @var SerializerInterface
      */
     protected $serializer;
 
-    public function __construct(bool $catching = true, bool $verbose = false, SerializerInterface $serializer = null)
-    {
+    public function __construct(
+        bool $catching = true,
+        bool $verbose = false,
+        ExceptionFactoryInterface $exceptionFactory = null,
+        SerializerInterface $serializer = null
+    ) {
         $this->isCatching = $catching;
         $this->verbose = $verbose;
-        $this->serializer = $serializer !== null ? $serializer : new DefaultSerializer();
+        $this->exceptionFactory = $exceptionFactory ?? new DefaultExceptionFactory();
+        $this->serializer = $serializer ?? new DefaultSerializer();
     }
 
     public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next): ResponseInterface
@@ -40,8 +53,10 @@ class JsonApiErrorHandlerMiddleware
             try {
                 return $next($request, $response);
             } catch (JsonApiExceptionInterface $exception) {
+                $responder = new Responder($request, $response, $this->exceptionFactory, $this->serializer);
                 $additionalMeta = $this->verbose === true ? $this->getExceptionMeta($exception) : [];
-                return $exception->getErrorDocument()->getResponse($this->serializer, $response, null, $additionalMeta);
+
+                return $responder->genericError($exception->getErrorDocument(), [], null, $additionalMeta);
             }
         }
 

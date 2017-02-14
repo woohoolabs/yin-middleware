@@ -134,8 +134,8 @@ and PSR-7 responses can also be created with it. Learn more from the documentati
 
 Available configuration options for the middleware (they can be set in the constructor):
 
-- `container`: A [PSR-11 compliant](https://github.com/php-fig/fig-standards/blob/master/proposed/container.md) container
-instance to be used to instantiate the controller
+- `container`: A [PSR-11 compliant](http://www.php-fig.org/psr/psr-11/) container instance to be used to instantiate
+the controller
 - `exceptionFactory`: The [Exception Factory](https://github.com/woohoolabs/yin/#exceptions) instance to be
 used (e.g.: when dispatching fails)
 - `serializer`: The [Serializer](https://github.com/woohoolabs/yin/#custom-serialization) instance to be used

@@ -68,7 +68,7 @@ class JsonApiDispatcherMiddleware
             if (!is_callable($callable)) {
                 $callable = $this->container->get($callable);
             }
-            $response = call_user_func($callable, $jsonApi);
+            $response = $callable($jsonApi);
         }
 
         return $next($request, $response);

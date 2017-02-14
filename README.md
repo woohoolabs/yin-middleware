@@ -38,14 +38,27 @@ Yin Middleware are compatible with frameworks like [Woohoo Labs. Harmony](https:
 
 ## Install
 
-The only thing you need is [Composer](http://getcomposer.org) before getting started. Then run the command below to get
-the latest version:
+The only thing you need before getting started is [Composer](http://getcomposer.org).
+
+### Install a PSR-7 implementation:
+
+Because Yin Middleware requires a PSR-7 implementation (a package which provides the `psr/http-message-implementation` virtual
+package), you must install one first. You may use [Zend Diactoros](https://github.com/zendframework/zend-diactoros) or
+any other library of your preference:
+
+```bash
+$ composer require zendframework/zend-diactoros:^1.3.0
+```
+
+### Install Yin Middleware:
+
+To install the latest version of this library, run the command below:
 
 ```bash
 $ composer require woohoolabs/yin-middleware
 ```
 
-This library requires PHP 7.0 at least. You may use version 1.0 for PHP 5.6.
+Yin Middleware requires PHP 7.0 at least. You may use Yin Middleware 1.0 for PHP 5.6.
 
 ## Basic Usage
 

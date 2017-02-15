@@ -10,7 +10,7 @@ use WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface;
 use WoohooLabs\Yin\JsonApi\Exception\JsonApiExceptionInterface;
 use WoohooLabs\Yin\JsonApi\Request\RequestInterface;
 use WoohooLabs\Yin\JsonApi\Response\Responder;
-use WoohooLabs\Yin\JsonApi\Serializer\DefaultSerializer;
+use WoohooLabs\Yin\JsonApi\Serializer\JsonSerializer;
 use WoohooLabs\Yin\JsonApi\Serializer\SerializerInterface;
 
 class JsonApiErrorHandlerMiddleware
@@ -44,7 +44,7 @@ class JsonApiErrorHandlerMiddleware
         $this->isCatching = $catching;
         $this->verbose = $verbose;
         $this->exceptionFactory = $exceptionFactory ?? new DefaultExceptionFactory();
-        $this->serializer = $serializer ?? new DefaultSerializer();
+        $this->serializer = $serializer ?? new JsonSerializer();
     }
 
     public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next): ResponseInterface

@@ -7,7 +7,7 @@ use Psr\Http\Message\ResponseInterface;
 use WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface;
 use WoohooLabs\Yin\JsonApi\Negotiation\ResponseValidator;
 use WoohooLabs\Yin\JsonApi\Request\RequestInterface;
-use WoohooLabs\Yin\JsonApi\Serializer\DefaultSerializer;
+use WoohooLabs\Yin\JsonApi\Serializer\JsonSerializer;
 use WoohooLabs\Yin\JsonApi\Serializer\SerializerInterface;
 use WoohooLabs\YinMiddleware\Utils\JsonApiMessageValidator;
 
@@ -26,7 +26,7 @@ class JsonApiResponseValidatorMiddleware extends JsonApiMessageValidator
         bool $validateBody = true
     ) {
         parent::__construct($includeOriginalMessageInResponse, $lintBody, $validateBody, $exceptionFactory);
-        $this->serializer = $serializer ?? new DefaultSerializer();
+        $this->serializer = $serializer ?? new JsonSerializer();
     }
 
     public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next): ResponseInterface

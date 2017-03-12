@@ -1,4 +1,14 @@
-## 2.0.0 - unreleased
+## 2.1.0 - unreleased
+
+ADDED:
+
+CHANGED:
+
+REMOVED:
+
+FIXED:
+
+## 2.0.0 - 2017-03-12
 
 ADDED:
 
@@ -15,8 +25,6 @@ CHANGED:
 REMOVED:
 
 - Support for Container-Interop
-
-FIXED:
 
 ## 1.0.0 - 2016-10-29
 

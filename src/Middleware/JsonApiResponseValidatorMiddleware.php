@@ -19,7 +19,7 @@ class JsonApiResponseValidatorMiddleware extends JsonApiMessageValidator
     private $serializer;
 
     public function __construct(
-        ExceptionFactoryInterface $exceptionFactory = null,
+        ?ExceptionFactoryInterface $exceptionFactory = null,
         SerializerInterface $serializer = null,
         bool $includeOriginalMessageInResponse = true,
         bool $lintBody = true,

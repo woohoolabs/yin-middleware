@@ -38,8 +38,8 @@ class JsonApiErrorHandlerMiddleware
     public function __construct(
         bool $catching = true,
         bool $verbose = false,
-        ExceptionFactoryInterface $exceptionFactory = null,
-        SerializerInterface $serializer = null
+        ?ExceptionFactoryInterface $exceptionFactory = null,
+        ?SerializerInterface $serializer = null
     ) {
         $this->isCatching = $catching;
         $this->verbose = $verbose;

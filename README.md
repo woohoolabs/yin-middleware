@@ -60,7 +60,7 @@ To install the latest version of this library, run the command below:
 $ composer require woohoolabs/yin-middleware
 ```
 
-Yin Middleware requires PHP 7.0 at least. You may use Yin Middleware 1.0 for PHP 5.6.
+Yin Middleware requires PHP 7.1 at least. You may use Yin Middleware 2.0 for PHP 7.0 and 1.0 for PHP 5.6.
 
 ## Basic Usage
 

@@ -9,7 +9,7 @@ use WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface;
 abstract class JsonApiMessageValidator
 {
     /**
-     * @var \WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface
+     * @var ExceptionFactoryInterface
      */
     protected $exceptionFactory;
 
@@ -32,7 +32,7 @@ abstract class JsonApiMessageValidator
         bool $includeOriginalMessageInResponse,
         bool $lintBody,
         bool $validateBody,
-        ExceptionFactoryInterface $exceptionFactory = null
+        ?ExceptionFactoryInterface $exceptionFactory = null
     ) {
         $this->exceptionFactory = $exceptionFactory ? $exceptionFactory : new DefaultExceptionFactory();
         $this->includeOriginalMessageInResponse = $includeOriginalMessageInResponse;

@@ -22,7 +22,7 @@ class JsonApiRequestValidatorMiddleware extends JsonApiMessageValidator
     protected $checkQueryParams;
 
     public function __construct(
-        ExceptionFactoryInterface $exceptionFactory = null,
+        ?ExceptionFactoryInterface $exceptionFactory = null,
         bool $includeOriginalMessageInResponse = true,
         bool $negotiate = true,
         bool $checkQueryParams = true,

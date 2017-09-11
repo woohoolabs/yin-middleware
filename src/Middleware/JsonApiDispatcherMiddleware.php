@@ -36,9 +36,9 @@ class JsonApiDispatcherMiddleware
     protected $handlerAttributeName;
 
     public function __construct(
-        ContainerInterface $container = null,
-        ExceptionFactoryInterface $exceptionFactory = null,
-        SerializerInterface $serializer = null,
+        ?ContainerInterface $container = null,
+        ?ExceptionFactoryInterface $exceptionFactory = null,
+        ?SerializerInterface $serializer = null,
         string $handlerAttributeName = "__action"
     ) {
         $this->container = $container;

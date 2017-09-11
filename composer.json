@@ -21,7 +21,9 @@
         "woohoolabs/yin": "^2.0.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.0.0",
+        "justinrainbow/json-schema": "^2.0.0",
+        "phpunit/phpunit": "^6.1.0",
+        "seld/jsonlint": "^1.4.0",
         "squizlabs/php_codesniffer": "^2.8.0",
         "zendframework/zend-diactoros": "^1.3.0"
     },

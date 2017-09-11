@@ -2,6 +2,8 @@
 
 ADDED:
 
+- Tests
+
 CHANGED:
 
 - Increased minimum PHP version requirement to 7.1

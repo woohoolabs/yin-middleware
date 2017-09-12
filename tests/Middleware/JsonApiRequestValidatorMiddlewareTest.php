@@ -5,6 +5,8 @@ namespace WoohooLabs\YinMiddleware\Tests\Middleware;
 
 use PHPUnit\Framework\TestCase;
 use WoohooLabs\Yin\JsonApi\Exception\DefaultExceptionFactory;
+use WoohooLabs\Yin\JsonApi\Exception\MediaTypeUnacceptable;
+use WoohooLabs\Yin\JsonApi\Exception\MediaTypeUnsupported;
 use WoohooLabs\Yin\JsonApi\Exception\QueryParamUnrecognized;
 use WoohooLabs\Yin\JsonApi\Exception\RequestBodyInvalidJson;
 use WoohooLabs\Yin\JsonApi\Request\Request;
@@ -19,9 +21,89 @@ class JsonApiRequestValidatorMiddlewareTest extends TestCase
      * @doesNotPerformAssertions
      * @test
      */
+    public function successOnValidHeaders()
+    {
+        $middleware = new JsonApiRequestValidatorMiddleware(
+            null,
+            true,
+            true,
+            false,
+            false
+        );
+
+        $request = $this->getRequest(
+            [],
+            "",
+            ["Content-Type" => "application/vnd.api+json", "Accept" => "application/vnd.api+json"]
+        );
+
+        $middleware($request, $this->getResponse(), $this->getNext());
+    }
+
+    /**
+     * @doesNotPerformAssertions
+     * @test
+     */
+    public function successOnMissingHeaders()
+    {
+        $middleware = new JsonApiRequestValidatorMiddleware(
+            null,
+            true,
+            true,
+            false,
+            false
+        );
+
+        $request = $this->getRequest();
+
+        $middleware($request, $this->getResponse(), $this->getNext());
+    }
+
+    /**
+     * @test
+     */
+    public function exceptionOnInvalidContentTypeHeader()
+    {
+        $middleware = new JsonApiRequestValidatorMiddleware(
+            null,
+            true,
+            true,
+            false,
+            false
+        );
+
+        $request = $this->getRequest([], "", ["Content-Type" => "application/vnd.api+json; version=1", "Accept" => "application/vnd.api+json"]);
+
+        $this->expectException(MediaTypeUnsupported::class);
+        $middleware($request, $this->getResponse(), $this->getNext());
+    }
+
+    /**
+     * @test
+     */
+    public function exceptionOnInvalidAcceptHeader()
+    {
+        $middleware = new JsonApiRequestValidatorMiddleware(
+            null,
+            true,
+            true,
+            false,
+            false
+        );
+
+        $request = $this->getRequest([], "", ["Content-Type" => "application/vnd.api+json", "Accept" => "application/vnd.api+json; version=1"]);
+
+        $this->expectException(MediaTypeUnacceptable::class);
+        $middleware($request, $this->getResponse(), $this->getNext());
+    }
+
+    /**
+     * @doesNotPerformAssertions
+     * @test
+     */
     public function successOnValidQueryParams()
     {
-        $requestValidator = new JsonApiRequestValidatorMiddleware(
+        $middleware = new JsonApiRequestValidatorMiddleware(
             null,
             true,
             false,
@@ -29,9 +111,28 @@ class JsonApiRequestValidatorMiddlewareTest extends TestCase
             false
         );
 
-        $request = $this->getRequest("https://example.com/test?foo_bar=baz&page[number]=1&page[size]=10");
+        $request = $this->getRequest(["page" => ["number" => "1", "size" => "10"]]);
 
-        $requestValidator($request, $this->getResponse(), $this->getNext());
+        $middleware($request, $this->getResponse(), $this->getNext());
+    }
+
+    /**
+     * @test
+     */
+    public function exceptionOnInvalidQueryParams()
+    {
+        $middleware = new JsonApiRequestValidatorMiddleware(
+            null,
+            true,
+            false,
+            true,
+            false
+        );
+
+        $request = $this->getRequest(["foo" => "bar"]);
+
+        $this->expectException(QueryParamUnrecognized::class);
+        $middleware($request, $this->getResponse(), $this->getNext());
     }
 
     /**
@@ -40,7 +141,7 @@ class JsonApiRequestValidatorMiddlewareTest extends TestCase
      */
     public function successOnEmptyRequestBody()
     {
-        $requestValidator = new JsonApiRequestValidatorMiddleware(
+        $middleware = new JsonApiRequestValidatorMiddleware(
             null,
             true,
             false,
@@ -50,7 +151,7 @@ class JsonApiRequestValidatorMiddlewareTest extends TestCase
 
         $request = $this->getRequest();
 
-        $requestValidator($request, $this->getResponse(), $this->getNext());
+        $middleware($request, $this->getResponse(), $this->getNext());
     }
 
     /**
@@ -59,7 +160,7 @@ class JsonApiRequestValidatorMiddlewareTest extends TestCase
      */
     public function successOnValidRequestBody()
     {
-        $requestValidator = new JsonApiRequestValidatorMiddleware(
+        $middleware = new JsonApiRequestValidatorMiddleware(
             null,
             true,
             false,
@@ -67,9 +168,9 @@ class JsonApiRequestValidatorMiddlewareTest extends TestCase
             true
         );
 
-        $request = $this->getRequest("", $this->getValidRequestBody());
+        $request = $this->getRequest([], $this->getValidRequestBody());
 
-        $requestValidator($request, $this->getResponse(), $this->getNext());
+        $middleware($request, $this->getResponse(), $this->getNext());
     }
 
     /**
@@ -77,7 +178,7 @@ class JsonApiRequestValidatorMiddlewareTest extends TestCase
      */
     public function exceptionOnInvalidJsonRequestBody()
     {
-        $requestValidator = new JsonApiRequestValidatorMiddleware(
+        $middleware = new JsonApiRequestValidatorMiddleware(
             null,
             true,
             false,
@@ -85,10 +186,10 @@ class JsonApiRequestValidatorMiddlewareTest extends TestCase
             true
         );
 
-        $request = $this->getRequest("", $this->getInvalidJsonRequestBody());
+        $request = $this->getRequest([], $this->getInvalidJsonRequestBody());
 
         $this->expectException(RequestBodyInvalidJson::class);
-        $requestValidator($request, $this->getResponse(), $this->getNext());
+        $middleware($request, $this->getResponse(), $this->getNext());
     }
 
     private function getValidRequestBody(): string
@@ -126,15 +227,19 @@ EOF;
 EOF;
     }
 
-    private function getRequest(string $uri = "", string $body = "", string $method = "GET"): Request
+    private function getRequest(array $queryParams = [], string $body = "", array $headers = []): Request
     {
-        $request = new ServerRequest([], [], $uri, $method, new Stream("php://memory", "rw"));
+        $request = new ServerRequest([], [], "", "POST", new Stream("php://memory", "rw"));
+        $request = $request->withQueryParams($queryParams);
         $request->getBody()->write($body);
+        foreach ($headers as $header => $value) {
+            $request = $request->withHeader($header, $value);
+        }
 
         return new Request($request, new DefaultExceptionFactory());
     }
 
-    private function getResponse()
+    private function getResponse(): Response
     {
         return new Response();
     }

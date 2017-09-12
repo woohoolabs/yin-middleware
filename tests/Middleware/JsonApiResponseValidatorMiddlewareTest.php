@@ -20,11 +20,11 @@ class JsonApiResponseValidatorMiddlewareTest extends TestCase
      */
     public function successOnEmptyResponseBody()
     {
-        $responseValidator = new JsonApiResponseValidatorMiddleware();
+        $middleware = new JsonApiResponseValidatorMiddleware();
 
         $response = new Response();
 
-        $responseValidator($this->getRequest(), $response, $this->getNext());
+        $middleware($this->getRequest(), $response, $this->getNext());
     }
 
     /**
@@ -33,12 +33,12 @@ class JsonApiResponseValidatorMiddlewareTest extends TestCase
      */
     public function successOnValidResponseBody()
     {
-        $responseValidator = new JsonApiResponseValidatorMiddleware();
+        $middleware = new JsonApiResponseValidatorMiddleware();
 
         $response = new Response();
         $response->getBody()->write($this->getValidResponseBody());
 
-        $responseValidator($this->getRequest(), $response, $this->getNext());
+        $middleware($this->getRequest(), $response, $this->getNext());
     }
 
     /**
@@ -46,13 +46,13 @@ class JsonApiResponseValidatorMiddlewareTest extends TestCase
      */
     public function exceptionOnInvalidJsonResponseBody()
     {
-        $responseValidator = new JsonApiResponseValidatorMiddleware();
+        $middleware = new JsonApiResponseValidatorMiddleware();
 
         $response = new Response();
         $response->getBody()->write($this->getInvalidJsonResponseBody());
 
         $this->expectException(ResponseBodyInvalidJson::class);
-        $responseValidator($this->getRequest(), $response, $this->getNext());
+        $middleware($this->getRequest(), $response, $this->getNext());
     }
 
     /**
@@ -60,13 +60,13 @@ class JsonApiResponseValidatorMiddlewareTest extends TestCase
      */
     public function exceptionOnInvalidJsonApiResponseBody()
     {
-        $responseValidator = new JsonApiResponseValidatorMiddleware();
+        $middleware = new JsonApiResponseValidatorMiddleware();
 
         $response = new Response();
         $response->getBody()->write($this->getInvalidJsonApiResponseBody());
 
         $this->expectException(ResponseBodyInvalidJsonApi::class);
-        $responseValidator($this->getRequest(), $response, $this->getNext());
+        $middleware($this->getRequest(), $response, $this->getNext());
     }
 
     private function getValidResponseBody(): string

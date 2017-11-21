@@ -70,7 +70,7 @@ class JsonApiErrorHandlerMiddleware
             "message" => $exception->getMessage(),
             "file" => $exception->getFile(),
             "line" => $exception->getLine(),
-            "trace" => $exception->getTrace()
+            "trace" => $exception->getTrace(),
         ];
     }
 }

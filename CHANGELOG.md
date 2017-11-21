@@ -1,4 +1,4 @@
-## 2.2.0 - unreleased
+## 2.3.0 - unreleased
 
 ADDED:
 
@@ -7,6 +7,12 @@ CHANGED:
 REMOVED:
 
 FIXED:
+
+## 2.2.0 - unreleased
+
+CHANGED:
+
+- Yin 3.0.0 is minimally required
 
 ## 2.1.0 - 2017-09-12
 

@@ -64,7 +64,7 @@ Yin Middleware requires PHP 7.1 at least. You may use Yin Middleware 2.0 for PHP
 ### Supported middleware interface design
 
 The interface design of Yin-Middleware is based on the [PSR-15](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-15-request-handlers.md) de-facto standard.
-That's why they are compatible with [Woohoo Labs. Harmony](https://github.com/woohoolabs/harmony),
+That's why it is compatible with [Woohoo Labs. Harmony](https://github.com/woohoolabs/harmony),
 [Zend-Stratigility](https://github.com/zendframework/zend-stratigility/), [Zend-Expressive](https://github.com/zendframework/zend-expressive/)
 and many other frameworks.
 
@@ -80,8 +80,8 @@ application (the example is for [Woohoo Labs. Harmony](https://github.com/woohoo
 $harmony->addMiddleware(new JsonApiRequestValidatorMiddleware());
 ```
 
-If validation fails, the appropriate JSON:API errors will be sent. If you want to customize the error messages or the
-responses, provide an Exception Factory of your own. For other customizations, feel free to extend the class.
+If validation fails, an exception containing the appropriate JSON:API errors will be thrown. If you want to customize
+the error messages or the response, provide an Exception Factory of your own. For other customizations, feel free to extend the class.
 
 Available configuration options for the middleware (they can be passed to the constructor):
 
@@ -102,8 +102,8 @@ JSON and the JSON:API schema. Just add it to your application (the example is fo
 $harmony->addMiddleware(new JsonApiResponseValidatorMiddleware());
 ```
 
-If validation fails, the appropriate JSON API errors will be sent. If you want to customize the messages or the responses,
-provide an Exception Factory of your own. For other customizations, feel free to extend the class.
+If validation fails, an exception containing the appropriate JSON:API errors will be thrown. If you want to customize
+the error messages or the response, provide an Exception Factory of your own. For other customizations, feel free to extend the class.
 
 Available configuration options for the middleware (they can be passed to the constructor):
 
@@ -115,8 +115,8 @@ Available configuration options for the middleware (they can be passed to the co
 
 ### JsonApiDispatcherMiddleware
 
-The middleware is able to dispatch JSON:API-aware controllers. Just add it to your
-application (the example is for [Woohoo Labs. Harmony](https://github.com/woohoolabs/harmony)):
+This middleware is able to dispatch JSON:API-aware controllers. Just add it to your application (the example is for
+[Woohoo Labs. Harmony](https://github.com/woohoolabs/harmony)):
 
 ```php
 $harmony->addMiddleware(new JsonApiDispatcherMiddleware());

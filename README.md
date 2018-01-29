@@ -150,8 +150,9 @@ provided by a router).
 
 ### JsonApiErrorHandlerMiddleware
 
-It catches exceptions and responds with an appropriate JSON:API error response. Available configuration options for the
-middleware (they can be passed to the constructor):
+It catches exceptions and responds with an appropriate JSON:API error response.
+
+Available configuration options for the middleware (they can be passed to the constructor):
 
 - `errorResponsePrototype`: In case of an error, this response object will be manipulated and returned
 - `catching`: If false, the middleware won't catch `JsonApiException`s

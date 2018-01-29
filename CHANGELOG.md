@@ -6,7 +6,7 @@ CHANGED:
 
 REMOVED:
 
-FIX
+FIXED:
 
 ## 3.0.0 - unreleased
 
@@ -16,9 +16,9 @@ ADDED:
 
 CHANGED:
 
-REMOVED:
-
-FIXED:
+- `JsonApiErrorHandlerMiddleware` expects a `ResponseInterface` instance as the first constructor parameter to use it as an error response prototype
+- `JsonApiErrorHandlerMiddleware` catches and handles `Throwable`s by default
+- `JsonApiDispatcherMiddleware` throws an exception instead of responding with an error 404 response if it can not find any dispatchable action
 
 ## 2.2.0 - 2017-11-21
 

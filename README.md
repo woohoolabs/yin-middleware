@@ -150,32 +150,14 @@ provided by a router).
 
 ### JsonApiErrorHandlerMiddleware
 
-It catches `JsonApiException`s and responds with the JSON:API error response associated with the exception.
-Available configuration options for the middleware (they can be passed to the constructor):
+It catches exceptions and responds with an appropriate JSON:API error response. Available configuration options for the
+middleware (they can be passed to the constructor):
 
 - `errorResponsePrototype`: In case of an error, this response object will be manipulated and returned
 - `catching`: If false, the middleware won't catch `JsonApiException`s
 - `verbose`: If true, additional meta information will be provided about the exception thrown
 - `exceptionFactory`: The [Exception Factory](https://github.com/woohoolabs/yin/#exceptions) instance to be used
 - `serializer`: The [Serializer](https://github.com/woohoolabs/yin/#custom-serialization) instance to be used
-
-If you want to catch `Throwable`s too, you have to extend the class and wrap it like that:
-
-```php
-class MyErrorHandlerMiddleware extends JsonApiErrorHandlerMiddleware
-{
-    public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next): ResponseInterface
-    {
-        try {
-            return parent::__invoke($request, $response, $next);
-        } catch (Throwable $e) {
-            $responder = new Responder($request, $response, $this->exceptionFactory, $this->serializer);
-            
-            return $responder->genericError($this->exceptionFactory->createApplicationErrorException($request), [], null, $additionalMeta);
-        }
-    }
-}
-```
 
 ## Versioning
 

@@ -26,14 +26,10 @@
 
 ## Introduction
 
-Yin Middleware are compatible with frameworks like [Woohoo Labs. Harmony](https://github.com/woohoolabs/harmony),
-[Zend-Stratigility](https://github.com/zendframework/zend-stratigility/), [Zend-Expressive](https://github.com/zendframework/zend-expressive/) or
-[Slim Framework 3](http://www.slimframework.com/docs/concepts/middleware.html). Read more in the
-[Supported middleware interface design section](#supported-middleware-interface-design).
-
 ### Features
 
-- 100% [PSR-7](http://www.php-fig.org/psr/psr-7/) compatibility
+- 100% [PSR-15](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-15-request-handlers.md) compatibility
+- 100% [PSR-7](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-7-http-message.md) compatibility
 - Validation of requests against the JSON schema
 - Validation of responses against the JSON and JSON:API schema
 - Dispatching of JSON:API-aware controllers
@@ -50,7 +46,7 @@ package), you must install one first. You may use [Zend Diactoros](https://githu
 any other library of your preference:
 
 ```bash
-$ composer require zendframework/zend-diactoros:^1.3.0
+$ composer require zendframework/zend-diactoros:^1.7.0
 ```
 
 ### Install Yin Middleware:
@@ -67,12 +63,10 @@ Yin Middleware requires PHP 7.1 at least. You may use Yin Middleware 2.0 for PHP
 
 ### Supported middleware interface design
 
-The interface design of our middleware is based on the "request, response, next" style advocated
-by such prominent developers as [Matthew Weier O'Phinney](https://mwop.net/) (you can read more on the
-topic [in his blog post](https://mwop.net/blog/2015-01-08-on-http-middleware-and-psr-7.html)). That's why
-our middleware are compatible with [Woohoo Labs. Harmony](https://github.com/woohoolabs/harmony),
-[Zend-Stratigility](https://github.com/zendframework/zend-stratigility/), [Zend-Expressive](https://github.com/zendframework/zend-expressive/) or
-[Slim Framework 3](http://www.slimframework.com/docs/concepts/middleware.html).
+The interface design of Yin-Middleware is based on the [PSR-15](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-15-request-handlers.md) de-facto standard.
+That's why they are compatible with [Woohoo Labs. Harmony](https://github.com/woohoolabs/harmony),
+[Zend-Stratigility](https://github.com/zendframework/zend-stratigility/), [Zend-Expressive](https://github.com/zendframework/zend-expressive/)
+and many other frameworks.
 
 The following sections will guide you through how to use and configure the provided middleware.
 
@@ -86,11 +80,10 @@ application (the example is for [Woohoo Labs. Harmony](https://github.com/woohoo
 $harmony->addMiddleware(new JsonApiRequestValidatorMiddleware());
 ```
 
-If validation fails, the appropriate JSON:API errors will be sent. If you want to customize
-the error messages or the responses, provide an Exception Factory of your own.
-For other customizations, feel free to extend the class.
+If validation fails, the appropriate JSON:API errors will be sent. If you want to customize the error messages or the
+responses, provide an Exception Factory of your own. For other customizations, feel free to extend the class.
 
-Available configuration options for the middleware (they can be set in the constructor):
+Available configuration options for the middleware (they can be passed to the constructor):
 
 - `exceptionFactory`: The [Exception Factory](https://github.com/woohoolabs/yin/#exceptions) instance to be used
 - `includeOriginalMessageInResponse`: If true, the original request will be included in the "meta"
@@ -102,19 +95,17 @@ spec. In this case, the "Content-Type" and the "Accept" header is checked.
 
 ### JsonApiResponseValidatorMiddleware
 
-The middleware is mainly useful in a development environment, and it is able to validate a
-PSR-7 response against the JSON and the JSON:API schema. Just add it to your
-application (the example is for [Woohoo Labs. Harmony](https://github.com/woohoolabs/harmony)):
+The middleware is mainly useful in a development environment, and it is able to validate a PSR-7 response against the
+JSON and the JSON:API schema. Just add it to your application (the example is for [Woohoo Labs. Harmony](https://github.com/woohoolabs/harmony)):
 
 ```php
 $harmony->addMiddleware(new JsonApiResponseValidatorMiddleware());
 ```
 
-If validation fails, the appropriate JSON API errors will be sent. If you want to customize
-the messages or the responses, provide an Exception Factory of your own. For other customizations,
-feel free to extend the class.
+If validation fails, the appropriate JSON API errors will be sent. If you want to customize the messages or the responses,
+provide an Exception Factory of your own. For other customizations, feel free to extend the class.
 
-Available configuration options for the middleware (they can be set in the constructor):
+Available configuration options for the middleware (they can be passed to the constructor):
 
 - `exceptionFactory`: The [Exception Factory](https://github.com/woohoolabs/yin/#exceptions) instance to be used
 - `serializer`: The [Serializer](https://github.com/woohoolabs/yin/#custom-serialization) instance to be used
@@ -131,24 +122,23 @@ application (the example is for [Woohoo Labs. Harmony](https://github.com/woohoo
 $harmony->addMiddleware(new JsonApiDispatcherMiddleware());
 ```
 
-The middleware works exactly as [the one in Woohoo Labs. Harmony](https://github.com/woohoolabs/harmony#using-your-favourite-di-container-with-harmony),
-the only difference is that it dispatches controllers with the following signature:
+This middleware works exactly as [the one in Woohoo Labs. Harmony](https://github.com/woohoolabs/harmony#using-your-favourite-di-container-with-harmony),
+the only difference is that it dispatches controller actions with the following signature:
 
 ```php
-public function myController(JsonApi $jsonApi): ResponseInterface;
+public function myAction(JsonApi $jsonApi): ResponseInterface;
 ```
 
 instead of:
 
 ```php
-public function myController(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface;
+public function myAction(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface;
 ```
 
-The difference is subtle, as the `$jsonApi` object contains a PSR-7 compatible request,
-and PSR-7 responses can also be created with it. Learn more from the documentation of
-[Woohoo Labs. Yin](https://github.com/woohoolabs/yin#jsonapi-class).
+The difference is subtle, as the `$jsonApi` object contains a PSR-7 compatible request, and PSR-7 responses can also be
+created with it. Learn more from the documentation of [Woohoo Labs. Yin](https://github.com/woohoolabs/yin#jsonapi-class).
 
-Available configuration options for the middleware (they can be set in the constructor):
+Available configuration options for the middleware (they can be passed to the constructor):
 
 - `container`: A [PSR-11 compliant](http://www.php-fig.org/psr/psr-11/) container instance to be used to instantiate
 the controller
@@ -161,15 +151,15 @@ provided by a router).
 ### JsonApiErrorHandlerMiddleware
 
 It catches `JsonApiException`s and responds with the JSON:API error response associated with the exception.
-Available configuration options for the middleware (they can be set in the constructor):
+Available configuration options for the middleware (they can be passed to the constructor):
 
+- `errorResponsePrototype`: In case of an error, this response object will be manipulated and returned
 - `catching`: If false, the middleware won't catch `JsonApiException`s
 - `verbose`: If true, additional meta information will be provided about the exception thrown
-- `exceptionFactory`: The [Exception Factory](https://github.com/woohoolabs/yin/#exceptions) instance to be
-used
+- `exceptionFactory`: The [Exception Factory](https://github.com/woohoolabs/yin/#exceptions) instance to be used
 - `serializer`: The [Serializer](https://github.com/woohoolabs/yin/#custom-serialization) instance to be used
 
-If you want to catch `\Throwable`s too, you have to extend the class and wrap it like that:
+If you want to catch `Throwable`s too, you have to extend the class and wrap it like that:
 
 ```php
 class MyErrorHandlerMiddleware extends JsonApiErrorHandlerMiddleware

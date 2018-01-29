@@ -4,6 +4,9 @@ declare(strict_types=1);
 namespace WoohooLabs\YinMiddleware\Tests\Middleware;
 
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use WoohooLabs\Yin\JsonApi\Exception\DefaultExceptionFactory;
 use WoohooLabs\Yin\JsonApi\Exception\ResponseBodyInvalidJson;
 use WoohooLabs\Yin\JsonApi\Exception\ResponseBodyInvalidJsonApi;
@@ -24,7 +27,7 @@ class JsonApiResponseValidatorMiddlewareTest extends TestCase
 
         $response = new Response();
 
-        $middleware($this->getRequest(), $response, $this->getNext());
+        $middleware->process($this->getRequest(), $this->createHandler($response));
     }
 
     /**
@@ -38,7 +41,7 @@ class JsonApiResponseValidatorMiddlewareTest extends TestCase
         $response = new Response();
         $response->getBody()->write($this->getValidResponseBody());
 
-        $middleware($this->getRequest(), $response, $this->getNext());
+        $middleware->process($this->getRequest(), $this->createHandler($response));
     }
 
     /**
@@ -52,7 +55,7 @@ class JsonApiResponseValidatorMiddlewareTest extends TestCase
         $response->getBody()->write($this->getInvalidJsonResponseBody());
 
         $this->expectException(ResponseBodyInvalidJson::class);
-        $middleware($this->getRequest(), $response, $this->getNext());
+        $middleware->process($this->getRequest(), $this->createHandler($response));
     }
 
     /**
@@ -66,7 +69,7 @@ class JsonApiResponseValidatorMiddlewareTest extends TestCase
         $response->getBody()->write($this->getInvalidJsonApiResponseBody());
 
         $this->expectException(ResponseBodyInvalidJsonApi::class);
-        $middleware($this->getRequest(), $response, $this->getNext());
+        $middleware->process($this->getRequest(), $this->createHandler($response));
     }
 
     private function getValidResponseBody(): string
@@ -192,10 +195,23 @@ EOF;
         return new Request(new ServerRequest(), new DefaultExceptionFactory());
     }
 
-    private function getNext(): callable
+    private function createHandler(ResponseInterface $response): RequestHandlerInterface
     {
-        return function ($request, $response) {
-            return $response;
+        return new class($response) implements RequestHandlerInterface {
+            /**
+             * @var ResponseInterface
+             */
+            private $response;
+
+            public function __construct(ResponseInterface $response)
+            {
+                $this->response = $response;
+            }
+
+            public function handle(ServerRequestInterface $request): ResponseInterface
+            {
+                return $this->response;
+            }
         };
     }
 }

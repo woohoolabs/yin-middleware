@@ -4,6 +4,9 @@ declare(strict_types=1);
 namespace WoohooLabs\YinMiddleware\Middleware;
 
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Throwable;
 use WoohooLabs\Yin\JsonApi\Exception\DefaultExceptionFactory;
 use WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface;
@@ -12,9 +15,15 @@ use WoohooLabs\Yin\JsonApi\Request\RequestInterface;
 use WoohooLabs\Yin\JsonApi\Response\Responder;
 use WoohooLabs\Yin\JsonApi\Serializer\JsonSerializer;
 use WoohooLabs\Yin\JsonApi\Serializer\SerializerInterface;
+use WoohooLabs\YinMiddleware\Exception\RequestException;
 
-class JsonApiErrorHandlerMiddleware
+class JsonApiErrorHandlerMiddleware implements MiddlewareInterface
 {
+    /**
+     * @var ResponseInterface
+     */
+    protected $errorResponsePrototype;
+
     /**
      * @var bool
      */
@@ -36,35 +45,59 @@ class JsonApiErrorHandlerMiddleware
     protected $serializer;
 
     public function __construct(
+        ResponseInterface $errorResponsePrototype,
         bool $catching = true,
         bool $verbose = false,
         ?ExceptionFactoryInterface $exceptionFactory = null,
         ?SerializerInterface $serializer = null
     ) {
+        $this->errorResponsePrototype = $errorResponsePrototype;
         $this->isCatching = $catching;
         $this->verbose = $verbose;
         $this->exceptionFactory = $exceptionFactory ?? new DefaultExceptionFactory();
         $this->serializer = $serializer ?? new JsonSerializer();
     }
 
-    public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next): ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        if ($this->isCatching === true) {
-            try {
-                return $next($request, $response);
-            } catch (JsonApiExceptionInterface $exception) {
-                $responder = new Responder($request, $response, $this->exceptionFactory, $this->serializer);
-                $additionalMeta = $this->verbose === true ? $this->getExceptionMeta($exception) : [];
-
-                return $responder->genericError($exception->getErrorDocument(), [], null, $additionalMeta);
-            }
+        if ($this->isCatching === false) {
+            return $handler->handle($request);
         }
 
-        return $next($request, $response);
+        try {
+            return $handler->handle($request);
+        } catch (JsonApiExceptionInterface $exception) {
+            return $this->handleJsonApiException($exception, $request);
+        } catch (Throwable $exception) {
+            return $this->handleThrowable($exception, $request);
+        }
+    }
+
+    protected function handleJsonApiException(JsonApiExceptionInterface $exception, ServerRequestInterface $request): ResponseInterface
+    {
+        $jsonApiRequest = $this->getJsonApiRequest($request);
+        $responder = $this->createResponder($jsonApiRequest);
+        $additionalMeta = $this->getExceptionMeta($exception);
+
+        return $responder->genericError($exception->getErrorDocument(), [], null, $additionalMeta);
+    }
+
+    protected function handleThrowable(Throwable $exception, ServerRequestInterface $request): ResponseInterface
+    {
+        $jsonApiRequest = $this->getJsonApiRequest($request);
+        $responder = $this->createResponder($jsonApiRequest);
+        $additionalMeta = $this->getExceptionMeta($exception);
+        $jsonApiException = $this->exceptionFactory->createApplicationErrorException($jsonApiRequest);
+
+        return $responder->genericError($jsonApiException->getErrorDocument(), [], null, $additionalMeta);
     }
 
     protected function getExceptionMeta(Throwable $exception): array
     {
+        if ($this->verbose === false) {
+            return [];
+        }
+
         return [
             "code" => $exception->getCode(),
             "message" => $exception->getMessage(),
@@ -72,5 +105,19 @@ class JsonApiErrorHandlerMiddleware
             "line" => $exception->getLine(),
             "trace" => $exception->getTrace(),
         ];
+    }
+
+    protected function createResponder(RequestInterface $request): Responder
+    {
+        return new Responder($request, $this->errorResponsePrototype, $this->exceptionFactory, $this->serializer);
+    }
+
+    protected function getJsonApiRequest(ServerRequestInterface $request): RequestInterface
+    {
+        if ($request instanceof RequestInterface) {
+            return $request;
+        }
+
+        throw new RequestException();
     }
 }

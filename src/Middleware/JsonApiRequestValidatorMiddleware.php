@@ -4,12 +4,14 @@ declare(strict_types=1);
 namespace WoohooLabs\YinMiddleware\Middleware;
 
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface;
 use WoohooLabs\Yin\JsonApi\Negotiation\RequestValidator;
-use WoohooLabs\Yin\JsonApi\Request\RequestInterface;
 use WoohooLabs\YinMiddleware\Utils\JsonApiMessageValidator;
 
-class JsonApiRequestValidatorMiddleware extends JsonApiMessageValidator
+class JsonApiRequestValidatorMiddleware extends JsonApiMessageValidator implements MiddlewareInterface
 {
     /**
      * @var bool
@@ -33,7 +35,7 @@ class JsonApiRequestValidatorMiddleware extends JsonApiMessageValidator
         $this->checkQueryParams = $checkQueryParams;
     }
 
-    public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next): ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $validator = new RequestValidator($this->exceptionFactory, $this->includeOriginalMessageInResponse);
 
@@ -49,6 +51,6 @@ class JsonApiRequestValidatorMiddleware extends JsonApiMessageValidator
             $validator->lintBody($request);
         }
 
-        return $next($request, $response);
+        return $handler->handle($request);
     }
 }

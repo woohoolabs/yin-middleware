@@ -4,6 +4,9 @@ declare(strict_types=1);
 namespace WoohooLabs\YinMiddleware\Tests\Middleware;
 
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use WoohooLabs\Yin\JsonApi\Exception\DefaultExceptionFactory;
 use WoohooLabs\Yin\JsonApi\Request\Request;
 use WoohooLabs\YinMiddleware\Middleware\JsonApiErrorHandlerMiddleware;
@@ -18,10 +21,10 @@ class JsonApiErrorHandlerMiddlewareTest extends TestCase
      */
     public function exceptionWhenNotCatching()
     {
-        $middleware = new JsonApiErrorHandlerMiddleware(false, false);
+        $middleware = new JsonApiErrorHandlerMiddleware($this->createResponse(),false, false);
 
         $this->expectException(DummyException::class);
-        $middleware($this->getRequest(), $this->getResponse(), $this->getNext());
+        $middleware->process($this->createRequest(), $this->createHandler());
     }
 
     /**
@@ -29,9 +32,9 @@ class JsonApiErrorHandlerMiddlewareTest extends TestCase
      */
     public function responseWhenException()
     {
-        $middleware = new JsonApiErrorHandlerMiddleware(true, false);
+        $middleware = new JsonApiErrorHandlerMiddleware($this->createResponse(),true, false);
 
-        $response = $middleware($this->getRequest(), $this->getResponse(), $this->getNext());
+        $response = $middleware->process($this->createRequest(), $this->createHandler());
 
         $this->assertEquals("555", $response->getStatusCode());
     }
@@ -41,9 +44,9 @@ class JsonApiErrorHandlerMiddlewareTest extends TestCase
      */
     public function notVerboseResponseWhenException()
     {
-        $middleware = new JsonApiErrorHandlerMiddleware(true, false);
+        $middleware = new JsonApiErrorHandlerMiddleware($this->createResponse(),true, false);
 
-        $response = $middleware($this->getRequest(), $this->getResponse(), $this->getNext());
+        $response = $middleware->process($this->createRequest(), $this->createHandler());
 
         $this->assertArrayNotHasKey("meta", json_decode($response->getBody()->__toString(), true));
     }
@@ -53,29 +56,32 @@ class JsonApiErrorHandlerMiddlewareTest extends TestCase
      */
     public function verboseResponseWhenException()
     {
-        $middleware = new JsonApiErrorHandlerMiddleware(true, true);
+        $middleware = new JsonApiErrorHandlerMiddleware($this->createResponse(), true, true);
 
-        $response = $middleware($this->getRequest(), $this->getResponse(), $this->getNext());
+        $response = $middleware->process($this->createRequest(), $this->createHandler());
         $body = json_decode($response->getBody()->__toString(), true);
 
         $this->assertEquals("0", $body["meta"]["code"]);
         $this->assertEquals("Dummy exception", $body["meta"]["message"]);
     }
 
-    private function getRequest(): Request
+    private function createRequest(): Request
     {
         return new Request(new ServerRequest(), new DefaultExceptionFactory());
     }
 
-    private function getResponse(): Response
+    private function createResponse(): Response
     {
         return new Response();
     }
 
-    private function getNext(): callable
+    private function createHandler(): RequestHandlerInterface
     {
-        return function () {
-            throw new DummyException();
+        return new class implements RequestHandlerInterface {
+            public function handle(ServerRequestInterface $request): ResponseInterface
+            {
+                throw new DummyException();
+            }
         };
     }
 }

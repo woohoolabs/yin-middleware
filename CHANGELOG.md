@@ -1,6 +1,18 @@
-## 2.3.0 - unreleased
+## 3.1.0 - unreleased
 
 ADDED:
+
+CHANGED:
+
+REMOVED:
+
+FIX
+
+## 3.0.0 - unreleased
+
+ADDED:
+
+- Support for PSR-15 (**breaking change**)
 
 CHANGED:
 

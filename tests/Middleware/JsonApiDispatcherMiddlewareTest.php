@@ -4,7 +4,11 @@ declare(strict_types=1);
 namespace WoohooLabs\YinMiddleware\Tests\Middleware;
 
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use WoohooLabs\Yin\JsonApi\Exception\DefaultExceptionFactory;
+use WoohooLabs\Yin\JsonApi\Exception\ResourceNotFound;
 use WoohooLabs\Yin\JsonApi\Request\Request;
 use WoohooLabs\YinMiddleware\Middleware\JsonApiDispatcherMiddleware;
 use WoohooLabs\YinMiddleware\Tests\Utils\FakeController;
@@ -20,9 +24,8 @@ class JsonApiDispatcherMiddlewareTest extends TestCase
     {
         $middleware = new JsonApiDispatcherMiddleware();
 
-        $response = $middleware($this->getRequest(null), $this->getResponse(), $this->getNext());
-
-        $this->assertEquals("404", $response->getStatusCode());
+        $this->expectException(ResourceNotFound::class);
+        $middleware->process($this->createRequest(null), $this->createHandler());
     }
 
     /**
@@ -32,7 +35,7 @@ class JsonApiDispatcherMiddlewareTest extends TestCase
     {
         $middleware = new JsonApiDispatcherMiddleware();
 
-        $response = $middleware($this->getRequest([FakeController::class, "__invoke"]), $this->getResponse(), $this->getNext());
+        $response = $middleware->process($this->createRequest([FakeController::class, "__invoke"]), $this->createHandler());
 
         $this->assertEquals("201", $response->getStatusCode());
     }
@@ -44,12 +47,12 @@ class JsonApiDispatcherMiddlewareTest extends TestCase
     {
         $middleware = new JsonApiDispatcherMiddleware();
 
-        $response = $middleware($this->getRequest(new FakeController()), $this->getResponse(), $this->getNext());
+        $response = $middleware->process($this->createRequest(new FakeController()), $this->createHandler());
 
         $this->assertEquals("201", $response->getStatusCode());
     }
 
-    private function getRequest($action): Request
+    private function createRequest($action): Request
     {
         $request = new ServerRequest();
         $request = $request->withAttribute("__action", $action);
@@ -57,15 +60,13 @@ class JsonApiDispatcherMiddlewareTest extends TestCase
         return new Request($request, new DefaultExceptionFactory());
     }
 
-    private function getResponse(): Response
+    private function createHandler(): RequestHandlerInterface
     {
-        return new Response();
-    }
-
-    private function getNext(): callable
-    {
-        return function ($request, $response) {
-            return $response;
+        return new class implements RequestHandlerInterface {
+            public function handle(ServerRequestInterface $request): ResponseInterface
+            {
+                return new Response();
+            }
         };
     }
 }

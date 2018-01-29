@@ -4,14 +4,16 @@ declare(strict_types=1);
 namespace WoohooLabs\YinMiddleware\Middleware;
 
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface;
 use WoohooLabs\Yin\JsonApi\Negotiation\ResponseValidator;
-use WoohooLabs\Yin\JsonApi\Request\RequestInterface;
 use WoohooLabs\Yin\JsonApi\Serializer\JsonSerializer;
 use WoohooLabs\Yin\JsonApi\Serializer\SerializerInterface;
 use WoohooLabs\YinMiddleware\Utils\JsonApiMessageValidator;
 
-class JsonApiResponseValidatorMiddleware extends JsonApiMessageValidator
+class JsonApiResponseValidatorMiddleware extends JsonApiMessageValidator implements MiddlewareInterface
 {
     /**
      * @var SerializerInterface
@@ -29,13 +31,15 @@ class JsonApiResponseValidatorMiddleware extends JsonApiMessageValidator
         $this->serializer = $serializer ?? new JsonSerializer();
     }
 
-    public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next): ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $validator = new ResponseValidator(
             $this->serializer,
             $this->exceptionFactory,
             $this->includeOriginalMessageInResponse
         );
+
+        $response = $handler->handle($request);
 
         if ($this->lintBody) {
             $validator->lintBody($response);
@@ -45,6 +49,6 @@ class JsonApiResponseValidatorMiddleware extends JsonApiMessageValidator
             $validator->validateBody($response);
         }
 
-        return $next($request, $response);
+        return $response;
     }
 }

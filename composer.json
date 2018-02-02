@@ -2,7 +2,7 @@
     "name": "woohoolabs/yin-middleware",
     "description": "Woohoo Labs. Yin Middleware",
     "type": "library",
-    "keywords": ["Woohoo Labs.", "Yin", "Middleware", "JSON API", "PSR-7"],
+    "keywords": ["Woohoo Labs.", "Yin", "Middleware", "JSON API", "PSR-7", "PSR-15"],
     "license": "MIT",
     "authors": [
         {

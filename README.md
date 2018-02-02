@@ -148,7 +148,7 @@ used (e.g.: when dispatching fails)
 - `handlerAttribute`: The name of the request attribute which stores a dispatchable controller (it is usually
 provided by a router).
 
-### JsonApiErrorHandlerMiddleware
+### JsonApiExceptionHandlerMiddleware
 
 It catches exceptions and responds with an appropriate JSON:API error response.
 

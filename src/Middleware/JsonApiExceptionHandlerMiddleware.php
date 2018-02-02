@@ -17,7 +17,7 @@ use WoohooLabs\Yin\JsonApi\Serializer\JsonSerializer;
 use WoohooLabs\Yin\JsonApi\Serializer\SerializerInterface;
 use WoohooLabs\YinMiddleware\Exception\RequestException;
 
-class JsonApiErrorHandlerMiddleware implements MiddlewareInterface
+class JsonApiExceptionHandlerMiddleware implements MiddlewareInterface
 {
     /**
      * @var ResponseInterface

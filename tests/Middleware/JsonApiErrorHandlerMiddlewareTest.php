@@ -9,7 +9,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use WoohooLabs\Yin\JsonApi\Exception\DefaultExceptionFactory;
 use WoohooLabs\Yin\JsonApi\Request\Request;
-use WoohooLabs\YinMiddleware\Middleware\JsonApiErrorHandlerMiddleware;
+use WoohooLabs\YinMiddleware\Middleware\JsonApiExceptionHandlerMiddleware;
 use WoohooLabs\YinMiddleware\Tests\Utils\DummyException;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\ServerRequest;
@@ -21,7 +21,7 @@ class JsonApiErrorHandlerMiddlewareTest extends TestCase
      */
     public function exceptionWhenNotCatching()
     {
-        $middleware = new JsonApiErrorHandlerMiddleware($this->createResponse(), false, false);
+        $middleware = new JsonApiExceptionHandlerMiddleware($this->createResponse(), false, false);
 
         $this->expectException(DummyException::class);
         $middleware->process($this->createRequest(), $this->createHandler());
@@ -32,7 +32,7 @@ class JsonApiErrorHandlerMiddlewareTest extends TestCase
      */
     public function responseWhenException()
     {
-        $middleware = new JsonApiErrorHandlerMiddleware($this->createResponse(), true, false);
+        $middleware = new JsonApiExceptionHandlerMiddleware($this->createResponse(), true, false);
 
         $response = $middleware->process($this->createRequest(), $this->createHandler());
 
@@ -44,7 +44,7 @@ class JsonApiErrorHandlerMiddlewareTest extends TestCase
      */
     public function notVerboseResponseWhenException()
     {
-        $middleware = new JsonApiErrorHandlerMiddleware($this->createResponse(), true, false);
+        $middleware = new JsonApiExceptionHandlerMiddleware($this->createResponse(), true, false);
 
         $response = $middleware->process($this->createRequest(), $this->createHandler());
 
@@ -56,7 +56,7 @@ class JsonApiErrorHandlerMiddlewareTest extends TestCase
      */
     public function verboseResponseWhenException()
     {
-        $middleware = new JsonApiErrorHandlerMiddleware($this->createResponse(), true, true);
+        $middleware = new JsonApiExceptionHandlerMiddleware($this->createResponse(), true, true);
 
         $response = $middleware->process($this->createRequest(), $this->createHandler());
         $body = json_decode($response->getBody()->__toString(), true);

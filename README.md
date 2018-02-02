@@ -57,7 +57,7 @@ To install the latest version of this library, run the command below:
 $ composer require woohoolabs/yin-middleware
 ```
 
-Yin Middleware requires PHP 7.1 at least. You may use Yin Middleware 2.0 for PHP 7.0 and 1.0 for PHP 5.6.
+Yin Middleware requires PHP 7.1 at least. You may use Yin Middleware 2.0.0 for PHP 7.0.
 
 ## Basic Usage
 
@@ -69,6 +69,11 @@ That's why it is compatible with [Woohoo Labs. Harmony](https://github.com/wooho
 and many other frameworks.
 
 The following sections will guide you through how to use and configure the provided middleware.
+
+> Note: When passing a `ServerRequestInterface` instance to your middleware dispatcher, a
+`WoohooLabs\Yin\JsonApi\Request\RequestInterface` instance must be used in fact (the `WoohooLabs\Yin\JsonApi\Request\Request`
+class possibly), otherwise the `JsonApiDispatcherMiddleware` and the `JsonApiExceptionHandlerMiddleware` will throw an
+exception.
 
 ### JsonApiRequestValidatorMiddleware
 

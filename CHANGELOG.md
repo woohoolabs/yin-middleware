@@ -16,10 +16,10 @@ ADDED:
 
 CHANGED:
 
-- `JsonApiErrorHandlerMiddleware` was renamed to `JsonApiExceptionHandlerMiddleware`
-- `JsonApiExceptionHandlerMiddleware` expects a `ResponseInterface` instance as the first constructor parameter to use it as an error response prototype
-- `JsonApiExceptionHandlerMiddleware` catches and handles `Throwable`s by default
-- `JsonApiDispatcherMiddleware` throws an exception instead of responding with an error 404 response if it can not find any dispatchable action
+- `JsonApiErrorHandlerMiddleware` was renamed to `JsonApiExceptionHandlerMiddleware` (**breaking change**)
+- `JsonApiExceptionHandlerMiddleware` expects a `ResponseInterface` instance as the first constructor parameter to use it as an error response prototype (**breaking change**)
+- `JsonApiExceptionHandlerMiddleware` catches and handles `Throwable`s by default (**breaking change**)
+- `JsonApiDispatcherMiddleware` throws an exception instead of responding with an error 404 response if it can not find any dispatchable action (**breaking change**)
 - PHPUnit 7 is minimally required to run tests
 
 ## 2.2.0 - 2017-11-21

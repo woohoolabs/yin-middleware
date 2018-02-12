@@ -8,6 +8,17 @@ REMOVED:
 
 FIXED:
 
+## 3.0.1 - unreleased
+
+REMOVED:
+
+- `JsonApiExceptionHandlerMiddleware` catching `Throwable`s (**breaking change**)
+
+FIXED:
+
+- `JsonApiExceptionHandlerMiddleware` caught `Throwable`s by default, but it prevented child middleware to catch other
+exceptions
+
 ## 3.0.0 - 2018-02-02
 
 ADDED:

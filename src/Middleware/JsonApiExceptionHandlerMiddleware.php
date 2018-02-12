@@ -68,8 +68,6 @@ class JsonApiExceptionHandlerMiddleware implements MiddlewareInterface
             return $handler->handle($request);
         } catch (JsonApiExceptionInterface $exception) {
             return $this->handleJsonApiException($exception, $request);
-        } catch (Throwable $exception) {
-            return $this->handleThrowable($exception, $request);
         }
     }
 
@@ -80,16 +78,6 @@ class JsonApiExceptionHandlerMiddleware implements MiddlewareInterface
         $additionalMeta = $this->getExceptionMeta($exception);
 
         return $responder->genericError($exception->getErrorDocument(), [], null, $additionalMeta);
-    }
-
-    protected function handleThrowable(Throwable $exception, ServerRequestInterface $request): ResponseInterface
-    {
-        $jsonApiRequest = $this->getJsonApiRequest($request);
-        $responder = $this->createResponder($jsonApiRequest);
-        $additionalMeta = $this->getExceptionMeta($exception);
-        $jsonApiException = $this->exceptionFactory->createApplicationErrorException($jsonApiRequest);
-
-        return $responder->genericError($jsonApiException->getErrorDocument(), [], null, $additionalMeta);
     }
 
     protected function getExceptionMeta(Throwable $exception): array

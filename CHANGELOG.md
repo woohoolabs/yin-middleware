@@ -4,6 +4,7 @@ ADDED:
 
 CHANGED:
 
+- Update Zend Diactoros to 2.0
 REMOVED:
 
 FIXED:

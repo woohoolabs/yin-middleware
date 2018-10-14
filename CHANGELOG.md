@@ -5,6 +5,8 @@ ADDED:
 CHANGED:
 
 - Update Zend Diactoros to 2.0
+- Run Travis tests on PHP 7.3 too
+
 REMOVED:
 
 FIXED:

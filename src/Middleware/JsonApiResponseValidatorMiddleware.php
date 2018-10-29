@@ -16,9 +16,9 @@ use WoohooLabs\YinMiddleware\Utils\JsonApiMessageValidator;
 class JsonApiResponseValidatorMiddleware extends JsonApiMessageValidator implements MiddlewareInterface
 {
     /**
-     * @var SerializerInterface
+     * @var ResponseValidator
      */
-    private $serializer;
+    private $validator;
 
     public function __construct(
         ?ExceptionFactoryInterface $exceptionFactory = null,
@@ -28,25 +28,24 @@ class JsonApiResponseValidatorMiddleware extends JsonApiMessageValidator impleme
         bool $validateBody = true
     ) {
         parent::__construct($includeOriginalMessageInResponse, $lintBody, $validateBody, $exceptionFactory);
-        $this->serializer = $serializer ?? new JsonSerializer();
+        $serializer = $serializer ?? new JsonSerializer();
+        $this->validator = new ResponseValidator(
+            $serializer,
+            $this->exceptionFactory,
+            $this->includeOriginalMessageInResponse
+        );
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $validator = new ResponseValidator(
-            $this->serializer,
-            $this->exceptionFactory,
-            $this->includeOriginalMessageInResponse
-        );
-
         $response = $handler->handle($request);
 
         if ($this->lintBody) {
-            $validator->lintBody($response);
+            $this->validator->lintBody($response);
         }
 
         if ($this->validateBody) {
-            $validator->validateBody($response);
+            $this->validator->validateBody($response);
         }
 
         return $response;

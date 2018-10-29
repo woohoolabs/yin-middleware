@@ -7,7 +7,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Throwable;
 use WoohooLabs\Yin\JsonApi\Exception\DefaultExceptionFactory;
 use WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface;
 use WoohooLabs\Yin\JsonApi\Exception\JsonApiExceptionInterface;
@@ -80,7 +79,7 @@ class JsonApiExceptionHandlerMiddleware implements MiddlewareInterface
         return $responder->genericError($exception->getErrorDocument(), [], null, $additionalMeta);
     }
 
-    protected function getExceptionMeta(Throwable $exception): array
+    protected function getExceptionMeta(JsonApiExceptionInterface $exception): array
     {
         if ($this->verbose === false) {
             return [];

@@ -9,6 +9,8 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface;
 use WoohooLabs\Yin\JsonApi\Negotiation\RequestValidator;
+use WoohooLabs\Yin\JsonApi\Request\RequestInterface;
+use WoohooLabs\YinMiddleware\Exception\RequestException;
 use WoohooLabs\YinMiddleware\Utils\JsonApiMessageValidator;
 
 class JsonApiRequestValidatorMiddleware extends JsonApiMessageValidator implements MiddlewareInterface
@@ -23,6 +25,11 @@ class JsonApiRequestValidatorMiddleware extends JsonApiMessageValidator implemen
      */
     protected $checkQueryParams;
 
+    /**
+     * @var RequestValidator
+     */
+    protected $validator;
+
     public function __construct(
         ?ExceptionFactoryInterface $exceptionFactory = null,
         bool $includeOriginalMessageInResponse = true,
@@ -33,24 +40,34 @@ class JsonApiRequestValidatorMiddleware extends JsonApiMessageValidator implemen
         parent::__construct($includeOriginalMessageInResponse, $lintBody, false, $exceptionFactory);
         $this->negotiate = $negotiate;
         $this->checkQueryParams = $checkQueryParams;
+        $this->validator = new RequestValidator($this->exceptionFactory, $this->includeOriginalMessageInResponse);
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $validator = new RequestValidator($this->exceptionFactory, $this->includeOriginalMessageInResponse);
+        $jsonApiRequest = $this->getJsonApiRequest($request);
 
         if ($this->negotiate) {
-            $validator->negotiate($request);
+            $this->validator->negotiate($jsonApiRequest);
         }
 
         if ($this->checkQueryParams) {
-            $validator->validateQueryParams($request);
+            $this->validator->validateQueryParams($jsonApiRequest);
         }
 
         if ($this->lintBody) {
-            $validator->lintBody($request);
+            $this->validator->lintBody($jsonApiRequest);
         }
 
         return $handler->handle($request);
+    }
+
+    protected function getJsonApiRequest(ServerRequestInterface $request): RequestInterface
+    {
+        if ($request instanceof RequestInterface) {
+            return $request;
+        }
+
+        throw new RequestException();
     }
 }

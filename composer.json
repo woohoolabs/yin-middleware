@@ -15,14 +15,14 @@
         "source": "https://github.com/woohoolabs/yin-middleware"
     },
     "require": {
-        "php": "^7.1.0",
+        "php": "^7.2.0",
         "psr/container": "^1.0.0",
         "psr/http-message-implementation": "^1.0.0",
         "psr/http-server-middleware": "^1.0.0",
-        "woohoolabs/yin": "^3.0.0"
+        "woohoolabs/yin": "4.0.x-dev as 4.0.0"
     },
     "require-dev": {
-        "justinrainbow/json-schema": "^2.0.0",
+        "justinrainbow/json-schema": "^5.2.0",
         "phpunit/phpunit": "^7.0.0",
         "seld/jsonlint": "^1.4.0",
         "squizlabs/php_codesniffer": "^3.2.0",

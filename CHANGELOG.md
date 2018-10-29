@@ -4,8 +4,9 @@ ADDED:
 
 CHANGED:
 
+- Increased minimum PHP version requirement to 7.2
+- Yin 4.0.0 is minimally required
 - Update Zend Diactoros to 2.0
-- Run Travis tests on PHP 7.3 too
 
 REMOVED:
 
@@ -15,7 +16,7 @@ FIXED:
 
 REMOVED:
 
-- `JsonApiExceptionHandlerMiddleware` catching `Throwable`s (**breaking change**)
+- `JsonApiExceptionHandlerMiddleware` accidentally catching `Throwable`s (**breaking change**)
 
 FIXED:
 

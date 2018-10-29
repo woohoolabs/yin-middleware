@@ -10,6 +10,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 use WoohooLabs\Yin\JsonApi\Exception\DefaultExceptionFactory;
 use WoohooLabs\Yin\JsonApi\Exception\ResourceNotFound;
 use WoohooLabs\Yin\JsonApi\Request\Request;
+use WoohooLabs\YinMiddleware\Exception\RequestException;
 use WoohooLabs\YinMiddleware\Middleware\JsonApiDispatcherMiddleware;
 use WoohooLabs\YinMiddleware\Tests\Utils\FakeController;
 use Zend\Diactoros\Response;
@@ -26,6 +27,17 @@ class JsonApiDispatcherMiddlewareTest extends TestCase
 
         $this->expectException(ResourceNotFound::class);
         $middleware->process($this->createRequest(null), $this->createHandler());
+    }
+
+    /**
+     * @test
+     */
+    public function exceptionOnInvalidServerRequest()
+    {
+        $middleware = new JsonApiDispatcherMiddleware();
+
+        $this->expectException(RequestException::class);
+        $middleware->process(new ServerRequest(), $this->createHandler());
     }
 
     /**

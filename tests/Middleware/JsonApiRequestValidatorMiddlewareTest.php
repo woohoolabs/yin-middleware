@@ -13,6 +13,7 @@ use WoohooLabs\Yin\JsonApi\Exception\MediaTypeUnsupported;
 use WoohooLabs\Yin\JsonApi\Exception\QueryParamUnrecognized;
 use WoohooLabs\Yin\JsonApi\Exception\RequestBodyInvalidJson;
 use WoohooLabs\Yin\JsonApi\Request\Request;
+use WoohooLabs\YinMiddleware\Exception\RequestException;
 use WoohooLabs\YinMiddleware\Middleware\JsonApiRequestValidatorMiddleware;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\ServerRequest;
@@ -174,6 +175,17 @@ class JsonApiRequestValidatorMiddlewareTest extends TestCase
         $request = $this->createRequest([], $this->getValidRequestBody());
 
         $middleware->process($request, $this->createHandler());
+    }
+
+    /**
+     * @test
+     */
+    public function exceptionOnServerRequest()
+    {
+        $middleware = new JsonApiRequestValidatorMiddleware();
+
+        $this->expectException(RequestException::class);
+        $middleware->process(new ServerRequest(), $this->createHandler());
     }
 
     /**

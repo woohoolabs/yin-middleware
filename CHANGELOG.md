@@ -5,8 +5,7 @@ ADDED:
 CHANGED:
 
 - Increased minimum PHP version requirement to 7.2
-- Yin 4.0.0 is minimally required
-- Update Zend Diactoros to 2.0
+- Updated Yin to 4.0.0
 - `JsonApiRequestValidatorMiddleware` will throw a `RequestException` if the request isn't instance of Yin's `RequestInterface`
 
 REMOVED:

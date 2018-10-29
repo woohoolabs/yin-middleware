@@ -60,7 +60,7 @@ $ composer require woohoolabs/yin-middleware
 > Note: The tests and examples won't be downloaded by default. You have to use `composer require woohoolabs/yin-middleware --prefer-source`
 or clone the repository if you need them.
 
-Yin Middleware 3 requires PHP 7.1 at least. You may use Yin Middleware 2.0.0 for PHP 7.0.
+Yin Middleware 3.1 requires PHP 7.2 at least. You may use Yin Middleware 3.0.1 for PHP 7.1 or 2.0.0 for PHP 7.0.
 
 ## Basic Usage
 

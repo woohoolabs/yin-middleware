@@ -23,7 +23,7 @@ class JsonApiRequestValidatorMiddleware extends JsonApiMessageValidator implemen
     /**
      * @var bool
      */
-    protected $checkQueryParams;
+    protected $validateQueryParams;
 
     /**
      * @var RequestValidator
@@ -34,12 +34,12 @@ class JsonApiRequestValidatorMiddleware extends JsonApiMessageValidator implemen
         ?ExceptionFactoryInterface $exceptionFactory = null,
         bool $includeOriginalMessageInResponse = true,
         bool $negotiate = true,
-        bool $checkQueryParams = true,
-        bool $lintBody = true
+        bool $validateQueryParams = true,
+        bool $validateJsonBody = true
     ) {
-        parent::__construct($includeOriginalMessageInResponse, $lintBody, false, $exceptionFactory);
+        parent::__construct($includeOriginalMessageInResponse, $validateJsonBody, false, $exceptionFactory);
         $this->negotiate = $negotiate;
-        $this->checkQueryParams = $checkQueryParams;
+        $this->validateQueryParams = $validateQueryParams;
         $this->validator = new RequestValidator($this->exceptionFactory, $this->includeOriginalMessageInResponse);
     }
 
@@ -51,12 +51,12 @@ class JsonApiRequestValidatorMiddleware extends JsonApiMessageValidator implemen
             $this->validator->negotiate($jsonApiRequest);
         }
 
-        if ($this->checkQueryParams) {
+        if ($this->validateQueryParams) {
             $this->validator->validateQueryParams($jsonApiRequest);
         }
 
-        if ($this->lintBody) {
-            $this->validator->lintBody($jsonApiRequest);
+        if ($this->validateJsonBody) {
+            $this->validator->validateJsonBody($jsonApiRequest);
         }
 
         return $handler->handle($request);

@@ -21,22 +21,22 @@ abstract class JsonApiMessageValidator
     /**
      * @var bool
      */
-    protected $lintBody;
+    protected $validateJsonBody;
 
     /**
      * @var bool
      */
-    protected $validateBody;
+    protected $validateJsonApiBody;
 
     public function __construct(
         bool $includeOriginalMessageInResponse,
-        bool $lintBody,
-        bool $validateBody,
+        bool $validateJsonBody,
+        bool $validateJsonApiBody,
         ?ExceptionFactoryInterface $exceptionFactory = null
     ) {
         $this->exceptionFactory = $exceptionFactory ? $exceptionFactory : new DefaultExceptionFactory();
         $this->includeOriginalMessageInResponse = $includeOriginalMessageInResponse;
-        $this->lintBody = $lintBody;
-        $this->validateBody = $validateBody;
+        $this->validateJsonBody = $validateJsonBody;
+        $this->validateJsonApiBody = $validateJsonApiBody;
     }
 }

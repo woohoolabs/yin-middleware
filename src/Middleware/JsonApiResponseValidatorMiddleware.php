@@ -40,12 +40,12 @@ class JsonApiResponseValidatorMiddleware extends JsonApiMessageValidator impleme
     {
         $response = $handler->handle($request);
 
-        if ($this->lintBody) {
-            $this->validator->lintBody($response);
+        if ($this->validateJsonBody) {
+            $this->validator->validateJsonBody($response);
         }
 
-        if ($this->validateBody) {
-            $this->validator->validateBody($response);
+        if ($this->validateJsonApiBody) {
+            $this->validator->validateJsonApiBody($response);
         }
 
         return $response;

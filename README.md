@@ -98,8 +98,8 @@ Available configuration options for the middleware (they can be passed to the co
 top-level member
 - `negotiate`: If true, the middleware performs content-negotiation as specified by the JSON:API
 spec. In this case, the "Content-Type" and the "Accept" header is checked.
-- `checkQueryParams`: If true, query parameters are validated against the JSON:API specification
-- `lintBody`: If true, the request body gets linted
+- `validateQueryParams`: If true, query parameters are validated against the JSON:API specification
+- `validateJsonBody`: If true, the request body gets validated against the JSON schema
 
 ### JsonApiResponseValidatorMiddleware
 
@@ -118,8 +118,8 @@ Available configuration options for the middleware (they can be passed to the co
 - `exceptionFactory`: The [Exception Factory](https://github.com/woohoolabs/yin/#exceptions) instance to be used
 - `serializer`: The [Serializer](https://github.com/woohoolabs/yin/#custom-serialization) instance to be used
 - `includeOriginalMessageInResponse`: If true, the original response will be included in the "meta" top-level member
-- `lintBody`: If true, the response body gets linted
-- `validateBody`: If true, the response is validated against the JSON:API schema
+- `validateJsonBody`: If true, the response body gets validated against the JSON schema
+- `validateJsonApiBody`: If true, the response is validated against the JSON:API schema
 
 ### JsonApiDispatcherMiddleware
 

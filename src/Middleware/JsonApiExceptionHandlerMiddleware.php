@@ -76,7 +76,7 @@ class JsonApiExceptionHandlerMiddleware implements MiddlewareInterface
         $responder = $this->createResponder($jsonApiRequest);
         $additionalMeta = $this->getExceptionMeta($exception);
 
-        return $responder->genericError($exception->getErrorDocument(), [], null, $additionalMeta);
+        return $responder->genericError($exception->getErrorDocument(), null, $additionalMeta);
     }
 
     protected function getExceptionMeta(JsonApiExceptionInterface $exception): array

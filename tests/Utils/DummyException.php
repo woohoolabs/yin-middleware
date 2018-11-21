@@ -2,10 +2,10 @@
 
 namespace WoohooLabs\YinMiddleware\Tests\Utils;
 
-use WoohooLabs\Yin\JsonApi\Exception\JsonApiException;
-use WoohooLabs\Yin\JsonApi\Schema\Error;
+use WoohooLabs\Yin\JsonApi\Exception\AbstractJsonApiException;
+use WoohooLabs\Yin\JsonApi\Schema\Error\Error;
 
-class DummyException extends JsonApiException
+class DummyException extends AbstractJsonApiException
 {
     public function __construct()
     {

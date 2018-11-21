@@ -37,7 +37,7 @@
 
 ## Install
 
-The only thing you need before getting started is [Composer](http://getcomposer.org).
+The only thing you need before getting started is [Composer](https://getcomposer.org).
 
 ### Install a PSR-7 implementation:
 
@@ -148,7 +148,7 @@ created with it. Learn more from the documentation of [Woohoo Labs. Yin](https:/
 
 Available configuration options for the middleware (they can be passed to the constructor):
 
-- `container`: A [PSR-11 compliant](http://www.php-fig.org/psr/psr-11/) container instance to be used to instantiate
+- `container`: A [PSR-11 compliant](https://www.php-fig.org/psr/psr-11/) container instance to be used to instantiate
 the controller
 - `exceptionFactory`: The [Exception Factory](https://github.com/woohoolabs/yin/#exceptions) instance to be
 used (e.g.: when dispatching fails)
@@ -170,7 +170,7 @@ Available configuration options for the middleware (they can be passed to the co
 
 ## Versioning
 
-This library follows [SemVer v2.0.0](http://semver.org/).
+This library follows [SemVer v2.0.0](https://semver.org/).
 
 ## Change Log
 

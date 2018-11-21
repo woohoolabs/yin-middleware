@@ -6,11 +6,11 @@ We accept contributions via Pull Requests on [Github](https://github.com/woohool
 
 ## Pull Requests
 
-- **[PSR-2 Coding Standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md)** - The easiest way to apply the conventions is to install [PHP Code Sniffer](http://pear.php.net/package/PHP_CodeSniffer).
+- **[PSR-2 Coding Standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md)** - The easiest way to apply the conventions is to install [PHP Code Sniffer](https://pear.php.net/package/PHP_CodeSniffer).
 
 - **Document any change in behaviour** - Make sure the `README.md` and any other relevant documentation are kept up-to-date.
 
-- **Consider our release cycle** - We try to follow [SemVer v2.0.0](http://semver.org/).
+- **Consider our release cycle** - We try to follow [SemVer v2.0.0](https://semver.org/).
 
 - **Create feature branches** - Don't ask us to pull from your master branch.
 

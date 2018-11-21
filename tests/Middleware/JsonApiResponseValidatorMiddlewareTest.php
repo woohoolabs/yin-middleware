@@ -77,9 +77,9 @@ class JsonApiResponseValidatorMiddlewareTest extends TestCase
         return <<<EOF
 {
   "links": {
-    "self": "http://example.com/articles",
-    "next": "http://example.com/articles?page[offset]=2",
-    "last": "http://example.com/articles?page[offset]=10"
+    "self": "https://example.com/articles",
+    "next": "https://example.com/articles?page[offset]=2",
+    "last": "https://example.com/articles?page[offset]=10"
   },
   "data": [{
     "type": "articles",
@@ -90,15 +90,15 @@ class JsonApiResponseValidatorMiddlewareTest extends TestCase
     "relationships": {
       "author": {
         "links": {
-          "self": "http://example.com/articles/1/relationships/author",
-          "related": "http://example.com/articles/1/author"
+          "self": "https://example.com/articles/1/relationships/author",
+          "related": "https://example.com/articles/1/author"
         },
         "data": { "type": "people", "id": "9" }
       },
       "comments": {
         "links": {
-          "self": "http://example.com/articles/1/relationships/comments",
-          "related": "http://example.com/articles/1/comments"
+          "self": "https://example.com/articles/1/relationships/comments",
+          "related": "https://example.com/articles/1/comments"
         },
         "data": [
           { "type": "comments", "id": "5" },
@@ -107,7 +107,7 @@ class JsonApiResponseValidatorMiddlewareTest extends TestCase
       }
     },
     "links": {
-      "self": "http://example.com/articles/1"
+      "self": "https://example.com/articles/1"
     }
   }],
   "included": [{
@@ -119,7 +119,7 @@ class JsonApiResponseValidatorMiddlewareTest extends TestCase
       "twitter": "dgeb"
     },
     "links": {
-      "self": "http://example.com/people/9"
+      "self": "https://example.com/people/9"
     }
   }, {
     "type": "comments",
@@ -133,7 +133,7 @@ class JsonApiResponseValidatorMiddlewareTest extends TestCase
       }
     },
     "links": {
-      "self": "http://example.com/comments/5"
+      "self": "https://example.com/comments/5"
     }
   }, {
     "type": "comments",
@@ -147,7 +147,7 @@ class JsonApiResponseValidatorMiddlewareTest extends TestCase
       }
     },
     "links": {
-      "self": "http://example.com/comments/12"
+      "self": "https://example.com/comments/12"
     }
   }]
 }
@@ -159,9 +159,9 @@ EOF;
         return <<<EOF
 {
   "links": {
-    "self": "http://example.com/articles",
-    "next": "http://example.com/articles?page[offset]=2",
-    "last": "http://example.com/articles?page[offset]=10"
+    "self": "https://example.com/articles",
+    "next": "https://example.com/articles?page[offset]=2",
+    "last": "https://example.com/articles?page[offset]=10"
   },
 }
 EOF;
@@ -172,9 +172,9 @@ EOF;
         return <<<EOF
 {
     "links": {
-        "self": "http://example.com/articles",
-        "next": "http://example.com/articles?page[offset]=2",
-        "last": "http://example.com/articles?page[offset]=10"
+        "self": "https://example.com/articles",
+        "next": "https://example.com/articles?page[offset]=2",
+        "last": "https://example.com/articles?page[offset]=10"
     },
     "data": [
         {

@@ -215,7 +215,7 @@ class JsonApiRequestValidatorMiddlewareTest extends TestCase
     "type": "photos",
     "attributes": {
       "title": "Ember Hamster",
-      "src": "http://example.com/images/productivity.png"
+      "src": "https://example.com/images/productivity.png"
     },
     "relationships": {
       "photographer": {
@@ -235,7 +235,7 @@ EOF;
     "type": "photos"
     "attributes": {
       "title": "Ember Hamster",
-      "src": "http://example.com/images/productivity.png"
+      "src": "https://example.com/images/productivity.png"
     },
   }
 }

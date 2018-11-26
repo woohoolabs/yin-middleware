@@ -4,7 +4,6 @@ ADDED:
 
 CHANGED:
 
-- Increased minimum PHP version requirement to 7.2
 - Updated Yin to 4.0.0
 - `JsonApiRequestValidatorMiddleware` will throw a `RequestException` if the request isn't instance of Yin's `RequestInterface`
 

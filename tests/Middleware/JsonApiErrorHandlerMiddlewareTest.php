@@ -24,6 +24,7 @@ class JsonApiErrorHandlerMiddlewareTest extends TestCase
         $middleware = new JsonApiExceptionHandlerMiddleware($this->createResponse(), false, false);
 
         $this->expectException(DummyException::class);
+
         $middleware->process($this->createRequest(), $this->createHandler());
     }
 
@@ -48,7 +49,7 @@ class JsonApiErrorHandlerMiddlewareTest extends TestCase
 
         $response = $middleware->process($this->createRequest(), $this->createHandler());
 
-        $this->assertArrayNotHasKey("meta", json_decode($response->getBody()->__toString(), true));
+        $this->assertArrayNotHasKey("meta", $this->getBody($response));
     }
 
     /**
@@ -57,9 +58,9 @@ class JsonApiErrorHandlerMiddlewareTest extends TestCase
     public function verboseResponseWhenException()
     {
         $middleware = new JsonApiExceptionHandlerMiddleware($this->createResponse(), true, true);
-
         $response = $middleware->process($this->createRequest(), $this->createHandler());
-        $body = json_decode($response->getBody()->__toString(), true);
+
+        $body = $this->getBody($response);
 
         $this->assertEquals("0", $body["meta"]["code"]);
         $this->assertEquals("Dummy exception", $body["meta"]["message"]);
@@ -83,5 +84,10 @@ class JsonApiErrorHandlerMiddlewareTest extends TestCase
                 throw new DummyException();
             }
         };
+    }
+
+    private function getBody(ResponseInterface $response): array
+    {
+        return json_decode($response->getBody()->__toString(), true);
     }
 }

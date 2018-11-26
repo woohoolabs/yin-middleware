@@ -38,7 +38,7 @@ class JsonApiRequestValidatorMiddlewareTest extends TestCase
         $request = $this->createRequest(
             [],
             "",
-            ["Content-Type" => "application/vnd.api+json", "Accept" => "application/vnd.api+json"]
+            ["content-type" => "application/vnd.api+json", "accept" => "application/vnd.api+json"]
         );
 
         $middleware->process($request, $this->createHandler());
@@ -75,10 +75,10 @@ class JsonApiRequestValidatorMiddlewareTest extends TestCase
             false,
             false
         );
-
-        $request = $this->createRequest([], "", ["Content-Type" => "application/vnd.api+json; version=1", "Accept" => "application/vnd.api+json"]);
+        $request = $this->createRequest([], "", ["content-type" => "application/vnd.api+json; version=1", "accept" => "application/vnd.api+json"]);
 
         $this->expectException(MediaTypeUnsupported::class);
+
         $middleware->process($request, $this->createHandler());
     }
 
@@ -95,7 +95,7 @@ class JsonApiRequestValidatorMiddlewareTest extends TestCase
             false
         );
 
-        $request = $this->createRequest([], "", ["Content-Type" => "application/vnd.api+json", "Accept" => "application/vnd.api+json; version=1"]);
+        $request = $this->createRequest([], "", ["content-type" => "application/vnd.api+json", "accept" => "application/vnd.api+json; version=1"]);
 
         $this->expectException(MediaTypeUnacceptable::class);
         $middleware->process($request, $this->createHandler());
@@ -114,7 +114,6 @@ class JsonApiRequestValidatorMiddlewareTest extends TestCase
             true,
             false
         );
-
         $request = $this->createRequest(["page" => ["number" => "1", "size" => "10"]]);
 
         $middleware->process($request, $this->createHandler());
@@ -132,10 +131,10 @@ class JsonApiRequestValidatorMiddlewareTest extends TestCase
             true,
             false
         );
-
         $request = $this->createRequest(["foo" => "bar"]);
 
         $this->expectException(QueryParamUnrecognized::class);
+
         $middleware->process($request, $this->createHandler());
     }
 
@@ -185,6 +184,7 @@ class JsonApiRequestValidatorMiddlewareTest extends TestCase
         $middleware = new JsonApiRequestValidatorMiddleware();
 
         $this->expectException(RequestException::class);
+
         $middleware->process(new ServerRequest(), $this->createHandler());
     }
 
@@ -200,10 +200,10 @@ class JsonApiRequestValidatorMiddlewareTest extends TestCase
             false,
             true
         );
-
         $request = $this->createRequest([], $this->getInvalidJsonRequestBody());
 
         $this->expectException(RequestBodyInvalidJson::class);
+
         $middleware->process($request, $this->createHandler());
     }
 

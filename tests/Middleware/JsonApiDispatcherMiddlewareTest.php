@@ -26,6 +26,7 @@ class JsonApiDispatcherMiddlewareTest extends TestCase
         $middleware = new JsonApiDispatcherMiddleware();
 
         $this->expectException(ResourceNotFound::class);
+
         $middleware->process($this->createRequest(null), $this->createHandler());
     }
 
@@ -37,6 +38,7 @@ class JsonApiDispatcherMiddlewareTest extends TestCase
         $middleware = new JsonApiDispatcherMiddleware();
 
         $this->expectException(RequestException::class);
+
         $middleware->process(new ServerRequest(), $this->createHandler());
     }
 

@@ -12,8 +12,9 @@ use WoohooLabs\Yin\JsonApi\Exception\MediaTypeUnacceptable;
 use WoohooLabs\Yin\JsonApi\Exception\MediaTypeUnsupported;
 use WoohooLabs\Yin\JsonApi\Exception\QueryParamUnrecognized;
 use WoohooLabs\Yin\JsonApi\Exception\RequestBodyInvalidJson;
-use WoohooLabs\Yin\JsonApi\Request\Request;
-use WoohooLabs\YinMiddleware\Exception\RequestException;
+use WoohooLabs\Yin\JsonApi\Request\JsonApiRequest;
+use WoohooLabs\Yin\JsonApi\Request\JsonApiRequestInterface;
+use WoohooLabs\YinMiddleware\Exception\JsonApiRequestException;
 use WoohooLabs\YinMiddleware\Middleware\JsonApiRequestValidatorMiddleware;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\ServerRequest;
@@ -183,7 +184,7 @@ class JsonApiRequestValidatorMiddlewareTest extends TestCase
     {
         $middleware = new JsonApiRequestValidatorMiddleware();
 
-        $this->expectException(RequestException::class);
+        $this->expectException(JsonApiRequestException::class);
 
         $middleware->process(new ServerRequest(), $this->createHandler());
     }
@@ -242,7 +243,7 @@ EOF;
 EOF;
     }
 
-    private function createRequest(array $queryParams = [], string $body = "", array $headers = []): Request
+    private function createRequest(array $queryParams = [], string $body = "", array $headers = []): JsonApiRequestInterface
     {
         $request = new ServerRequest([], [], "", "POST", new Stream("php://memory", "rw"));
         $request = $request->withQueryParams($queryParams);
@@ -251,7 +252,7 @@ EOF;
             $request = $request->withHeader($header, $value);
         }
 
-        return new Request($request, new DefaultExceptionFactory());
+        return new JsonApiRequest($request, new DefaultExceptionFactory());
     }
 
     private function createHandler(): RequestHandlerInterface

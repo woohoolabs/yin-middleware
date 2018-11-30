@@ -9,8 +9,9 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use WoohooLabs\Yin\JsonApi\Exception\DefaultExceptionFactory;
 use WoohooLabs\Yin\JsonApi\Exception\ResourceNotFound;
-use WoohooLabs\Yin\JsonApi\Request\Request;
-use WoohooLabs\YinMiddleware\Exception\RequestException;
+use WoohooLabs\Yin\JsonApi\Request\JsonApiRequest;
+use WoohooLabs\Yin\JsonApi\Request\JsonApiRequestInterface;
+use WoohooLabs\YinMiddleware\Exception\JsonApiRequestException;
 use WoohooLabs\YinMiddleware\Middleware\JsonApiDispatcherMiddleware;
 use WoohooLabs\YinMiddleware\Tests\Utils\FakeController;
 use Zend\Diactoros\Response;
@@ -37,7 +38,7 @@ class JsonApiDispatcherMiddlewareTest extends TestCase
     {
         $middleware = new JsonApiDispatcherMiddleware();
 
-        $this->expectException(RequestException::class);
+        $this->expectException(JsonApiRequestException::class);
 
         $middleware->process(new ServerRequest(), $this->createHandler());
     }
@@ -66,12 +67,12 @@ class JsonApiDispatcherMiddlewareTest extends TestCase
         $this->assertEquals("201", $response->getStatusCode());
     }
 
-    private function createRequest($action): Request
+    private function createRequest($action): JsonApiRequestInterface
     {
         $request = new ServerRequest();
         $request = $request->withAttribute("__action", $action);
 
-        return new Request($request, new DefaultExceptionFactory());
+        return new JsonApiRequest($request, new DefaultExceptionFactory());
     }
 
     private function createHandler(): RequestHandlerInterface

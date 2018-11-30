@@ -10,11 +10,11 @@ use Psr\Http\Server\RequestHandlerInterface;
 use WoohooLabs\Yin\JsonApi\Exception\DefaultExceptionFactory;
 use WoohooLabs\Yin\JsonApi\Exception\ExceptionFactoryInterface;
 use WoohooLabs\Yin\JsonApi\Exception\JsonApiExceptionInterface;
-use WoohooLabs\Yin\JsonApi\Request\RequestInterface;
+use WoohooLabs\Yin\JsonApi\Request\JsonApiRequestInterface;
 use WoohooLabs\Yin\JsonApi\Response\Responder;
 use WoohooLabs\Yin\JsonApi\Serializer\JsonSerializer;
 use WoohooLabs\Yin\JsonApi\Serializer\SerializerInterface;
-use WoohooLabs\YinMiddleware\Exception\RequestException;
+use WoohooLabs\YinMiddleware\Exception\JsonApiRequestException;
 
 class JsonApiExceptionHandlerMiddleware implements MiddlewareInterface
 {
@@ -94,17 +94,17 @@ class JsonApiExceptionHandlerMiddleware implements MiddlewareInterface
         ];
     }
 
-    protected function createResponder(RequestInterface $request): Responder
+    protected function createResponder(JsonApiRequestInterface $request): Responder
     {
         return new Responder($request, $this->errorResponsePrototype, $this->exceptionFactory, $this->serializer);
     }
 
-    protected function getJsonApiRequest(ServerRequestInterface $request): RequestInterface
+    protected function getJsonApiRequest(ServerRequestInterface $request): JsonApiRequestInterface
     {
-        if ($request instanceof RequestInterface) {
+        if ($request instanceof JsonApiRequestInterface) {
             return $request;
         }
 
-        throw new RequestException();
+        throw new JsonApiRequestException();
     }
 }

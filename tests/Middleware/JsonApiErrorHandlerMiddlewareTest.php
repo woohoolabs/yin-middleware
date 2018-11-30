@@ -8,7 +8,8 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use WoohooLabs\Yin\JsonApi\Exception\DefaultExceptionFactory;
-use WoohooLabs\Yin\JsonApi\Request\Request;
+use WoohooLabs\Yin\JsonApi\Request\JsonApiRequest;
+use WoohooLabs\Yin\JsonApi\Request\JsonApiRequestInterface;
 use WoohooLabs\YinMiddleware\Middleware\JsonApiExceptionHandlerMiddleware;
 use WoohooLabs\YinMiddleware\Tests\Utils\DummyException;
 use Zend\Diactoros\Response;
@@ -66,9 +67,9 @@ class JsonApiErrorHandlerMiddlewareTest extends TestCase
         $this->assertEquals("Dummy exception", $body["meta"]["message"]);
     }
 
-    private function createRequest(): Request
+    private function createRequest(): JsonApiRequestInterface
     {
-        return new Request(new ServerRequest(), new DefaultExceptionFactory());
+        return new JsonApiRequest(new ServerRequest(), new DefaultExceptionFactory());
     }
 
     private function createResponse(): Response

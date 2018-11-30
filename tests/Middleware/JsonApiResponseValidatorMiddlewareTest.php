@@ -10,7 +10,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 use WoohooLabs\Yin\JsonApi\Exception\DefaultExceptionFactory;
 use WoohooLabs\Yin\JsonApi\Exception\ResponseBodyInvalidJson;
 use WoohooLabs\Yin\JsonApi\Exception\ResponseBodyInvalidJsonApi;
-use WoohooLabs\Yin\JsonApi\Request\Request;
+use WoohooLabs\Yin\JsonApi\Request\JsonApiRequest;
+use WoohooLabs\Yin\JsonApi\Request\JsonApiRequestInterface;
 use WoohooLabs\YinMiddleware\Middleware\JsonApiResponseValidatorMiddleware;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\ServerRequest;
@@ -190,9 +191,9 @@ EOF;
 EOF;
     }
 
-    private function getRequest(): Request
+    private function getRequest(): JsonApiRequestInterface
     {
-        return new Request(new ServerRequest(), new DefaultExceptionFactory());
+        return new JsonApiRequest(new ServerRequest(), new DefaultExceptionFactory());
     }
 
     private function createHandler(ResponseInterface $response): RequestHandlerInterface

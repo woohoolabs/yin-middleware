@@ -4,12 +4,17 @@ ADDED:
 
 CHANGED:
 
-- Updated Yin to 4.0.0
-- `JsonApiRequestValidatorMiddleware` will throw a `RequestException` if the request isn't instance of Yin's `RequestInterface`
-
 REMOVED:
 
 FIXED:
+
+## 4.0.0-beta1 - 2018-12-21
+
+CHANGED:
+
+- Updated Yin to 4.0.0
+- `JsonApiRequestValidatorMiddleware` will throw a `RequestException` if the request isn't instance of Yin's `RequestInterface`
+- Apply the Woohoo Labs. Coding Standard
 
 ## 3.0.1 - 2018-02-12
 

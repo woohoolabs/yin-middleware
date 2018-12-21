@@ -15,6 +15,9 @@ use WoohooLabs\Yin\JsonApi\Request\JsonApiRequestInterface;
 use WoohooLabs\Yin\JsonApi\Serializer\JsonSerializer;
 use WoohooLabs\Yin\JsonApi\Serializer\SerializerInterface;
 use WoohooLabs\YinMiddleware\Exception\JsonApiRequestException;
+use function is_array;
+use function is_callable;
+use function is_string;
 
 class JsonApiDispatcherMiddleware implements MiddlewareInterface
 {

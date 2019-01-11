@@ -34,7 +34,7 @@ abstract class JsonApiMessageValidator
         bool $validateJsonApiBody,
         ?ExceptionFactoryInterface $exceptionFactory = null
     ) {
-        $this->exceptionFactory = $exceptionFactory ? $exceptionFactory : new DefaultExceptionFactory();
+        $this->exceptionFactory = $exceptionFactory ?? new DefaultExceptionFactory();
         $this->includeOriginalMessageInResponse = $includeOriginalMessageInResponse;
         $this->validateJsonBody = $validateJsonBody;
         $this->validateJsonApiBody = $validateJsonApiBody;

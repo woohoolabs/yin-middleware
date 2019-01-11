@@ -27,7 +27,7 @@ class JsonApiDispatcherMiddleware implements MiddlewareInterface
     private $exceptionFactory;
 
     /**
-     * @var ContainerInterface
+     * @var ContainerInterface|null
      */
     protected $container;
 
@@ -70,7 +70,7 @@ class JsonApiDispatcherMiddleware implements MiddlewareInterface
             $object = $this->container !== null ? $this->container->get($callable[0]) : new $callable[0]();
             $response = $object->{$callable[1]}($jsonApi);
         } else {
-            if (!is_callable($callable)) {
+            if ($this->container !== null && !is_callable($callable)) {
                 $callable = $this->container->get($callable);
             }
             $response = $callable($jsonApi);

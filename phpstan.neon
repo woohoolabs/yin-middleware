@@ -1,0 +1,6 @@
+parameters:
+    bootstrap: vendor/autoload.php
+    ignoreErrors:
+
+includes:
+	- vendor/phpstan/phpstan-strict-rules/rules.neon

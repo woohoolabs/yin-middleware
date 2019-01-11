@@ -1,7 +1,7 @@
 version: '2'
 
 services:
-    php:
+    yin-middleware-php:
         container_name: yin-middleware-php
         image: php:7.1-cli
         volumes:

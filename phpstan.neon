@@ -1,6 +1,9 @@
 parameters:
     bootstrap: vendor/autoload.php
     ignoreErrors:
+        -
+            message: '#^Variable method call on mixed\.#'
+            path: src/Middleware/JsonApiDispatcherMiddleware.php
 
 includes:
 	- vendor/phpstan/phpstan-strict-rules/rules.neon

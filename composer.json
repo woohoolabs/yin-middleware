@@ -19,7 +19,7 @@
         "psr/container": "^1.0.0",
         "psr/http-message-implementation": "^1.0.0",
         "psr/http-server-middleware": "^1.0.0",
-        "woohoolabs/yin": "4.0.x-dev as 4.0.0"
+        "woohoolabs/yin": "^4.0.0"
     },
     "require-dev": {
         "justinrainbow/json-schema": "^5.2.0",

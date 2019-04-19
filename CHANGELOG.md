@@ -1,4 +1,4 @@
-## 4.0.0 - unreleased
+## 4.1.0 - unreleased
 
 ADDED:
 
@@ -7,6 +7,14 @@ CHANGED:
 REMOVED:
 
 FIXED:
+
+## 4.0.0 - 2019-04-19
+
+CHANGED:
+
+- Updated Yin to 4.0.0
+- `JsonApiRequestValidatorMiddleware` will throw a `RequestException` if the request isn't instance of Yin's `RequestInterface`
+- Apply the Woohoo Labs. Coding Standard
 
 ## 4.0.0-beta1 - 2018-12-21
 

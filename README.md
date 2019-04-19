@@ -46,7 +46,7 @@ package), you must install one first. You may use [Zend Diactoros](https://githu
 any other library of your preference:
 
 ```bash
-$ composer require zendframework/zend-diactoros:^1.7.0
+$ composer require zendframework/zend-diactoros
 ```
 
 ### Install Yin Middleware:
@@ -60,7 +60,7 @@ $ composer require woohoolabs/yin-middleware
 > Note: The tests and examples won't be downloaded by default. You have to use `composer require woohoolabs/yin-middleware --prefer-source`
 or clone the repository if you need them.
 
-Yin Middleware 3.1 requires PHP 7.1 at least, but you may use Yin Middleware 2.0.0 for PHP 7.0.
+Yin Middleware 4.0 requires PHP 7.1 at least, but you may use Yin Middleware 2.0.0 for PHP 7.0.
 
 ## Basic Usage
 
@@ -74,7 +74,7 @@ and many other frameworks.
 The following sections will guide you through how to use and configure the provided middleware.
 
 > Note: When passing a `ServerRequestInterface` instance to your middleware dispatcher, a
-`WoohooLabs\Yin\JsonApi\Request\RequestInterface` instance must be used in fact (the `WoohooLabs\Yin\JsonApi\Request\Request`
+`WoohooLabs\Yin\JsonApi\Request\JsonApiRequestInterface` instance must be used in fact (the `WoohooLabs\Yin\JsonApi\Request\JsonApiRequest`
 class possibly), otherwise the `JsonApiDispatcherMiddleware` and the `JsonApiExceptionHandlerMiddleware` will throw an
 exception.
 
@@ -93,11 +93,10 @@ the error messages or the response, provide an Exception Factory of your own. Fo
 
 Available configuration options for the middleware (they can be passed to the constructor):
 
-- `exceptionFactory`: The [Exception Factory](https://github.com/woohoolabs/yin/#exceptions) instance to be used
-- `includeOriginalMessageInResponse`: If true, the original request will be included in the "meta"
-top-level member
-- `negotiate`: If true, the middleware performs content-negotiation as specified by the JSON:API
-spec. In this case, the "Content-Type" and the "Accept" header is checked.
+- `exceptionFactory`: The [ExceptionFactoryInterface](https://github.com/woohoolabs/yin/#exceptions) instance to be used
+- `includeOriginalMessageInResponse`: If true, the original request body will be included in the "meta" top-level member
+- `negotiate`: If true, the middleware performs content-negotiation as specified by the JSON:API spec. In this case,
+the "Content-Type" and the "Accept" header is checked.
 - `validateQueryParams`: If true, query parameters are validated against the JSON:API specification
 - `validateJsonBody`: If true, the request body gets validated against the JSON schema
 
@@ -115,8 +114,8 @@ the error messages or the response, provide an Exception Factory of your own. Fo
 
 Available configuration options for the middleware (they can be passed to the constructor):
 
-- `exceptionFactory`: The [Exception Factory](https://github.com/woohoolabs/yin/#exceptions) instance to be used
-- `serializer`: The [Serializer](https://github.com/woohoolabs/yin/#custom-serialization) instance to be used
+- `exceptionFactory`: The [ExceptionFactoryInterface](https://github.com/woohoolabs/yin/#exceptions) instance to be used
+- `serializer`: The [SerializerInterface](https://github.com/woohoolabs/yin/#custom-serialization) instance to be used
 - `includeOriginalMessageInResponse`: If true, the original response will be included in the "meta" top-level member
 - `validateJsonBody`: If true, the response body gets validated against the JSON schema
 - `validateJsonApiBody`: If true, the response is validated against the JSON:API schema
@@ -150,9 +149,9 @@ Available configuration options for the middleware (they can be passed to the co
 
 - `container`: A [PSR-11 compliant](https://www.php-fig.org/psr/psr-11/) container instance to be used to instantiate
 the controller
-- `exceptionFactory`: The [Exception Factory](https://github.com/woohoolabs/yin/#exceptions) instance to be
+- `exceptionFactory`: The [ExceptionFactoryInterface](https://github.com/woohoolabs/yin/#exceptions) instance to be
 used (e.g.: when dispatching fails)
-- `serializer`: The [Serializer](https://github.com/woohoolabs/yin/#custom-serialization) instance to be used
+- `serializer`: The [SerializerInterface](https://github.com/woohoolabs/yin/#custom-serialization) instance to be used
 - `handlerAttribute`: The name of the request attribute which stores a dispatchable controller (it is usually
 provided by a router).
 
@@ -165,8 +164,8 @@ Available configuration options for the middleware (they can be passed to the co
 - `errorResponsePrototype`: In case of an error, this response object will be manipulated and returned
 - `catching`: If false, the middleware won't catch `JsonApiException`s
 - `verbose`: If true, additional meta information will be provided about the exception thrown
-- `exceptionFactory`: The [Exception Factory](https://github.com/woohoolabs/yin/#exceptions) instance to be used
-- `serializer`: The [Serializer](https://github.com/woohoolabs/yin/#custom-serialization) instance to be used
+- `exceptionFactory`: The [ExceptionFactoryInterface](https://github.com/woohoolabs/yin/#exceptions) instance to be used
+- `serializer`: The [SerializerInterface](https://github.com/woohoolabs/yin/#custom-serialization) instance to be used
 
 ## Versioning
 

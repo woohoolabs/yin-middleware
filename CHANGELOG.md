@@ -1,16 +1,20 @@
-## 4.1.0 - unreleased
+## 4.2.0 - unreleased
 
 ADDED:
+
+CHANGED:
+
+REMOVED:
+
+FIXED:
+
+## 4.1.0 - 2019-08-21
 
 CHANGED:
 
 - Increased minimum PHP version requirement to 7.4 as property type declarations were added
 - Updated dev dependencies
 - Improved static analysis
-
-REMOVED:
-
-FIXED:
 
 ## 4.0.0 - 2019-04-19
 

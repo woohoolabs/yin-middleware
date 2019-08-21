@@ -12,7 +12,7 @@ help:
 .PHONY: test phpstan cs cs-fix composer-install composer-update release
 
 test:
-	docker-compose run --rm --no-deps yin-middleware-php /bin/sh -c "cd /var/www; php vendor/bin/phpunit"
+	docker-compose run --rm --no-deps yin-middleware-php /bin/sh -c "cd /var/www && ./vendor/bin/phpunit"
 
 phpstan:
 	docker-compose run --rm --no-deps yin-middleware-php /bin/sh -c "cd /var/www && ./vendor/bin/phpstan analyse --level 7 src tests"

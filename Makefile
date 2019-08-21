@@ -12,16 +12,16 @@ help:
 .PHONY: test phpstan cs cs-fix composer-install composer-update release
 
 test:
-	docker-compose up
+	docker-compose run --rm --no-deps yin-middleware-php /bin/sh -c "cd /var/www; php vendor/bin/phpunit"
 
 phpstan:
-	docker-compose run --rm yin-middleware-php /bin/bash -c "cd /var/www && ./vendor/bin/phpstan analyse --level 7 src"
+	docker-compose run --rm --no-deps yin-middleware-php /bin/sh -c "cd /var/www && ./vendor/bin/phpstan analyse --level 7 src tests"
 
 cs:
-	docker-compose run --rm yin-middleware-php /var/www/vendor/bin/phpcs --standard=/var/www/phpcs.xml
+	docker-compose run --rm --no-deps yin-middleware-php /var/www/vendor/bin/phpcs --standard=/var/www/phpcs.xml
 
 cs-fix:
-	docker-compose run --rm yin-middleware-php /var/www/vendor/bin/phpcbf --standard=/var/www/phpcs.xml
+	docker-compose run --rm --no-deps yin-middleware-php /var/www/vendor/bin/phpcbf --standard=/var/www/phpcs.xml
 
 composer-install:
 	docker run --rm --interactive --tty --volume $(PWD):/app --user $(id -u):$(id -g) composer install --ignore-platform-reqs
@@ -29,5 +29,5 @@ composer-install:
 composer-update:
 	docker run --rm --interactive --tty --volume $(PWD):/app --user $(id -u):$(id -g) composer update --ignore-platform-reqs
 
-release:
-	make test && make phpstan && make cs && ./vendor/bin/releaser release
+release: test phpstan cs
+	./vendor/bin/releaser release

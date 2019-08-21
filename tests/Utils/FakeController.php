@@ -10,6 +10,6 @@ class FakeController
 {
     public function __invoke(JsonApi $jsonApi): ResponseInterface
     {
-        return $jsonApi->response->withStatus("201");
+        return $jsonApi->response->withStatus(201);
     }
 }

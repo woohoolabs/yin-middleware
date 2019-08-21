@@ -26,7 +26,7 @@ class JsonApiRequestValidatorMiddlewareTest extends TestCase
      * @doesNotPerformAssertions
      * @test
      */
-    public function successOnValidHeaders()
+    public function successOnValidHeaders(): void
     {
         $middleware = new JsonApiRequestValidatorMiddleware(
             null,
@@ -49,7 +49,7 @@ class JsonApiRequestValidatorMiddlewareTest extends TestCase
      * @doesNotPerformAssertions
      * @test
      */
-    public function successOnMissingHeaders()
+    public function successOnMissingHeaders(): void
     {
         $middleware = new JsonApiRequestValidatorMiddleware(
             null,
@@ -67,7 +67,7 @@ class JsonApiRequestValidatorMiddlewareTest extends TestCase
     /**
      * @test
      */
-    public function exceptionOnInvalidContentTypeHeader()
+    public function exceptionOnInvalidContentTypeHeader(): void
     {
         $middleware = new JsonApiRequestValidatorMiddleware(
             null,
@@ -86,7 +86,7 @@ class JsonApiRequestValidatorMiddlewareTest extends TestCase
     /**
      * @test
      */
-    public function exceptionOnInvalidAcceptHeader()
+    public function exceptionOnInvalidAcceptHeader(): void
     {
         $middleware = new JsonApiRequestValidatorMiddleware(
             null,
@@ -106,7 +106,7 @@ class JsonApiRequestValidatorMiddlewareTest extends TestCase
      * @doesNotPerformAssertions
      * @test
      */
-    public function successOnValidQueryParams()
+    public function successOnValidQueryParams(): void
     {
         $middleware = new JsonApiRequestValidatorMiddleware(
             null,
@@ -123,7 +123,7 @@ class JsonApiRequestValidatorMiddlewareTest extends TestCase
     /**
      * @test
      */
-    public function exceptionOnInvalidQueryParams()
+    public function exceptionOnInvalidQueryParams(): void
     {
         $middleware = new JsonApiRequestValidatorMiddleware(
             null,
@@ -143,7 +143,7 @@ class JsonApiRequestValidatorMiddlewareTest extends TestCase
      * @test
      * @doesNotPerformAssertions
      */
-    public function successOnEmptyRequestBody()
+    public function successOnEmptyRequestBody(): void
     {
         $middleware = new JsonApiRequestValidatorMiddleware(
             null,
@@ -162,7 +162,7 @@ class JsonApiRequestValidatorMiddlewareTest extends TestCase
      * @test
      * @doesNotPerformAssertions
      */
-    public function successOnValidRequestBody()
+    public function successOnValidRequestBody(): void
     {
         $middleware = new JsonApiRequestValidatorMiddleware(
             null,
@@ -180,7 +180,7 @@ class JsonApiRequestValidatorMiddlewareTest extends TestCase
     /**
      * @test
      */
-    public function exceptionOnServerRequest()
+    public function exceptionOnServerRequest(): void
     {
         $middleware = new JsonApiRequestValidatorMiddleware();
 
@@ -192,7 +192,7 @@ class JsonApiRequestValidatorMiddlewareTest extends TestCase
     /**
      * @test
      */
-    public function exceptionOnInvalidJsonRequestBody()
+    public function exceptionOnInvalidJsonRequestBody(): void
     {
         $middleware = new JsonApiRequestValidatorMiddleware(
             null,

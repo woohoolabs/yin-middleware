@@ -21,7 +21,7 @@ class JsonApiResponseValidatorMiddlewareTest extends TestCase
     /**
      * @test
      */
-    public function successOnEmptyResponseBody()
+    public function successOnEmptyResponseBody(): void
     {
         $middleware = new JsonApiResponseValidatorMiddleware();
         $response = new Response();
@@ -34,7 +34,7 @@ class JsonApiResponseValidatorMiddlewareTest extends TestCase
     /**
      * @test
      */
-    public function successOnValidResponseBody()
+    public function successOnValidResponseBody(): void
     {
         $middleware = new JsonApiResponseValidatorMiddleware();
         $response = new Response();
@@ -48,7 +48,7 @@ class JsonApiResponseValidatorMiddlewareTest extends TestCase
     /**
      * @test
      */
-    public function exceptionOnInvalidJsonResponseBody()
+    public function exceptionOnInvalidJsonResponseBody(): void
     {
         $middleware = new JsonApiResponseValidatorMiddleware();
         $response = new Response();
@@ -62,7 +62,7 @@ class JsonApiResponseValidatorMiddlewareTest extends TestCase
     /**
      * @test
      */
-    public function exceptionOnInvalidJsonApiResponseBody()
+    public function exceptionOnInvalidJsonApiResponseBody(): void
     {
         $middleware = new JsonApiResponseValidatorMiddleware();
         $response = new Response();

@@ -22,7 +22,7 @@ class JsonApiDispatcherMiddlewareTest extends TestCase
     /**
      * @test
      */
-    public function error404WhenActionIsNull()
+    public function error404WhenActionIsNull(): void
     {
         $middleware = new JsonApiDispatcherMiddleware();
 
@@ -34,7 +34,7 @@ class JsonApiDispatcherMiddlewareTest extends TestCase
     /**
      * @test
      */
-    public function exceptionOnInvalidServerRequest()
+    public function exceptionOnInvalidServerRequest(): void
     {
         $middleware = new JsonApiDispatcherMiddleware();
 
@@ -46,11 +46,11 @@ class JsonApiDispatcherMiddlewareTest extends TestCase
     /**
      * @test
      */
-    public function invokeAsCallableObject()
+    public function invokeAsCallableObject(): void
     {
         $middleware = new JsonApiDispatcherMiddleware();
 
-        $response = $middleware->process($this->createRequest([FakeController::class, "__invoke"]), $this->createHandler());
+        $response = $middleware->process($this->createRequest([new FakeController(), "__invoke"]), $this->createHandler());
 
         $this->assertEquals("201", $response->getStatusCode());
     }
@@ -58,7 +58,7 @@ class JsonApiDispatcherMiddlewareTest extends TestCase
     /**
      * @test
      */
-    public function invokeAsFunction()
+    public function invokeAsFunction(): void
     {
         $middleware = new JsonApiDispatcherMiddleware();
 
@@ -67,7 +67,7 @@ class JsonApiDispatcherMiddlewareTest extends TestCase
         $this->assertEquals("201", $response->getStatusCode());
     }
 
-    private function createRequest($action): JsonApiRequestInterface
+    private function createRequest(?callable $action): JsonApiRequestInterface
     {
         $request = new ServerRequest();
         $request = $request->withAttribute("__action", $action);

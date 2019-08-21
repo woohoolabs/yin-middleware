@@ -21,7 +21,7 @@ class JsonApiErrorHandlerMiddlewareTest extends TestCase
     /**
      * @test
      */
-    public function exceptionWhenNotCatching()
+    public function exceptionWhenNotCatching(): void
     {
         $middleware = new JsonApiExceptionHandlerMiddleware($this->createResponse(), false, false);
 
@@ -33,7 +33,7 @@ class JsonApiErrorHandlerMiddlewareTest extends TestCase
     /**
      * @test
      */
-    public function responseWhenException()
+    public function responseWhenException(): void
     {
         $middleware = new JsonApiExceptionHandlerMiddleware($this->createResponse(), true, false);
 
@@ -45,7 +45,7 @@ class JsonApiErrorHandlerMiddlewareTest extends TestCase
     /**
      * @test
      */
-    public function notVerboseResponseWhenException()
+    public function notVerboseResponseWhenException(): void
     {
         $middleware = new JsonApiExceptionHandlerMiddleware($this->createResponse(), true, false);
 
@@ -57,7 +57,7 @@ class JsonApiErrorHandlerMiddlewareTest extends TestCase
     /**
      * @test
      */
-    public function verboseResponseWhenException()
+    public function verboseResponseWhenException(): void
     {
         $middleware = new JsonApiExceptionHandlerMiddleware($this->createResponse(), true, true);
         $response = $middleware->process($this->createRequest(), $this->createHandler());

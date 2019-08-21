@@ -19,30 +19,11 @@ use WoohooLabs\YinMiddleware\Exception\JsonApiRequestException;
 
 class JsonApiExceptionHandlerMiddleware implements MiddlewareInterface
 {
-    /**
-     * @var ResponseInterface
-     */
-    protected $errorResponsePrototype;
-
-    /**
-     * @var bool
-     */
-    protected $isCatching;
-
-    /**
-     * @var bool
-     */
-    protected $verbose;
-
-    /**
-     * @var ExceptionFactoryInterface
-     */
-    protected $exceptionFactory;
-
-    /**
-     * @var SerializerInterface
-     */
-    protected $serializer;
+    protected ResponseInterface $errorResponsePrototype;
+    protected bool $isCatching;
+    protected bool $verbose;
+    protected ExceptionFactoryInterface $exceptionFactory;
+    protected SerializerInterface $serializer;
 
     public function __construct(
         ResponseInterface $errorResponsePrototype,

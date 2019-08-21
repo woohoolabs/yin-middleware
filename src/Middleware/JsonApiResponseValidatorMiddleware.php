@@ -15,10 +15,7 @@ use WoohooLabs\YinMiddleware\Utils\JsonApiMessageValidator;
 
 class JsonApiResponseValidatorMiddleware extends JsonApiMessageValidator implements MiddlewareInterface
 {
-    /**
-     * @var ResponseValidator
-     */
-    private $validator;
+    private ResponseValidator $validator;
 
     public function __construct(
         ?ExceptionFactoryInterface $exceptionFactory = null,

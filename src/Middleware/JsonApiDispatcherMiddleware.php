@@ -21,25 +21,14 @@ use function is_string;
 
 class JsonApiDispatcherMiddleware implements MiddlewareInterface
 {
-    /**
-     * @var ExceptionFactoryInterface
-     */
-    private $exceptionFactory;
+    private ExceptionFactoryInterface $exceptionFactory;
 
     /**
      * @var ContainerInterface|null
      */
     protected $container;
-
-    /**
-     * @var SerializerInterface
-     */
-    protected $serializer;
-
-    /**
-     * @var string
-     */
-    protected $handlerAttributeName;
+    protected SerializerInterface $serializer;
+    protected string $handlerAttributeName;
 
     public function __construct(
         ?ContainerInterface $container = null,

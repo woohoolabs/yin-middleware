@@ -15,20 +15,9 @@ use WoohooLabs\YinMiddleware\Utils\JsonApiMessageValidator;
 
 class JsonApiRequestValidatorMiddleware extends JsonApiMessageValidator implements MiddlewareInterface
 {
-    /**
-     * @var bool
-     */
-    protected $negotiate;
-
-    /**
-     * @var bool
-     */
-    protected $validateQueryParams;
-
-    /**
-     * @var RequestValidator
-     */
-    protected $validator;
+    protected bool $negotiate;
+    protected bool $validateQueryParams;
+    protected RequestValidator $validator;
 
     public function __construct(
         ?ExceptionFactoryInterface $exceptionFactory = null,

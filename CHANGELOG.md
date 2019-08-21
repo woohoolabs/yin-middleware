@@ -4,6 +4,10 @@ ADDED:
 
 CHANGED:
 
+- Increased minimum PHP version requirement to 7.4 as property type declarations were added
+- Updated dev dependencies
+- Improved static analysis
+
 REMOVED:
 
 FIXED:

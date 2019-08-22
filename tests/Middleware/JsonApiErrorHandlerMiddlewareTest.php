@@ -88,6 +88,9 @@ class JsonApiErrorHandlerMiddlewareTest extends TestCase
         };
     }
 
+    /**
+     * @return array<mixed, mixed>
+     */
     private function getBody(ResponseInterface $response): array
     {
         return json_decode($response->getBody()->__toString(), true);

@@ -243,6 +243,10 @@ EOF;
 EOF;
     }
 
+    /**
+     * @param array<mixed, mixed> $queryParams
+     * @param array<mixed, mixed> $headers
+     */
     private function createRequest(array $queryParams = [], string $body = "", array $headers = []): JsonApiRequestInterface
     {
         $request = new ServerRequest([], [], "", "POST", new Stream("php://memory", "rw"));

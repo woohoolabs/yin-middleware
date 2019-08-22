@@ -23,9 +23,7 @@ class JsonApiDispatcherMiddleware implements MiddlewareInterface
 {
     private ExceptionFactoryInterface $exceptionFactory;
 
-    /**
-     * @var ContainerInterface|null
-     */
+    /** @var ContainerInterface|null */
     protected $container;
     protected SerializerInterface $serializer;
     protected string $handlerAttributeName;

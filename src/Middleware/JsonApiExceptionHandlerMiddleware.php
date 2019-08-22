@@ -61,6 +61,9 @@ class JsonApiExceptionHandlerMiddleware implements MiddlewareInterface
         return $responder->genericError($exception->getErrorDocument(), null, $additionalMeta);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getExceptionMeta(Throwable $exception): array
     {
         if ($this->verbose === false) {

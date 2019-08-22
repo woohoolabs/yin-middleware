@@ -13,6 +13,9 @@ class DummyException extends AbstractJsonApiException
         parent::__construct("Dummy exception");
     }
 
+    /**
+     * @return array<int, Error>
+     */
     protected function getErrors(): array
     {
         return [

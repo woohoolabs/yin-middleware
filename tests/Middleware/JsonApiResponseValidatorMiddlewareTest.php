@@ -199,9 +199,7 @@ EOF;
     private function createHandler(ResponseInterface $response): RequestHandlerInterface
     {
         return new class($response) implements RequestHandlerInterface {
-            /**
-             * @var ResponseInterface
-             */
+            /** @var ResponseInterface */
             private $response;
 
             public function __construct(ResponseInterface $response)

@@ -5,6 +5,7 @@ namespace WoohooLabs\YinMiddleware\Exception;
 
 use Exception;
 use WoohooLabs\Yin\JsonApi\Request\JsonApiRequestInterface;
+use function sprintf;
 
 class JsonApiRequestException extends Exception
 {

@@ -10,6 +10,6 @@ class JsonApiRequestException extends Exception
 {
     public function __construct()
     {
-        parent::__construct("The request must be a " . JsonApiRequestInterface::class . " instance!");
+        parent::__construct(sprintf("The request must be a %s instance!", JsonApiRequestInterface::class));
     }
 }

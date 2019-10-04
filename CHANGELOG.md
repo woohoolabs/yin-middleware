@@ -8,6 +8,13 @@ REMOVED:
 
 FIXED:
 
+## 4.1.1 - 2019-10-04
+
+CHANGED:
+
+- Improved conformance to PSR-12
+- Added more property type declarations
+
 ## 4.1.0 - 2019-08-21
 
 CHANGED:

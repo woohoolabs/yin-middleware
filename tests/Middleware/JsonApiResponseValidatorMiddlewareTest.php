@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WoohooLabs\YinMiddleware\Tests\Middleware;
@@ -198,9 +199,8 @@ EOF;
 
     private function createHandler(ResponseInterface $response): RequestHandlerInterface
     {
-        return new class($response) implements RequestHandlerInterface {
-            /** @var ResponseInterface */
-            private $response;
+        return new class ($response) implements RequestHandlerInterface {
+            private ResponseInterface $response;
 
             public function __construct(ResponseInterface $response)
             {

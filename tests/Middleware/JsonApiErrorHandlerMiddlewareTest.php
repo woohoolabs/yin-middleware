@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WoohooLabs\YinMiddleware\Tests\Middleware;
@@ -14,6 +15,7 @@ use WoohooLabs\YinMiddleware\Middleware\JsonApiExceptionHandlerMiddleware;
 use WoohooLabs\YinMiddleware\Tests\Utils\DummyException;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\ServerRequest;
+
 use function json_decode;
 
 class JsonApiErrorHandlerMiddlewareTest extends TestCase

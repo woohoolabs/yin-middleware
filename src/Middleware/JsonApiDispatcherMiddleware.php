@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WoohooLabs\YinMiddleware\Middleware;
@@ -15,6 +16,7 @@ use WoohooLabs\Yin\JsonApi\Request\JsonApiRequestInterface;
 use WoohooLabs\Yin\JsonApi\Serializer\JsonSerializer;
 use WoohooLabs\Yin\JsonApi\Serializer\SerializerInterface;
 use WoohooLabs\YinMiddleware\Exception\JsonApiRequestException;
+
 use function is_array;
 use function is_callable;
 use function is_string;
@@ -22,9 +24,7 @@ use function is_string;
 class JsonApiDispatcherMiddleware implements MiddlewareInterface
 {
     private ExceptionFactoryInterface $exceptionFactory;
-
-    /** @var ContainerInterface|null */
-    protected $container;
+    protected ?ContainerInterface $container;
     protected SerializerInterface $serializer;
     protected string $handlerAttributeName;
 

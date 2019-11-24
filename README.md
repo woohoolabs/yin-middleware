@@ -62,6 +62,16 @@ or clone the repository if you need them.
 
 Yin Middleware 4.1 requires PHP 7.4 at least, but you may use Yin Middleware 4.0.0 for PHP 7.1.
 
+### Install the optional dependencies:
+
+If you want to use `JsonApiRequestValidatorMiddleware` and `JsonApiResponseValidatorMiddleware` from the default middleware stack
+then you have to require the following dependencies too:
+
+```bash
+$ composer require seld/jsonlint
+$ composer require justinrainbow/json-schema
+```
+
 ## Basic Usage
 
 ### Supported middleware interface design

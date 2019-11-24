@@ -2,6 +2,8 @@
 
 ADDED:
 
+- [#5](https://github.com/woohoolabs/yin-middleware/issues/5): `YinCompatibilityMiddleware` in order to facilitate the usage of Yin in other frameworks
+
 CHANGED:
 
 REMOVED:

@@ -88,6 +88,21 @@ The following sections will guide you through how to use and configure the provi
 class possibly), otherwise the `JsonApiDispatcherMiddleware` and the `JsonApiExceptionHandlerMiddleware` will throw an
 exception.
 
+### YinCompatibilityMiddleware
+
+This middleware facilitates the usage of Yin and Yin-Middleware in other frameworks. It does so by upgrading a basic PSR-7
+request object to `JsonApiRequest`, which is suitable for working with Yin. Please keep in mind, that this middleware should
+precede any other middleware that uses `JsonApiRequest` as `$request` parameter.
+
+```php
+$harmony->addMiddleware(new YinCompatibilityMiddleware());
+```
+
+Available configuration options for the middleware (they can be passed to the constructor):
+
+- `exceptionFactory`: The [ExceptionFactoryInterface](https://github.com/woohoolabs/yin/#exceptions) instance to be used
+- `deserializer`: The [DeserializerInterface](https://github.com/woohoolabs/yin/#custom-deserialization) instance to be used
+
 ### JsonApiRequestValidatorMiddleware
 
 The middleware is mainly useful in a development environment, and it is able to validate a

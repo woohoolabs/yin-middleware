@@ -1,14 +1,18 @@
-## 4.2.0 - unreleased
+## 4.3.0 - unreleased
 
 ADDED:
-
-- [#5](https://github.com/woohoolabs/yin-middleware/issues/5): `YinCompatibilityMiddleware` in order to facilitate the usage of Yin in other frameworks
 
 CHANGED:
 
 REMOVED:
 
 FIXED:
+
+## 4.2.0 - 2019-11-29
+
+ADDED:
+
+- [#5](https://github.com/woohoolabs/yin-middleware/issues/5): `YinCompatibilityMiddleware` in order to facilitate the usage of Yin in other frameworks
 
 ## 4.1.1 - 2019-10-04
 

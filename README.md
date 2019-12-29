@@ -1,12 +1,12 @@
 # Woohoo Labs. Yin Middleware
 
-[![Latest Version on Packagist][ico-version]][link-packagist]
+[![Latest Version on Packagist][ico-version]][link-version]
 [![Software License][ico-license]](LICENSE.md)
-[![Build Status][ico-travis]][link-travis]
-[![Coverage Status][ico-scrutinizer]][link-scrutinizer]
+[![Build Status][ico-build]][link-build]
+[![Coverage Status][ico-coverage]][link-coverage]
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
-[![Gitter][ico-gitter]][link-gitter]
+[![Gitter][ico-support]][link-support]
 
 **Woohoo Labs. Yin Middleware is a collection of middleware which helps you to integrate
 [Woohoo Labs. Yin](https://github.com/woohoolabs/yin) into your PHP applications.**
@@ -230,17 +230,17 @@ The MIT License (MIT). Please see the [License File](LICENSE.md) for more inform
 
 [ico-version]: https://img.shields.io/packagist/v/woohoolabs/yin-middleware.svg
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg
-[ico-travis]: https://img.shields.io/travis/woohoolabs/yin-middleware/master.svg
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/woohoolabs/yin-middleware.svg
+[ico-build]: https://img.shields.io/github/workflow/status/woohoolabs/yin-middleware/Continuous%20Integration
+[ico-coverage]: https://img.shields.io/codecov/c/github/woohoolabs/yin-middleware
 [ico-code-quality]: https://img.shields.io/scrutinizer/g/woohoolabs/yin-middleware.svg
 [ico-downloads]: https://img.shields.io/packagist/dt/woohoolabs/yin-middleware.svg
-[ico-gitter]: https://badges.gitter.im/woohoolabs/yin-middleware.svg
+[ico-support]: https://badges.gitter.im/woohoolabs/yin-middleware.svg
 
-[link-packagist]: https://packagist.org/packages/woohoolabs/yin-middleware
-[link-travis]: https://travis-ci.org/woohoolabs/yin-middleware
-[link-scrutinizer]: https://scrutinizer-ci.com/g/woohoolabs/yin-middleware/code-structure
+[link-version]: https://packagist.org/packages/woohoolabs/yin-middleware
+[link-build]: https://github.com/woohoolabs/yin-middleware/actions
+[link-coverage]: https://codecov.io/gh/woohoolabs/yin-middleware
 [link-code-quality]: https://scrutinizer-ci.com/g/woohoolabs/yin-middleware
 [link-downloads]: https://packagist.org/packages/woohoolabs/yin-middleware
 [link-author]: https://github.com/kocsismate
 [link-contributors]: ../../contributors
-[link-gitter]: https://gitter.im/woohoolabs/yin-middleware?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge
+[link-support]: https://gitter.im/woohoolabs/yin-middleware?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge

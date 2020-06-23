@@ -15,6 +15,10 @@ ADDED:
 - Support for PHP 8
 - Support for PHPUnit 9
 
+CHANGED:
+
+- Instead of zend/zend-diactoros, laminas/laminas-diactoros is required
+
 ## 4.2.0 - 2019-11-29
 
 ADDED:

@@ -38,7 +38,7 @@ jobs:
         run: php7.4 $(which composer) install --no-interaction --no-progress
 
       - name: "Run PHP CodeSniffer"
-        run: php vendor/bin/phpcs --standard=phpcs.xml
+        run: php7.4 vendor/bin/phpcs --standard=phpcs.xml
 
   static-code-analysis:
     name: "Static Code Analysis"
@@ -77,9 +77,9 @@ jobs:
 
     strategy:
       matrix:
-        php-binary:
-          - php7.4
-          - php8.0
+        php-version:
+          - 7.4
+          - 8.0
 
         dependencies:
           - lowest
@@ -92,7 +92,7 @@ jobs:
       - name: "Install PHP version"
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-binary }}
+          php-version: ${{ matrix.php-version }}
           extensions: mbstring, xml
           tools: composer:v2
 
@@ -107,14 +107,14 @@ jobs:
 
       - name: "Install lowest dependencies with composer"
         if: matrix.dependencies == 'lowest'
-        run: ${{ matrix.php-binary }} $(which composer) update --no-interaction --no-progress --no-plugins --prefer-lowest
+        run: php${{ matrix.php-version }} $(which composer) update --no-interaction --no-progress --no-plugins --prefer-lowest
 
       - name: "Install highest dependencies with composer"
         if: matrix.dependencies == 'highest'
-        run: ${{ matrix.php-binary }} $(which composer) update --no-interaction --no-progress --no-plugins
+        run: php${{ matrix.php-version }} $(which composer) update --no-interaction --no-progress --no-plugins
 
       - name: "Run unit tests"
-        run: ${{ matrix.php-binary }} vendor/bin/phpunit
+        run: php${{ matrix.php-version }} vendor/bin/phpunit
 
   code-coverage:
     name: "Code Coverage"
